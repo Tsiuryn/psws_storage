@@ -19,11 +19,20 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
-  # 1)router:
+  flutter_swipe_action_cell: ^3.0.1
+
+  # router:
   auto_route: ^3.2.4
+
+  # storage:
+  hive: ^2.2.1
+  hive_flutter: ^1.1.0
 
   # Back button interceptor:
   back_button_interceptor: 5.0.2
+
+  # uuid
+  uuid_type: ^2.0.0
 
 
   get_it: ^7.2.0
@@ -37,8 +46,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # 2)router:
+  # router:
   auto_route_generator: 3.2.0
+
+  hive_generator: ^1.1.3
+
   build_runner: ^2.1.5
 
   flutter_lints: ^1.0.0
