@@ -14,33 +14,33 @@ class ItemWidget extends StatelessWidget {
     const folderIcon = Icons.folder;
     const fileIcon = Icons.file_present_outlined;
 
-    return SwipeActionCell(
-      key: ValueKey(id),
-      trailingActions: <SwipeAction>[
-        SwipeAction(
-          ///this is the same as iOS native
-            icon: const Icon(Icons.delete, color: Colors.white,),
-            title: "Delete",
-            style: const TextStyle(fontSize: 14),
-            onTap: (CompletionHandler handler) async {
-              await handler(false);
-              onDelete?.call();
-            },
-            color: Colors.red),
-      ],
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppDim.eight, vertical: AppDim.two,),
+    return Column(
+      children: [
+        SwipeActionCell(
+          key: ValueKey(id),
+          trailingActions: <SwipeAction>[
+            SwipeAction(
+              ///this is the same as iOS native
+                icon: const Icon(Icons.delete, color: Colors.white,),
+                title: "Delete",
+                style: const TextStyle(fontSize: 14),
+                onTap: (CompletionHandler handler) async {
+                  await handler(false);
+                  onDelete?.call();
+                },
+                color: Colors.red),
+          ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDim.eight, vertical: AppDim.four,),
             child: Row(children: [
               Icon(model.isFolder ? folderIcon : fileIcon, size: AppDim.fourty,),
               const SizedBox(width: AppDim.sixteen,),
               Expanded(child: Text(model.name, overflow: TextOverflow.ellipsis,)),
             ],),
           ),
-          Divider(color: Theme.of(context).dividerColor,),
-        ],
-      ),
+        ),
+        Divider(color: Theme.of(context).dividerColor,),
+      ],
     );
   }
 }

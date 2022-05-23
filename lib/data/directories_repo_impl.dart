@@ -10,7 +10,7 @@ class DirectoriesRepoImpl implements DirectoriesRepo {
   Future<List<DirectoryModel>> getDirectories() async {
     final box = await _openBox();
     final directories = _getDirectories(box);
-    box.close();
+    await box.close();
 
     return directories;
   }
@@ -23,7 +23,7 @@ class DirectoriesRepoImpl implements DirectoriesRepo {
     var updatedData = model.copyWith(idHiveObject: idHiveObject).toBean();
     await box.put(idHiveObject, updatedData);
     final updatedListDirectory = _getDirectories(box);
-    box.close();
+    await box.close();
 
     return updatedListDirectory;
   }
@@ -31,9 +31,9 @@ class DirectoriesRepoImpl implements DirectoriesRepo {
   @override
   Future<List<DirectoryModel>> deleteDirectory(DirectoryModel model) async {
     final box = await _openBox();
-    box.delete(model.idHiveObject);
+    await box.delete(model.idHiveObject);
     final updatedListDirectory = _getDirectories(box);
-    box.close();
+    await box.close();
 
     return updatedListDirectory;
   }
