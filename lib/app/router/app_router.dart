@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:psws_storage/presenter/main/main_page.dart';
+import 'package:psws_storage/presenter/pin/presentation/pages/create_pin/create_pin_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -19,9 +20,13 @@ const pages = AutoRoute(
   page: EmptyRouterPage,
   children: [
     AutoRoute(
+        path: 'credential',
+        page: CreatePinPage,
+        initial: true,
+    ),
+    AutoRoute(
         path: 'home',
         page: MainPage,
-        initial: true,
     ),
   ]
 );

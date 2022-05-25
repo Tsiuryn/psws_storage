@@ -8,7 +8,7 @@ class Environment {
 
   Environment.empty()
       : id = '',
-        themeType = ThemeMode.dark;
+        themeType = ThemeMode.light;
 
   Environment copyWith({
     String? id,

@@ -22,14 +22,14 @@ dependencies:
   flutter_swipe_action_cell: ^3.0.1
 
   # router:
-  auto_route: ^3.2.4
+  auto_route: ^4.0.1
 
   # storage:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
 
   # Back button interceptor:
-  back_button_interceptor: 5.0.2
+  back_button_interceptor: ^6.0.0
 
   # uuid
   uuid_type: ^2.0.0
@@ -47,7 +47,7 @@ dev_dependencies:
     sdk: flutter
 
   # router:
-  auto_route_generator: 3.2.0
+  auto_route_generator: ^4.0.0
 
   hive_generator: ^1.1.3
 
