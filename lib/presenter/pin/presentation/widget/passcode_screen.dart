@@ -138,7 +138,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
   KeyboardKey _buildBackspaceKey() {
     return KeyboardKey(
       onTap: _onBackspaceButtonPressed,
-      child: const Icon(Icons.backspace, color: Colors.grey),
+      child: const Icon(Icons.backspace_outlined, color: Colors.grey),
     );
   }
 

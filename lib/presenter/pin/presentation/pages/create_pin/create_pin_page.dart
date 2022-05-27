@@ -4,15 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:psws_storage/app/common/base_page.dart';
 import 'package:psws_storage/app/router/app_router.dart';
-import 'package:psws_storage/presenter/pin/domain/entity/credentials.dart';
 import 'package:psws_storage/presenter/pin/presentation/pages/create_pin/bloc/create_pin_bloc.dart';
-import 'package:psws_storage/presenter/pin/presentation/pages/create_pin/bloc/create_pin_bloc_state.dart';
 import 'package:psws_storage/presenter/pin/presentation/widget/passcode_screen.dart';
 
-import 'bloc/create_pin_bloc_event.dart';
-
-class CreatePinPage
-    extends StatelessBasePage<CreatePinBloc, CreatePinBlocState> {
+class CreatePinPage extends StatelessBasePage<CreatePinBloc, PinState> {
   final String? username;
   final String? password;
   final passCodeWidgetKey = GlobalKey<PinCodeWidgetState>();
@@ -24,17 +19,17 @@ class CreatePinPage
   }) : super(key: key);
 
   @override
-  void listener(BuildContext context, CreatePinBlocState state) {
-      // TODO: 25.05.22
+  void listener(BuildContext context, PinState state) {
+    // TODO: 25.05.22
   }
 
   @override
-  AppBar? buildAppBar(BuildContext context, CreatePinBlocState state) {
+  AppBar? buildAppBar(BuildContext context, PinState state) {
     return AppBar();
   }
 
   @override
-  Widget buildBody(BuildContext context, CreatePinBlocState state) {
+  Widget buildBody(BuildContext context, PinState state) {
     final theme = Theme.of(context);
 
     return Column(
@@ -48,21 +43,18 @@ class CreatePinPage
                   passcodeLength: 4,
                   passwordEnteredCallback: (pinCode) =>
                       _passcodeEnteredCallback(context, pinCode),
-                  title: state is ErrorPinCodeState
-                      ? Text(
+                  title: Text(
                           'invalid code',
                           style: theme.textTheme.bodyText1?.copyWith(
                             color: theme.colorScheme.onError,
                           ),
-                        )
-                      : null,
+                        ),
                 ),
               ],
             ),
           ),
         ),
         TextButton(
-          key: const Key('skipPasscodeButton'),
           onPressed: () {
             context.router.push(const MainRoute());
           },
@@ -78,19 +70,22 @@ class CreatePinPage
     if (kDebugMode) {
       print('PASSCODE: $pinCode');
     }
-    BlocProvider.of<CreatePinBloc>(context).add(
-      CreatePinBlocEvent.createPinCode(
-        userCredentials: UserCredentials(
-          username: username!,
-          password: password!,
-        ),
-        pinCode: pinCode,
-      ),
-    );
+    context.read<CreatePinBloc>();
   }
 
   @override
   CreatePinBloc createBloc(BuildContext context) {
     return CreatePinBloc();
+  }
+}
+
+class HelloWidget extends StatelessWidget {
+  const HelloWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
   }
 }
