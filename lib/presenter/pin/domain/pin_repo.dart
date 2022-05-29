@@ -1,3 +1,7 @@
 abstract class PinRepo {
-  Future<bool> checkRegistrationPin();
+  Future<void> writePinStorage(String value);
+
+  Future<String?> readPinStorage();
+
+  Future<void> deletePinStorage();
 }

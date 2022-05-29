@@ -75,27 +75,34 @@ class PinCodeWidgetState extends State<PinCodeWidget>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    List<Widget> circles = _buildCircles(widget.passcodeLength);
+    const double spacing = 8;
+    final width = (widget.circleUIConfig.circleSize + spacing) * 4;
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: widget.title ??
-              Text(
-                'Hello',
-                style: theme.textTheme.bodyText1
-                    ?.copyWith(color: theme.colorScheme.onPrimary),
-              ),
-        ),
-        SizedBox(
-          height: 40,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildCircles(),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: widget.title ??
+                Text(
+                  'Hello',
+                  style: theme.textTheme.bodyText1
+                      ?.copyWith(color: theme.colorScheme.onPrimary),
+                ),
           ),
-        ),
-        _buildKeyboard(),
-      ],
+          SizedBox(
+            width: width,
+            child: Wrap(
+              spacing: spacing,
+              runSpacing: spacing,
+              alignment: WrapAlignment.center,
+              children: [...circles],
+            ),
+          ),
+          _buildKeyboard(),
+        ],
+      ),
     );
   }
 
@@ -106,19 +113,16 @@ class PinCodeWidgetState extends State<PinCodeWidget>
         bottomRightKey: _buildBackspaceKey(),
       );
 
-  List<Widget> _buildCircles() {
+  List<Widget> _buildCircles(int length) {
     var list = <Widget>[];
     var config = widget.circleUIConfig;
     var extraSize = animation.value;
-    for (var i = 0; i < widget.passcodeLength; i++) {
+    for (var i = 0; i < length; i++) {
       list.add(
-        Container(
-          margin: const EdgeInsets.all(8),
-          child: Circle(
-            filled: i < enteredPasscode.length,
-            circleUIConfig: config,
-            extraSize: extraSize,
-          ),
+        Circle(
+          filled: i < enteredPasscode.length,
+          circleUIConfig: config,
+          extraSize: extraSize,
         ),
       );
     }
@@ -154,6 +158,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
         enteredPasscode =
             enteredPasscode.substring(0, enteredPasscode.length - 1);
       });
+      widget.passwordEnteredCallback(enteredPasscode);
     }
   }
 
@@ -164,9 +169,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
     setState(() {
       enteredPasscode += text;
     });
-    if (enteredPasscode.length == widget.passcodeLength) {
-      widget.passwordEnteredCallback(enteredPasscode);
-    }
+    widget.passwordEnteredCallback(enteredPasscode);
   }
 
   @override

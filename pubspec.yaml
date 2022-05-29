@@ -28,6 +28,9 @@ dependencies:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
 
+  # secure_storage:
+  flutter_secure_storage: ^5.0.2
+
   # Back button interceptor:
   back_button_interceptor: ^6.0.0
 
@@ -40,7 +43,6 @@ dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
 
-  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

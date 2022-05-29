@@ -29,13 +29,17 @@ class Circle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: extraSize),
+    return SizedBox(
       width: circleUIConfig.circleSize,
       height: circleUIConfig.circleSize,
-      decoration: BoxDecoration(
-        color: filled ? circleUIConfig.filledColor : circleUIConfig.emptyColor,
-        shape: BoxShape.circle,
+      child: Container(
+        margin: EdgeInsets.only(bottom: extraSize),
+        decoration: BoxDecoration(
+          color:
+              filled ? circleUIConfig.filledColor : circleUIConfig.emptyColor,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black),
+        ),
       ),
     );
   }
