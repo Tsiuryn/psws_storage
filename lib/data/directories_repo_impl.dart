@@ -42,6 +42,6 @@ class DirectoriesRepoImpl implements DirectoriesRepo {
     return Hive.openBox(_idStorage);
   }
 
-  List<DirectoryModel> _getDirectories(Box<DirectoryBean> box) => box.values.map((e) => e.toDomain()).toList();
-
+  List<DirectoryModel> _getDirectories(Box<DirectoryBean> box) =>
+      box.values.map((e) => e.toDomain()).toList();
 }

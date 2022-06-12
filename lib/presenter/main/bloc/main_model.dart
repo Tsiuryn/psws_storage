@@ -22,17 +22,14 @@ class MainModel {
   }
 
   List<DirectoryModel> get sortedList {
-    if(directories.isEmpty){
+    if (directories.isEmpty) {
       return directories;
     }
 
     final folders = directories.where((element) => element.isFolder);
     final files = directories.where((element) => !element.isFolder);
 
-    return [
-      ...folders,
-      ...files
-    ];
+    return [...folders, ...files];
   }
 }
 

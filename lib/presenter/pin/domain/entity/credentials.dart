@@ -1,5 +1,4 @@
-
-class UserCredentials{
+class UserCredentials {
   final String username;
   final String password;
 

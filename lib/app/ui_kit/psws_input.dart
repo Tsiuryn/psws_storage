@@ -17,7 +17,8 @@ class PswsInput extends StatelessWidget {
     return TextFormField(
       autofocus: true,
       onChanged: onChanged,
-      decoration: InputDecoration(border: const OutlineInputBorder(), labelText: '$labelText name'),
+      decoration: InputDecoration(
+          border: const OutlineInputBorder(), labelText: '$labelText name'),
     );
   }
 }

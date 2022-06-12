@@ -5,26 +5,25 @@ import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/data/bean/directory_bean.dart';
 import 'app/router/app_router.dart';
 
-
-void main() async{
+void main() async {
   // init GetIt
   initDi();
   await _initHive();
   _initializedGetIt();
 }
 
-Future<void> _initHive() async{
+Future<void> _initHive() async {
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(DirectoryBeanAdapter());
   }
 }
 
-void _initializedGetIt(){
-  getIt
-      .allReady()
-      .whenComplete(() {
+void _initializedGetIt() {
+  getIt.allReady().whenComplete(() {
     final appRouter = AppRouter();
-        runApp(MyApp(appRouter: appRouter,));
+    runApp(MyApp(
+      appRouter: appRouter,
+    ));
   });
 }

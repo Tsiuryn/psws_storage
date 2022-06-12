@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-mixin PswsSnackBar{
-  void showRequestSnackBar(BuildContext context, {
+mixin PswsSnackBar {
+  void showRequestSnackBar(
+    BuildContext context, {
     required String message,
     required bool isSuccess,
   }) {
-    var mainColor = isSuccess ? const Color(0xFF5AA580) : const Color(0xFFDD6952);
+    var mainColor =
+        isSuccess ? const Color(0xFF5AA580) : const Color(0xFFDD6952);
     var mainIcon = isSuccess ? Icons.check : Icons.close;
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

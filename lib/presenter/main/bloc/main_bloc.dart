@@ -34,7 +34,8 @@ class MainBloc extends Cubit<MainModel> {
   }
 
   void addFile(String fileName) async {
-    final directories = await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
+    final directories =
+        await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
 
     emit(state.copyWith(
       directories: directories,
@@ -47,7 +48,9 @@ class MainBloc extends Cubit<MainModel> {
     ));
   }
 
-  DirectoryModel _getDirectory({bool isFolder = true, required String name, String content = ''}) => DirectoryModel(
+  DirectoryModel _getDirectory(
+          {bool isFolder = true, required String name, String content = ''}) =>
+      DirectoryModel(
         isFolder: isFolder,
         id: TimeUuidGenerator().generate().toString(),
         parentId: state.currentDirectory,
@@ -56,5 +59,3 @@ class MainBloc extends Cubit<MainModel> {
         content: content,
       );
 }
-
-

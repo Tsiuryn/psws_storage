@@ -15,9 +15,7 @@ class Environment {
     ThemeMode? themeType,
   }) {
     return Environment(
-      id: id ?? this.id,
-      themeType: themeType ?? this.themeType
-    );
+        id: id ?? this.id, themeType: themeType ?? this.themeType);
   }
 }
 

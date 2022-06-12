@@ -51,12 +51,12 @@ extension DirectoryBeanExt on DirectoryBean {
 
 extension DirectoryModelExt on DirectoryModel {
   DirectoryBean toBean() => DirectoryBean(
-    isFolder: isFolder,
-    id: id,
-    parentId: parentId,
-    createdDate: createdDate,
-    name: name,
-    content: content,
-    idHiveObject: idHiveObject,
-  );
+        isFolder: isFolder,
+        id: id,
+        parentId: parentId,
+        createdDate: createdDate,
+        name: name,
+        content: content,
+        idHiveObject: idHiveObject,
+      );
 }

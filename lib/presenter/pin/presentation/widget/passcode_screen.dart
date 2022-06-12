@@ -13,7 +13,7 @@ class PinCodeWidget extends StatefulWidget {
   final int passcodeLength;
   final PasswordEnteredCallback passwordEnteredCallback;
   final Widget? cancelButton;
-  final CancelCallback? cancelCallback;
+  final CancelCallback? confirmCallback;
   final Widget? title;
   final CircleUIConfig circleUIConfig;
   final KeyboardUIConfig keyboardUIConfig;
@@ -25,7 +25,7 @@ class PinCodeWidget extends StatefulWidget {
     this.cancelButton,
     CircleUIConfig? circleUIConfig,
     KeyboardUIConfig? keyboardUIConfig,
-    this.cancelCallback,
+    this.confirmCallback,
     this.title,
   })  : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
         keyboardUIConfig = keyboardUIConfig ?? const KeyboardUIConfig(),
@@ -77,7 +77,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
     final theme = Theme.of(context);
     List<Widget> circles = _buildCircles(widget.passcodeLength);
     const double spacing = 8;
-    final width = (widget.circleUIConfig.circleSize + spacing) * 4;
+    final width = (widget.circleUIConfig.circleSize + spacing) * 8;
 
     return SingleChildScrollView(
       child: Column(
@@ -131,9 +131,9 @@ class PinCodeWidgetState extends State<PinCodeWidget>
   }
 
   KeyboardKey? _buildCancelKey() {
-    return widget.cancelButton != null && widget.cancelCallback != null
+    return widget.cancelButton != null && widget.confirmCallback != null
         ? KeyboardKey(
-            onTap: widget.cancelCallback!,
+            onTap: widget.confirmCallback!,
             child: widget.cancelButton!,
           )
         : null;

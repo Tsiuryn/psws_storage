@@ -7,9 +7,7 @@ import 'package:psws_storage/presenter/main/bloc/main_model.dart';
 import 'package:psws_storage/presenter/main/widgets/item_widget.dart';
 import 'package:psws_storage/presenter/main/widgets/main_appbar.dart';
 
-class MainPage
-    extends StatelessBasePage<MainBloc, MainModel> {
-
+class MainPage extends StatelessBasePage<MainBloc, MainModel> {
   const MainPage({Key? key}) : super(key: key);
 
   @override
@@ -37,7 +35,7 @@ class MainPage
       itemBuilder: (context, index) => ItemWidget(
         id: index,
         model: listDirectories[index],
-        onDelete: (){
+        onDelete: () {
           bloc.deleteFile(listDirectories[index]);
         },
       ),

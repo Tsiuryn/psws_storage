@@ -1,4 +1,4 @@
-class AppDim{
+class AppDim {
   static const double two = 2;
   static const double four = 4;
   static const double eight = 8;

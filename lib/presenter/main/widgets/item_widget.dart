@@ -7,7 +7,9 @@ class ItemWidget extends StatelessWidget {
   final DirectoryModel model;
   final int id;
   final Function()? onDelete;
-  const ItemWidget({Key? key, required this.model, required this.id, this.onDelete}) : super(key: key);
+  const ItemWidget(
+      {Key? key, required this.model, required this.id, this.onDelete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,12 @@ class ItemWidget extends StatelessWidget {
           key: ValueKey(id),
           trailingActions: <SwipeAction>[
             SwipeAction(
-              ///this is the same as iOS native
-                icon: const Icon(Icons.delete, color: Colors.white,),
+
+                ///this is the same as iOS native
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
                 title: "Delete",
                 style: const TextStyle(fontSize: 14),
                 onTap: (CompletionHandler handler) async {
@@ -31,15 +37,31 @@ class ItemWidget extends StatelessWidget {
                 color: Colors.red),
           ],
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppDim.eight, vertical: AppDim.four,),
-            child: Row(children: [
-              Icon(model.isFolder ? folderIcon : fileIcon, size: AppDim.fourty,),
-              const SizedBox(width: AppDim.sixteen,),
-              Expanded(child: Text(model.name, overflow: TextOverflow.ellipsis,)),
-            ],),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDim.eight,
+              vertical: AppDim.four,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  model.isFolder ? folderIcon : fileIcon,
+                  size: AppDim.fourty,
+                ),
+                const SizedBox(
+                  width: AppDim.sixteen,
+                ),
+                Expanded(
+                    child: Text(
+                  model.name,
+                  overflow: TextOverflow.ellipsis,
+                )),
+              ],
+            ),
           ),
         ),
-        Divider(color: Theme.of(context).dividerColor,),
+        Divider(
+          color: Theme.of(context).dividerColor,
+        ),
       ],
     );
   }

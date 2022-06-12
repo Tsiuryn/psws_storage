@@ -7,26 +7,19 @@ part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
-    pages
-  ],
+  routes: <AutoRoute>[pages],
 )
 // extend the generated private router
-class AppRouter extends _$AppRouter{}
+class AppRouter extends _$AppRouter {}
 
-
-const pages = AutoRoute(
-  path: '/',
-  page: EmptyRouterPage,
-  children: [
-    AutoRoute(
-      path: 'credential',
+const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
+  AutoRoute(
+    path: 'credential',
     page: PinPage,
     initial: true,
   ),
-    AutoRoute(
-        path: 'home',
-        page: MainPage,
-    ),
-  ]
-);
+  AutoRoute(
+    path: 'home',
+    page: MainPage,
+  ),
+]);
