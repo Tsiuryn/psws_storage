@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:psws_storage/presenter/pin/domain/usecase/read_registration_pin_usecase.dart';
 import 'package:psws_storage/presenter/pin/domain/usecase/write_registration_pin_usecase.dart';
@@ -16,79 +19,97 @@ class PinBloc extends Cubit<PinState> {
     String? securePin = await readRegistrationPin();
 
     emit(state.copyWith(
-        state: securePin == null ? State.firstCreate : State.checkPassword));
+        state: securePin == null
+            ? PinFlowState.firstCreate
+            : PinFlowState.checkPassword));
   }
 
   Future<void> writePin(String value) async {
     switch (state.state) {
-      case State.firstCreate:
-      case State.unSuccessCreate:
+      case PinFlowState.firstCreate:
+      case PinFlowState.unSuccessCreate:
         {
-          return emit(
-              state.copyWith(firstPin: value, state: State.secondCreate));
+          return emit(state.copyWith(
+              firstPin: state.hashKey(value),
+              state: PinFlowState.secondCreate));
         }
-      case State.secondCreate:
+      case PinFlowState.secondCreate:
         {
-          if (state.firstPin == value) {
-            await writeRegistrationPin(value);
+          if (state.firstPin == state.hashKey(value)) {
+            await writeRegistrationPin(state.hashKey(value));
 
-            return emit(state.copyWith(state: State.success));
+            return emit(state.copyWith(state: PinFlowState.success));
           } else {
             return emit(state.clear(
-              state: State.unSuccessCreate,
+              state: PinFlowState.unSuccessCreate,
             ));
           }
         }
-      case State.checkPassword:
-      case State.unSuccessCheck:
+      case PinFlowState.checkPassword:
+      case PinFlowState.unSuccessCheck:
         {
-          if (value == await readRegistrationPin()) {
-           return emit(state.copyWith(state: State.success));
+          final String psw = await readRegistrationPin() ?? '';
+          if (state.hashKey(value) == psw) {
+            return emit(state.copyWith(state: PinFlowState.success));
           } else {
-           return  emit(state.copyWith(state: State.unSuccessCheck));
+            return emit(state.copyWith(state: PinFlowState.unSuccessCheck));
           }
         }
-      case State.unKnown:
-      case State.success:
+      case PinFlowState.success:
         {
-          return emit(state.copyWith(state: State.unKnown));
+          return emit(state.copyWith(state: PinFlowState.success));
         }
     }
+  }
+
+  Future<void> changeCurrentBackPressTime(DateTime currentBackPressTime) async {
+    return emit(state.copyWith(currentBackPressTime: currentBackPressTime));
   }
 }
 
 class PinState {
   final String? firstPin;
-  final State state;
+  final PinFlowState state;
+  final DateTime currentBackPressTime;
 
-  PinState({this.firstPin, this.state = State.unKnown});
+  PinState(
+      {this.firstPin,
+      this.state = PinFlowState.firstCreate,
+      DateTime? currentBackPressTime})
+      : currentBackPressTime = currentBackPressTime ?? DateTime(1980);
 
-  factory PinState.initial() => PinState();
+  factory PinState.initial() = PinState;
 
   PinState copyWith({
     String? firstPin,
-    State? state,
+    PinFlowState? state,
+    DateTime? currentBackPressTime,
   }) =>
       PinState(
         firstPin: firstPin ?? this.firstPin,
         state: state ?? this.state,
+        currentBackPressTime: currentBackPressTime ?? this.currentBackPressTime,
       );
 
   PinState clear({
-    required State state,
+    required PinFlowState state,
   }) =>
       PinState(
         firstPin: null,
         state: state,
       );
+
+  String hashKey(String value) {
+    var passwordHash = sha1.convert(utf8.encode(value));
+    return base64.encode(passwordHash.bytes);
+  }
 }
 
-enum State {
+enum PinFlowState {
   firstCreate,
   secondCreate,
   checkPassword,
   success,
   unSuccessCreate,
   unSuccessCheck,
-  unKnown,
 }

@@ -1,3 +1,10 @@
 {
-  "helloWorld": "Привет Мир"
+  "app_snack_exit": "Для выхода из приложения нажмите кнопку \"Назад\" еще раз",
+  "pin_page__title_first_create": "Введите новый пароль",
+  "pin_page__title_second_create": "Повторите пароль, пожалуйста",
+  "pin_page__title_check": "Введите пароль",
+  "pin_page__title_unsuccess": "Неудалось войти! Повторите пароль, пожалуйста",
+  "pin_page__title_snack_empty_psw": "Пароль не может быть пустым",
+  "pin_page__title_snack_psw_correct": "Поздравляем! Пароль правильный.",
+  "pin_page__title_snack_psw_not_correct": "Пароль не правильный! Повторите пожалуйста."
 }

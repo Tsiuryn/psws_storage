@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
         create: (context) => AppBloc(),
         child: BlocBuilder<AppBloc, Environment>(
           builder: (context, settings) {
+            final Locale locale = settings.appLocale == AppLocale.ru
+                ? const Locale('ru')
+                : const Locale('en');
             return MaterialApp.router(
               debugShowCheckedModeBanner: false,
               routerDelegate: appRouter.delegate(),
@@ -33,10 +36,11 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeMode.values
                   .firstWhere((element) => element == settings.themeType),
               theme: lightTheme(context),
+              locale: locale,
               darkTheme: darkTheme(context),
               supportedLocales: const [
                 Locale('en', ''), // English, no country code
-                Locale('ru', ''), // Spanish, no country code
+                Locale('ru', ''),
               ],
             );
           },

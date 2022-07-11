@@ -12,7 +12,7 @@ abstract class StatelessBasePage<B extends BlocBase<S>, S>
       create: createBloc,
       child: BlocConsumer<B, S>(
         listenWhen: listenWhen,
-        listener: onListenerState,
+        listener: onListener,
         buildWhen: buildWhen,
         builder: (context, state) {
           return PswsBackButtonListener(
@@ -38,7 +38,7 @@ abstract class StatelessBasePage<B extends BlocBase<S>, S>
     return true;
   }
 
-  void onListenerState(BuildContext context, S state) {}
+  void onListener(BuildContext context, S state) {}
 
   bool buildWhen(S previousState, S state) {
     return true;

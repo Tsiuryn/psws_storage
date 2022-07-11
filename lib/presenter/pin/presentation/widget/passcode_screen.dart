@@ -1,19 +1,20 @@
 library passcode_screen;
 
 import 'package:flutter/material.dart';
+import 'package:psws_storage/app/dimens/app_dim.dart';
 
 import 'circle.dart';
 import 'keyboard.dart';
 import 'shake_curve.dart';
 
 typedef PasswordEnteredCallback = void Function(String text);
-typedef CancelCallback = void Function();
+typedef ConfirmCallback = void Function();
 
 class PinCodeWidget extends StatefulWidget {
   final int passcodeLength;
   final PasswordEnteredCallback passwordEnteredCallback;
-  final Widget? cancelButton;
-  final CancelCallback? confirmCallback;
+  final Widget? confirmButton;
+  final ConfirmCallback? confirmCallback;
   final Widget? title;
   final CircleUIConfig circleUIConfig;
   final KeyboardUIConfig keyboardUIConfig;
@@ -22,13 +23,16 @@ class PinCodeWidget extends StatefulWidget {
     Key? key,
     required this.passcodeLength,
     required this.passwordEnteredCallback,
-    this.cancelButton,
+    this.confirmButton,
     CircleUIConfig? circleUIConfig,
     KeyboardUIConfig? keyboardUIConfig,
     this.confirmCallback,
     this.title,
-  })  : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
+  })
+      : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
         keyboardUIConfig = keyboardUIConfig ?? const KeyboardUIConfig(),
+        assert(confirmButton != null && confirmCallback != null ||
+            confirmButton == null && confirmCallback == null),
         super(key: key);
 
   @override
@@ -52,11 +56,6 @@ class PinCodeWidgetState extends State<PinCodeWidget>
     final Animation curve =
         CurvedAnimation(parent: controller, curve: ShakeCurve());
     animation = Tween(begin: 0.0, end: 10.0).animate(curve as Animation<double>)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _resetPasscode();
-        }
-      })
       ..addListener(() {
         // ignore: no-empty-block
         setState(() {
@@ -79,38 +78,46 @@ class PinCodeWidgetState extends State<PinCodeWidget>
     const double spacing = 8;
     final width = (widget.circleUIConfig.circleSize + spacing) * 8;
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+    return Column(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Align(
+            alignment: AlignmentDirectional.bottomCenter,
             child: widget.title ??
                 Text(
-                  'Hello',
+                  'PIN',
                   style: theme.textTheme.bodyText1
                       ?.copyWith(color: theme.colorScheme.onPrimary),
                 ),
           ),
-          SizedBox(
-            width: width,
-            child: Wrap(
-              spacing: spacing,
-              runSpacing: spacing,
-              alignment: WrapAlignment.center,
-              children: [...circles],
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: AppDim.twentyFour),
+            child: SizedBox(
+              width: width,
+              child: Center(
+                child: Wrap(
+                  spacing: spacing,
+                  runSpacing: spacing,
+                  alignment: WrapAlignment.center,
+                  children: [...circles],
+                ),
+              ),
             ),
           ),
-          _buildKeyboard(),
-        ],
-      ),
+        ),
+        _buildKeyboard(),
+      ],
     );
   }
 
   Widget _buildKeyboard() => Keyboard(
-        onKeyboardTap: _onKeyboardButtonPressed,
+    onKeyboardTap: _onKeyboardButtonPressed,
         keyboardUIConfig: widget.keyboardUIConfig,
-        bottomLeftKey: _buildCancelKey(),
-        bottomRightKey: _buildBackspaceKey(),
+        bottomLeftKey: _buildConfirmKey(),
+        bottomRightKey: _buildBackspaceKey(context),
       );
 
   List<Widget> _buildCircles(int length) {
@@ -130,19 +137,24 @@ class PinCodeWidgetState extends State<PinCodeWidget>
     return list;
   }
 
-  KeyboardKey? _buildCancelKey() {
-    return widget.cancelButton != null && widget.confirmCallback != null
+  KeyboardKey? _buildConfirmKey() {
+    final Widget? confirm = widget.confirmButton;
+    return confirm != null
         ? KeyboardKey(
-            onTap: widget.confirmCallback!,
-            child: widget.cancelButton!,
+            onTap: () {
+              widget.confirmCallback?.call();
+              _resetPasscode();
+            },
+            child: confirm,
           )
         : null;
   }
 
-  KeyboardKey _buildBackspaceKey() {
+  KeyboardKey _buildBackspaceKey(BuildContext context) {
     return KeyboardKey(
       onTap: _onBackspaceButtonPressed,
-      child: const Icon(Icons.backspace_outlined, color: Colors.grey),
+      child: Icon(Icons.backspace_outlined,
+          color: Theme.of(context).unselectedWidgetColor),
     );
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 typedef KeyboardTapCallback = void Function(String text);
 
-const _keyboardBottomPadding = 72.0;
+const _keyboardBottomPadding = 36.0;
 
 @immutable
 class KeyboardUIConfig {
@@ -79,7 +79,6 @@ class Keyboard extends StatelessWidget {
       width: keyboardSize.width,
       height: keyboardSize.height,
       margin: const EdgeInsets.only(
-        top: 16,
         bottom: _keyboardBottomPadding,
       ),
       child: AlignedGrid(
@@ -88,7 +87,7 @@ class Keyboard extends StatelessWidget {
           final item = keyboardItems[index];
 
           return item is String
-              ? _buildKeyboardDigit(item)
+              ? _buildKeyboardDigit(context: context, text: item)
               : item is KeyboardKey
                   ? _buildKeyboardKey(
                       child: item.child,
@@ -121,7 +120,10 @@ class Keyboard extends StatelessWidget {
     );
   }
 
-  Widget _buildKeyboardDigit(String text) {
+  Widget _buildKeyboardDigit({
+    required BuildContext context,
+    required String text,
+  }) {
     return _buildKeyboardKey(
       key: Key(text),
       child: Container(
@@ -132,7 +134,8 @@ class Keyboard extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: keyboardUIConfig.digitTextStyle,
+            style:
+                Theme.of(context).textTheme.headline6?.copyWith(fontSize: 30),
             semanticsLabel: text,
           ),
         ),

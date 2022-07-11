@@ -6,11 +6,13 @@ class CircleUIConfig {
 
   final Color filledColor;
   final Color emptyColor;
+  final Color borderColor;
   final double circleSize;
 
   const CircleUIConfig({
-    this.filledColor = Colors.blue,
-    this.emptyColor = Colors.grey,
+    this.filledColor = Colors.white,
+    this.emptyColor = Colors.transparent,
+    this.borderColor = Colors.black,
     this.circleSize = _defaultCircleSize,
   });
 }
@@ -38,7 +40,11 @@ class Circle extends StatelessWidget {
           color:
               filled ? circleUIConfig.filledColor : circleUIConfig.emptyColor,
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.black),
+          border: Border.all(
+            color: filled
+                ? circleUIConfig.filledColor
+                : circleUIConfig.borderColor,
+          ),
         ),
       ),
     );
