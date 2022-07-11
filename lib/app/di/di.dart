@@ -4,7 +4,9 @@ import 'package:psws_storage/data/directories_repo_impl.dart';
 import 'package:psws_storage/domain/repo/directories_repo.dart';
 import 'package:psws_storage/domain/usecase/add_file_usecase.dart';
 import 'package:psws_storage/domain/usecase/delete_directory_usecase.dart';
+import 'package:psws_storage/domain/usecase/delete_list_directories_usecase.dart';
 import 'package:psws_storage/domain/usecase/get_list_directories_usecase.dart';
+import 'package:psws_storage/domain/usecase/update_directory_usecase.dart';
 import 'package:psws_storage/presenter/main/bloc/main_bloc.dart';
 import 'package:psws_storage/presenter/pin/data/pin_repo_impl.dart';
 import 'package:psws_storage/presenter/pin/domain/pin_repo.dart';
@@ -33,6 +35,10 @@ void initDi() {
       () => GetListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
   getIt.registerFactory<DeleteDirectoryUseCase>(
       () => DeleteDirectoryUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<DeleteListDirectoriesUseCase>(
+      () => DeleteListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<UpdateDirectoryUseCase>(
+      () => UpdateDirectoryUseCase(getIt.get<DirectoriesRepo>()));
 
   getIt.registerFactory<ReadRegistrationPinUseCase>(
       () => ReadRegistrationPinUseCase(getIt.get<PinRepo>()));
@@ -44,6 +50,7 @@ void initDi() {
         addFileUseCase: getIt.get<AddFileUseCase>(),
         getListDirectoriesUseCase: getIt.get<GetListDirectoriesUseCase>(),
         deleteDirectoryUseCase: getIt.get<DeleteDirectoryUseCase>(),
+        deleteListDirectories: getIt.get<DeleteListDirectoriesUseCase>(),
       ));
 
   getIt.registerFactory<PinBloc>(() => PinBloc(

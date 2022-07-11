@@ -6,4 +6,8 @@ abstract class DirectoriesRepo {
   Future<List<DirectoryModel>> getDirectories();
 
   Future<List<DirectoryModel>> deleteDirectory(DirectoryModel model);
+
+  Future<List<DirectoryModel>> deleteDirectories(Iterable<int> keys);
+
+  Future<List<DirectoryModel>> updateDirectory({required int key, required DirectoryModel value});
 }

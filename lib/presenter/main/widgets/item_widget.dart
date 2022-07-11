@@ -7,8 +7,9 @@ class ItemWidget extends StatelessWidget {
   final DirectoryModel model;
   final int id;
   final Function()? onDelete;
+  final Function() onTap;
   const ItemWidget(
-      {Key? key, required this.model, required this.id, this.onDelete})
+      {Key? key, required this.model, required this.onTap, required this.id, this.onDelete})
       : super(key: key);
 
   @override
@@ -22,8 +23,6 @@ class ItemWidget extends StatelessWidget {
           key: ValueKey(id),
           trailingActions: <SwipeAction>[
             SwipeAction(
-
-                ///this is the same as iOS native
                 icon: const Icon(
                   Icons.delete,
                   color: Colors.white,
@@ -36,26 +35,29 @@ class ItemWidget extends StatelessWidget {
                 },
                 color: Colors.red),
           ],
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDim.eight,
-              vertical: AppDim.four,
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  model.isFolder ? folderIcon : fileIcon,
-                  size: AppDim.fourty,
-                ),
-                const SizedBox(
-                  width: AppDim.sixteen,
-                ),
-                Expanded(
-                    child: Text(
-                  model.name,
-                  overflow: TextOverflow.ellipsis,
-                )),
-              ],
+          child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDim.eight,
+                vertical: AppDim.four,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    model.isFolder ? folderIcon : fileIcon,
+                    size: AppDim.fourty,
+                  ),
+                  const SizedBox(
+                    width: AppDim.sixteen,
+                  ),
+                  Expanded(
+                      child: Text(
+                    model.name,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+                ],
+              ),
             ),
           ),
         ),

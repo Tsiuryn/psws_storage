@@ -1,24 +1,40 @@
 import 'package:psws_storage/domain/model/directory_model.dart';
 import 'package:psws_storage/presenter/main/const/constants.dart';
 
-class MainModel {
-  final String currentDirectory;
+class MainModelState {
+  final String parentId;
   final List<DirectoryModel> directories;
+  final DateTime currentBackPressTime;
 
-  MainModel({required this.currentDirectory, required this.directories});
+  MainModelState({
+    required this.directories,
+    required this.currentBackPressTime,
+    required this.parentId,
+  });
 
-  MainModel.empty()
-      : currentDirectory = rootDirectory,
+  MainModelState.empty()
+      : parentId = rootDirectory,
+        currentBackPressTime = DateTime(1980),
         directories = [];
 
-  MainModel copyWith({
-    String? currentDirectory,
+  MainModelState copyWith({
+    String? parentId,
     List<DirectoryModel>? directories,
+    DateTime? currentBackPressTime,
   }) {
-    return MainModel(
-      currentDirectory: currentDirectory ?? this.currentDirectory,
+    return MainModelState(
+      parentId: parentId ?? this.parentId,
+      currentBackPressTime: currentBackPressTime ?? this.currentBackPressTime,
       directories: directories ?? this.directories,
     );
+  }
+
+  List<DirectoryModel> getChildren(String parentId) {
+    return directories
+        .where(
+          (element) => element.parentId == parentId,
+        )
+        .toList();
   }
 
   List<DirectoryModel> get sortedList {
@@ -26,11 +42,14 @@ class MainModel {
       return directories;
     }
 
-    final folders = directories.where((element) => element.isFolder);
-    final files = directories.where((element) => !element.isFolder);
+    final List<DirectoryModel> sortedDirectory = getChildren(parentId);
 
-    return [...folders, ...files];
+    final folders = sortedDirectory.where((element) => element.isFolder);
+    final files = sortedDirectory.where((element) => !element.isFolder);
+
+    return [
+      ...folders,
+      ...files,
+    ];
   }
 }
-
-enum ThemeType { light, dark }
