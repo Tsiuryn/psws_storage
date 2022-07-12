@@ -5,7 +5,7 @@ class DirectoryModel {
   final DateTime createdDate;
   final String name;
   final String content;
-  final int? idHiveObject;
+  final int idHiveObject;
 
   DirectoryModel({
     required this.isFolder,
@@ -14,7 +14,7 @@ class DirectoryModel {
     required this.createdDate,
     required this.name,
     required this.content,
-    this.idHiveObject,
+    required this.idHiveObject,
   });
 
   DirectoryModel copyWith({

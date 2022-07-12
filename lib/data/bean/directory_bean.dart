@@ -45,7 +45,7 @@ extension DirectoryBeanExt on DirectoryBean {
         createdDate: createdDate,
         name: name,
         content: content,
-        idHiveObject: idHiveObject,
+        idHiveObject: idHiveObject ?? -1,
       );
 }
 

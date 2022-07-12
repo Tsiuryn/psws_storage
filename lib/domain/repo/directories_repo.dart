@@ -9,5 +9,7 @@ abstract class DirectoriesRepo {
 
   Future<List<DirectoryModel>> deleteDirectories(Iterable<int> keys);
 
-  Future<List<DirectoryModel>> updateDirectory({required int key, required DirectoryModel value});
+  Future<List<DirectoryModel>> updateDirectory(DirectoryModel value);
+
+  Future<DirectoryModel?> getDirectory(int idHiveObject);
 }

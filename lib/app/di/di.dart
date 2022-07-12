@@ -5,9 +5,11 @@ import 'package:psws_storage/domain/repo/directories_repo.dart';
 import 'package:psws_storage/domain/usecase/add_file_usecase.dart';
 import 'package:psws_storage/domain/usecase/delete_directory_usecase.dart';
 import 'package:psws_storage/domain/usecase/delete_list_directories_usecase.dart';
+import 'package:psws_storage/domain/usecase/get_directory_usecase.dart';
 import 'package:psws_storage/domain/usecase/get_list_directories_usecase.dart';
 import 'package:psws_storage/domain/usecase/update_directory_usecase.dart';
 import 'package:psws_storage/presenter/main/bloc/main_bloc.dart';
+import 'package:psws_storage/presenter/notes/bloc/edit_notes_bloc.dart';
 import 'package:psws_storage/presenter/pin/data/pin_repo_impl.dart';
 import 'package:psws_storage/presenter/pin/domain/pin_repo.dart';
 import 'package:psws_storage/presenter/pin/domain/usecase/read_registration_pin_usecase.dart';
@@ -33,6 +35,8 @@ void initDi() {
       () => AddFileUseCase(getIt.get<DirectoriesRepo>()));
   getIt.registerFactory<GetListDirectoriesUseCase>(
       () => GetListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<GetDirectoryUseCase>(
+      () => GetDirectoryUseCase(getIt.get<DirectoriesRepo>()));
   getIt.registerFactory<DeleteDirectoryUseCase>(
       () => DeleteDirectoryUseCase(getIt.get<DirectoriesRepo>()));
   getIt.registerFactory<DeleteListDirectoriesUseCase>(
@@ -46,14 +50,22 @@ void initDi() {
       () => WriteRegistrationPinUseCase(getIt.get<PinRepo>()));
 
   //Bloc
-  getIt.registerFactory<MainBloc>(() => MainBloc(
+  getIt.registerFactory<MainBloc>(() =>
+      MainBloc(
         addFileUseCase: getIt.get<AddFileUseCase>(),
         getListDirectoriesUseCase: getIt.get<GetListDirectoriesUseCase>(),
         deleteDirectoryUseCase: getIt.get<DeleteDirectoryUseCase>(),
         deleteListDirectories: getIt.get<DeleteListDirectoriesUseCase>(),
       ));
 
-  getIt.registerFactory<PinBloc>(() => PinBloc(
+  getIt.registerFactory(() =>
+      EditNotesBloc(
+        updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
+        getDirectory: getIt.get<GetDirectoryUseCase>(),
+      ));
+
+  getIt.registerFactory<PinBloc>(() =>
+      PinBloc(
         readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
         writeRegistrationPin: getIt.get<WriteRegistrationPinUseCase>(),
       ));

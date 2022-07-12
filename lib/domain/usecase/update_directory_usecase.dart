@@ -7,8 +7,6 @@ class UpdateDirectoryUseCase {
   UpdateDirectoryUseCase(this.directoriesRepo);
 
   Future<List<DirectoryModel>> call(DirectoryModel model) {
-    final int key = model.idHiveObject ?? 0;
-
-    return directoriesRepo.updateDirectory(key: key, value: model);
+    return directoriesRepo.updateDirectory(model);
   }
 }

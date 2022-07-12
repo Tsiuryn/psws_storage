@@ -54,15 +54,24 @@ class DirectoriesRepoImpl implements DirectoriesRepo {
 
     return updatedListDirectory;
   }
-  
+
   @override
-  Future<List<DirectoryModel>> updateDirectory({required int key, required DirectoryModel value}) async{
+  Future<List<DirectoryModel>> updateDirectory(DirectoryModel value) async {
     final box = await _openBox();
     DirectoryBean data = value.toBean();
-    await box.put(key, data);
+    await box.put(value.idHiveObject, data);
     final updatedListDirectory = _getDirectories(box);
     await box.close();
 
     return updatedListDirectory;
+  }
+
+  @override
+  Future<DirectoryModel?> getDirectory(int idHiveObject) async {
+    final box = await _openBox();
+    final DirectoryBean? bean = box.get(idHiveObject);
+    await box.close();
+
+    return bean?.toDomain();
   }
 }

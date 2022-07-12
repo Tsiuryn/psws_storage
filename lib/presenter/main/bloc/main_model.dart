@@ -52,4 +52,25 @@ class MainModelState {
       ...files,
     ];
   }
+
+  List<DirectoryModel> getListAttachedFiles(String parentId) {
+    List<DirectoryModel> _getSubFolders(List<DirectoryModel> input) {
+      final List<DirectoryModel> subFolders = [];
+      for (final element in input) {
+        final listChildren = getChildren(element.id);
+        if (listChildren.isEmpty) {
+          subFolders.add(element);
+        } else {
+          subFolders.add(element);
+          subFolders.addAll(_getSubFolders(listChildren));
+        }
+      }
+
+      return subFolders;
+    }
+
+    final List<DirectoryModel> childrenFolders = getChildren(parentId);
+
+    return _getSubFolders(childrenFolders);
+  }
 }
