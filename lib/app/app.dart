@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/app_bloc/environment.dart';
+import 'package:psws_storage/app/di/di.dart';
 
 import 'router/app_router.dart';
 import 'theme/dark_theme.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AppBloc(),
+        create: (context) => getIt.get<AppBloc>(),
         child: BlocBuilder<AppBloc, Environment>(
           builder: (context, settings) {
             final Locale locale = settings.appLocale == AppLocale.ru
@@ -33,8 +34,9 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              themeMode: ThemeMode.values
-                  .firstWhere((element) => element == settings.themeType),
+              themeMode: settings.themeType == ThemeType.light
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
               theme: lightTheme(context),
               locale: locale,
               darkTheme: darkTheme(context),

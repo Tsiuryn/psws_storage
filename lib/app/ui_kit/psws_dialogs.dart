@@ -26,15 +26,57 @@ mixin PswsDialogs {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              ),
             ),
             TextButton(
                 onPressed: () {
                   value(fileName);
                   Navigator.pop(context);
                 },
-                child: const Text(
+                child: Text(
                   'Ok',
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                ))
+          ],
+        );
+      },
+    );
+  }
+
+  void createOkDialog(
+    BuildContext context, {
+    required String title,
+    required String message,
+    required VoidCallback tapOk,
+    required VoidCallback tapNo,
+  }) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                tapNo();
+                Navigator.pop(context);
+              },
+              child: Text(
+                'NO',
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              ),
+            ),
+            TextButton(
+                onPressed: () {
+                  tapOk();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'YES',
                   style: TextStyle(color: Colors.blue),
                 ))
           ],

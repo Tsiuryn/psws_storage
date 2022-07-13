@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/data/directories_repo_impl.dart';
 import 'package:psws_storage/domain/repo/directories_repo.dart';
 import 'package:psws_storage/domain/usecase/add_file_usecase.dart';
@@ -50,16 +51,16 @@ void initDi() {
       () => WriteRegistrationPinUseCase(getIt.get<PinRepo>()));
 
   //Bloc
-  getIt.registerFactory<MainBloc>(() =>
-      MainBloc(
+  getIt.registerSingleton<AppBloc>(AppBloc());
+
+  getIt.registerFactory<MainBloc>(() => MainBloc(
         addFileUseCase: getIt.get<AddFileUseCase>(),
         getListDirectoriesUseCase: getIt.get<GetListDirectoriesUseCase>(),
         deleteDirectoryUseCase: getIt.get<DeleteDirectoryUseCase>(),
         deleteListDirectories: getIt.get<DeleteListDirectoriesUseCase>(),
       ));
 
-  getIt.registerFactory(() =>
-      EditNotesBloc(
+  getIt.registerFactory(() => EditNotesBloc(
         updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
         getDirectory: getIt.get<GetDirectoryUseCase>(),
       ));

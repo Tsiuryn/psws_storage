@@ -16,7 +16,7 @@ abstract class StatelessBasePage<B extends BlocBase<S>, S>
         buildWhen: buildWhen,
         builder: (context, state) {
           return PswsBackButtonListener(
-            context: context,
+            context,
             backPressed: () {
               return onBackButtonPressed(context, state);
             },

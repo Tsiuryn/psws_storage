@@ -17,13 +17,6 @@ class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
   }
 
   @override
-  PreferredSizeWidget? buildAppBar(
-          BuildContext context, EditNotesModel state) =>
-      AppBar(
-        title: Text('EditNotesPage'),
-      );
-
-  @override
   Widget buildBody(BuildContext context, EditNotesModel state) {
     final DirectoryModel? note = state.note;
     return note == null

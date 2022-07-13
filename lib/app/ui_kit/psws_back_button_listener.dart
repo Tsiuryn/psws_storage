@@ -16,9 +16,10 @@ class PswsBackButtonListener extends StatefulWidget {
   ///
   final bool Function() backPressed;
   final Widget child;
-  const PswsBackButtonListener({
+
+  const PswsBackButtonListener(
+    this.context, {
     Key? key,
-    required this.context,
     required this.backPressed,
     required this.child,
   }) : super(key: key);

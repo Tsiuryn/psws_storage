@@ -1,10 +1,17 @@
 {
   "app_snack_exit": "To exit the application, press the \"Back\" button again",
+  "main_appbar_dialog_folder": "Enter folder name",
+  "main_appbar_dialog_note": "Enter file name",
+  "main_appbar_bottom_theme": "Choose a color scheme: ",
+  "main_appbar_bottom_locale": "Select application language:",
   "pin_page__title_first_create": "Enter a new password",
   "pin_page__title_second_create": "Repeat password please",
   "pin_page__title_check": "enter password",
   "pin_page__title_unsuccess": "Failed entered! Repeat password please",
   "pin_page__title_snack_empty_psw": "Password can't be empty",
-  "pin_page__title_snack_psw_correct": "Congratulations! Password is correct.",
-  "pin_page__title_snack_psw_not_correct": "Password is not correct! Repeat please."
+  "pin_page__title_snack_psw_correct": "Authorization was successful!",
+  "pin_page__title_snack_psw_not_correct": "Password is not correct! Repeat please.",
+  "edit_notes_page__subtitle": "Created:",
+  "edit_notes_page__dialog_title": "Do you want to save changes?",
+  "edit_notes_page__dialog_subTitle": "Pressing \"NO\" will not save your changes."
 }

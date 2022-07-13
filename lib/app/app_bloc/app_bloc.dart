@@ -7,4 +7,12 @@ class AppBloc extends Cubit<Environment> {
   void init() {
     emit(state);
   }
+
+  void changeLocale(AppLocale locale) {
+    emit(state.copyWith(appLocale: locale));
+  }
+
+  void changeTheme(ThemeType theme) {
+    emit(state.copyWith(themeType: theme));
+  }
 }

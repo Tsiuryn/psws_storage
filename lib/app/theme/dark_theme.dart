@@ -7,7 +7,10 @@ ThemeData darkTheme(BuildContext context) {
       backgroundColor: Colors.black54,
       titleTextStyle: Theme.of(context).textTheme.headline6,
     ),
-    iconTheme: const IconThemeData(size: 24.0, color: Colors.yellow),
+    iconTheme: const IconThemeData(
+      size: 24.0,
+      color: Colors.yellow,
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       unselectedItemColor: Color(0xFF91969E),
       selectedItemColor: Color(0xFFF2F3F5),
@@ -16,15 +19,6 @@ ThemeData darkTheme(BuildContext context) {
     ),
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: Colors.black,
-    ),
-    textTheme: const TextTheme(
-      headline6: TextStyle(
-        fontSize: 20,
-        height: 1.5,
-        color: Color(0xFFF2F3F5),
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0.15,
-      ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
@@ -49,16 +43,16 @@ ThemeData darkTheme(BuildContext context) {
     ),
     colorScheme: const ColorScheme.dark().copyWith(
       secondary: const Color(0xFF538BEF),
-      primary: const Color(0xFF3C71CD),
-      onPrimary: const Color(0xFF8B8E94),
-      onSecondary: const Color(0xFF101112),
-      onBackground: const Color(0xFF212325),
-    ),
+        primary: const Color(0xFF3C71CD),
+        onPrimary: const Color(0xFF8B8E94),
+        onSecondary: const Color(0xFF101112),
+        onBackground: const Color(0xFF212325),
+        surface: Colors.red),
     backgroundColor: const Color(0xFF303847),
     primaryColor: const Color(0xFF212325),
     unselectedWidgetColor: const Color(0xFF6C6D70),
     primaryColorLight: const Color(0xFF262F40),
-    primaryColorDark: const Color(0xFFF2F3F5),
+    primaryColorDark: const Color(0xFFFFFFFF),
     indicatorColor: const Color(0xFFC4C4C4),
     hintColor: const Color(0xFF91969E),
   );

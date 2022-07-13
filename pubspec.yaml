@@ -28,6 +28,8 @@ dependencies:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
 
+  flutter_quill: ^5.0.4
+
   # secure_storage:
   flutter_secure_storage: ^5.0.2
 
