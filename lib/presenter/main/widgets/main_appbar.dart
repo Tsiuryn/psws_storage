@@ -79,7 +79,7 @@ class MainAppBar extends StatelessWidget
         backgroundColor: Colors.transparent,
         builder: (context) {
           return Container(
-            height: 250,
+            height: 300,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(AppDim.sixteen),
