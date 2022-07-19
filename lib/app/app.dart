@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
-import 'package:psws_storage/app/app_bloc/environment.dart';
 import 'package:psws_storage/app/di/di.dart';
+import 'package:psws_storage/app/domain/entity/environment.dart';
 
 import 'router/app_router.dart';
 import 'theme/dark_theme.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => getIt.get<AppBloc>(),
+        create: (context) => getIt.get<AppBloc>()..init(),
         child: BlocBuilder<AppBloc, Environment>(
           builder: (context, settings) {
             final Locale locale = settings.appLocale == AppLocale.ru

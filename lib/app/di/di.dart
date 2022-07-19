@@ -1,6 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
+import 'package:psws_storage/app/data/settings_gateway_impl.dart';
+import 'package:psws_storage/app/domain/settings_gateway.dart';
+import 'package:psws_storage/app/domain/usecase/get_environment_usecase.dart';
+import 'package:psws_storage/app/domain/usecase/save_environment.dart';
 import 'package:psws_storage/editor/data/directories_repo_impl.dart';
 import 'package:psws_storage/editor/domain/repo/directories_repo.dart';
 import 'package:psws_storage/editor/domain/usecase/add_file_usecase.dart';
@@ -30,8 +34,15 @@ void initDi() {
   getIt.registerSingleton<DirectoriesRepo>(DirectoriesRepoImpl());
   getIt.registerSingleton<PinRepo>(PinRepoImpl(
       getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
+  getIt.registerSingleton<SettingsGateway>(SettingsGatewayImpl(
+      getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
 
   //UseCase
+  getIt.registerFactory<GetEnvironmentUseCase>(
+      () => GetEnvironmentUseCase(getIt.get<SettingsGateway>()));
+  getIt.registerFactory<SaveEnvironmentUseCase>(
+      () => SaveEnvironmentUseCase(getIt.get<SettingsGateway>()));
+
   getIt.registerFactory<AddFileUseCase>(
       () => AddFileUseCase(getIt.get<DirectoriesRepo>()));
   getIt.registerFactory<GetListDirectoriesUseCase>(
@@ -43,24 +54,29 @@ void initDi() {
   getIt.registerFactory<DeleteListDirectoriesUseCase>(
       () => DeleteListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
   getIt.registerFactory<UpdateDirectoryUseCase>(
-      () => UpdateDirectoryUseCase(getIt.get<DirectoriesRepo>()));
+          () => UpdateDirectoryUseCase(getIt.get<DirectoriesRepo>()));
 
   getIt.registerFactory<ReadRegistrationPinUseCase>(
-      () => ReadRegistrationPinUseCase(getIt.get<PinRepo>()));
+          () => ReadRegistrationPinUseCase(getIt.get<PinRepo>()));
   getIt.registerFactory<WriteRegistrationPinUseCase>(
-      () => WriteRegistrationPinUseCase(getIt.get<PinRepo>()));
+          () => WriteRegistrationPinUseCase(getIt.get<PinRepo>()));
 
   //Bloc
-  getIt.registerSingleton<AppBloc>(AppBloc());
+  getIt.registerSingleton<AppBloc>(AppBloc(
+    getEnvironment: getIt.get<GetEnvironmentUseCase>(),
+    saveEnvironment: getIt.get<SaveEnvironmentUseCase>(),
+  ));
 
-  getIt.registerFactory<MainBloc>(() => MainBloc(
+  getIt.registerFactory<MainBloc>(() =>
+      MainBloc(
         addFileUseCase: getIt.get<AddFileUseCase>(),
         getListDirectoriesUseCase: getIt.get<GetListDirectoriesUseCase>(),
         deleteDirectoryUseCase: getIt.get<DeleteDirectoryUseCase>(),
         deleteListDirectories: getIt.get<DeleteListDirectoriesUseCase>(),
       ));
 
-  getIt.registerFactory(() => EditNotesBloc(
+  getIt.registerFactory(() =>
+      EditNotesBloc(
         updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
         getDirectory: getIt.get<GetDirectoryUseCase>(),
       ));

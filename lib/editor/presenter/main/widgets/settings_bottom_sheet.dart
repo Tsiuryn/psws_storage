@@ -3,31 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
-import 'package:psws_storage/app/app_bloc/environment.dart';
+import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/domain/entity/environment.dart';
 
-class SettingsBottomSheet extends StatefulWidget {
-  final Environment state;
-
-  const SettingsBottomSheet({
-    Key? key,
-    required this.state,
-  }) : super(key: key);
-
-  @override
-  State<SettingsBottomSheet> createState() => _SettingsBottomSheetState();
-}
-
-class _SettingsBottomSheetState extends State<SettingsBottomSheet> {
-  late ThemeType currentTheme;
-  late AppLocale currentLocale;
-
-  @override
-  void initState() {
-    super.initState();
-    currentLocale = widget.state.appLocale;
-    currentTheme = widget.state.themeType;
-  }
+class SettingsBottomSheet extends StatelessWidget {
+  const SettingsBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,73 +16,75 @@ class _SettingsBottomSheetState extends State<SettingsBottomSheet> {
     final titleTheme = l10n?.main_appbar_bottom_theme ?? '';
     final titleLocale = l10n?.main_appbar_bottom_locale ?? '';
 
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(AppDim.sixteen),
-            topRight: Radius.circular(AppDim.sixteen),
-          ),
-          color: Theme.of(context).primaryColor),
-      child: Padding(
-        padding: const EdgeInsets.all(AppDim.sixteen),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              titleTheme,
-              style: const TextStyle(
-                fontSize: AppDim.twentyFour,
-                fontWeight: FontWeight.w700,
+    return BlocBuilder<AppBloc, Environment>(
+        bloc: getIt.get<AppBloc>(),
+        builder: (context, environment) {
+          return Container(
+            height: 300,
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(AppDim.sixteen),
+                  topRight: Radius.circular(AppDim.sixteen),
+                ),
+                color: Theme.of(context).primaryColor),
+            child: Padding(
+              padding: const EdgeInsets.all(AppDim.sixteen),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    titleTheme,
+                    style: const TextStyle(
+                      fontSize: AppDim.twentyFour,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppDim.sixteen,
+                  ),
+                  CupertinoSlidingSegmentedControl<ThemeType>(
+                    children: ThemeTypeExt.toMap(context),
+                    groupValue: environment.themeType == ThemeType.dark
+                        ? ThemeType.dark
+                        : ThemeType.light,
+                    onValueChanged: (newValue) {
+                      if (newValue != null) {
+                        context.read<AppBloc>().changeTheme(newValue);
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: AppDim.fourty,
+                  ),
+                  Text(
+                    titleLocale,
+                    style: const TextStyle(
+                      fontSize: AppDim.twentyFour,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppDim.sixteen,
+                  ),
+                  CupertinoSlidingSegmentedControl<AppLocale>(
+                    children: AppLocaleExt.toMap(context),
+                    groupValue: environment.appLocale == AppLocale.ru
+                        ? AppLocale.ru
+                        : AppLocale.en,
+                    onValueChanged: (newValue) {
+                      if (newValue != null) {
+                        //   setState(() {
+                        //     currentLocale = newValue;
+                        //   });
+                        context.read<AppBloc>().changeLocale(newValue);
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-              height: AppDim.sixteen,
-            ),
-            CupertinoSlidingSegmentedControl<ThemeType>(
-              children: ThemeTypeExt.toMap(context),
-              groupValue: currentTheme == ThemeType.dark
-                  ? ThemeType.dark
-                  : ThemeType.light,
-              onValueChanged: (newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    currentTheme = newValue;
-                  });
-                  context.read<AppBloc>().changeTheme(newValue);
-                }
-              },
-            ),
-            const SizedBox(
-              height: AppDim.fourty,
-            ),
-            Text(
-              titleLocale,
-              style: const TextStyle(
-                fontSize: AppDim.twentyFour,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(
-              height: AppDim.sixteen,
-            ),
-            CupertinoSlidingSegmentedControl<AppLocale>(
-              children: AppLocaleExt.toMap(context),
-              groupValue:
-                  currentLocale == AppLocale.ru ? AppLocale.ru : AppLocale.en,
-              onValueChanged: (newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    currentLocale = newValue;
-                  });
-                  context.read<AppBloc>().changeLocale(newValue);
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }
 
