@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PswsInput extends StatelessWidget {
   final bool isFolder;
@@ -12,13 +13,24 @@ class PswsInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelText = isFolder ? 'Folder' : 'File';
+    final l10n = AppLocalizations.of(context)!;
+    final placeholder = isFolder
+        ? l10n.common_dialog_placeholder_folder
+        : l10n.common_dialog_placeholder_file;
 
-    return TextFormField(
-      autofocus: true,
-      onChanged: onChanged,
-      decoration: InputDecoration(
-          border: const OutlineInputBorder(), labelText: '$labelText name'),
+    return Form(
+      autovalidateMode: AutovalidateMode.always,
+      child: TextFormField(
+        autofocus: true,
+        onChanged: onChanged,
+        validator: (value) {
+          if ((value ?? '').isEmpty) {
+            return AppLocalizations.of(context)!.common_dialog_error;
+          }
+        },
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(), labelText: placeholder),
+      ),
     );
   }
 }

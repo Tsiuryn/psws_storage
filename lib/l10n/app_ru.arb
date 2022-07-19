@@ -13,5 +13,12 @@
   "pin_page__title_snack_psw_not_correct": "Пароль не правильный! Повторите пожалуйста.",
   "edit_notes_page__subtitle": "Создано:",
   "edit_notes_page__dialog_title": "Вы хотите сохранить изменения ?",
-  "edit_notes_page__dialog_subTitle": "При нажатии \"NO\" ваши изменения не сохранятся"
+  "edit_notes_page__dialog_subTitle": "При нажатии \"Нет\" ваши изменения не сохранятся",
+  "common_dialog_cancel": "Отменить",
+  "common_dialog_ok": "OK",
+  "common_dialog_no": "Нет",
+  "common_dialog_yes": "Да",
+  "common_dialog_error": "Поле не может быть пустым",
+  "common_dialog_placeholder_folder": "Название папки",
+  "common_dialog_placeholder_file": "Название файла"
 }

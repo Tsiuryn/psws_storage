@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/ui_kit/psws_input.dart';
 
 mixin PswsDialogs {
@@ -9,6 +10,7 @@ mixin PswsDialogs {
     required Function(String) value,
   }) {
     String fileName = '';
+    final l10n = AppLocalizations.of(context)!;
 
     showDialog<String>(
       context: context,
@@ -27,17 +29,20 @@ mixin PswsDialogs {
                 Navigator.pop(context);
               },
               child: Text(
-                'Cancel',
+                l10n.common_dialog_cancel,
                 style: TextStyle(color: Theme.of(context).primaryColorDark),
               ),
             ),
             TextButton(
                 onPressed: () {
+                  if (fileName.isEmpty) {
+                    return;
+                  }
                   value(fileName);
                   Navigator.pop(context);
                 },
                 child: Text(
-                  'Ok',
+                  l10n.common_dialog_ok,
                   style: TextStyle(color: Theme.of(context).primaryColorDark),
                 ))
           ],
@@ -53,6 +58,8 @@ mixin PswsDialogs {
     required VoidCallback tapOk,
     required VoidCallback tapNo,
   }) {
+    final l10n = AppLocalizations.of(context)!;
+
     showDialog<String>(
       context: context,
       builder: (BuildContext context) {
@@ -66,7 +73,7 @@ mixin PswsDialogs {
                 Navigator.pop(context);
               },
               child: Text(
-                'NO',
+                l10n.common_dialog_no,
                 style: TextStyle(color: Theme.of(context).primaryColorDark),
               ),
             ),
@@ -75,9 +82,9 @@ mixin PswsDialogs {
                   tapOk();
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  'YES',
-                  style: TextStyle(color: Colors.blue),
+                child: Text(
+                  l10n.common_dialog_yes,
+                  style: const TextStyle(color: Colors.blue),
                 ))
           ],
         );

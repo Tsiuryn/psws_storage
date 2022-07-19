@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:psws_storage/app/app.dart';
 import 'package:psws_storage/app/di/di.dart';
-import 'package:psws_storage/data/bean/directory_bean.dart';
+import 'package:psws_storage/editor/data/bean/directory_bean.dart';
 
 import 'app/router/app_router.dart';
 

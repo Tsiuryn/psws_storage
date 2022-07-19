@@ -13,5 +13,12 @@
   "pin_page__title_snack_psw_not_correct": "Password is not correct! Repeat please.",
   "edit_notes_page__subtitle": "Created:",
   "edit_notes_page__dialog_title": "Do you want to save changes?",
-  "edit_notes_page__dialog_subTitle": "Pressing \"NO\" will not save your changes."
+  "edit_notes_page__dialog_subTitle": "Pressing \"NO\" will not save your changes.",
+  "common_dialog_cancel": "Cancel",
+  "common_dialog_ok": "OK",
+  "common_dialog_no": "No",
+  "common_dialog_yes": "Yes",
+  "common_dialog_error": "The field can/'t be empty",
+  "common_dialog_placeholder_folder": "Folder name",
+  "common_dialog_placeholder_file": "File name"
 }

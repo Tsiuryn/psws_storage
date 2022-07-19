@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:psws_storage/presenter/main/main_page.dart';
-import 'package:psws_storage/presenter/notes/edit_notes_page.dart';
-import 'package:psws_storage/presenter/pin/presentation/pin_page.dart';
+import 'package:psws_storage/editor/presenter/main/main_page.dart';
+import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
+import 'package:psws_storage/pin/presentation/pin_page.dart';
 
 part 'app_router.gr.dart';
 
