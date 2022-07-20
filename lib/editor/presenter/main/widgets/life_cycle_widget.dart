@@ -65,10 +65,13 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
       });
     }
     if (state == AppLifecycleState.resumed) {
-      setState(() {
+      final String routeName = context.router.current.name;
+      if (PinRoute.name != routeName) {
         if (!showApp) {
           widget.router.push(PinRoute(isFirstPage: false));
         }
+      }
+      setState(() {
         showApp = true;
       });
     }

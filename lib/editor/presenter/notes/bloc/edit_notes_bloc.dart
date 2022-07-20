@@ -22,15 +22,28 @@ class EditNotesBloc extends Cubit<EditNotesModel> {
       await updateDirectory(note);
     }
   }
+
+  void updateEditMode(bool readOnly) {
+    emit(state.copyWith(readOnly: readOnly));
+  }
 }
 
 class EditNotesModel {
   final DirectoryModel? note;
+  final bool readOnly;
 
-  EditNotesModel({this.note});
+  EditNotesModel({
+    this.note,
+    required this.readOnly,
+  });
 
-  EditNotesModel.initial() : note = null;
+  EditNotesModel.initial()
+      : note = null,
+        readOnly = true;
 
-  EditNotesModel copyWith({DirectoryModel? note}) =>
-      EditNotesModel(note: note ?? this.note);
+  EditNotesModel copyWith({DirectoryModel? note, bool? readOnly}) =>
+      EditNotesModel(
+        note: note ?? this.note,
+        readOnly: readOnly ?? this.readOnly,
+      );
 }

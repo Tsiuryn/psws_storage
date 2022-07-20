@@ -7,9 +7,16 @@ class ItemWidget extends StatelessWidget {
   final DirectoryModel model;
   final int id;
   final Function()? onDelete;
+  final Function()? onEdit;
   final Function() onTap;
+
   const ItemWidget(
-      {Key? key, required this.model, required this.onTap, required this.id, this.onDelete})
+      {Key? key,
+      required this.model,
+      required this.onTap,
+      required this.id,
+      this.onDelete,
+      this.onEdit})
       : super(key: key);
 
   @override
@@ -21,6 +28,20 @@ class ItemWidget extends StatelessWidget {
       children: [
         SwipeActionCell(
           key: ValueKey(id),
+          leadingActions: [
+            SwipeAction(
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                ),
+                title: "Rename",
+                style: const TextStyle(fontSize: 14),
+                onTap: (CompletionHandler handler) async {
+                  await handler(false);
+                  onEdit?.call();
+                },
+                color: Colors.green),
+          ],
           trailingActions: <SwipeAction>[
             SwipeAction(
                 icon: const Icon(

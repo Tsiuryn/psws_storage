@@ -12,10 +12,23 @@ import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/notes/bloc/edit_notes_bloc.dart';
 
+const Map<String, String> fontSize = {
+  '5': '5',
+  '10': '10',
+  '15': '15',
+  '20': '20',
+  '25': '25',
+  '30': '30',
+  '35': '35',
+  '40': '40',
+};
+
 class EditNotesForm extends StatefulWidget {
   final DirectoryModel note;
+  final EditNotesModel state;
 
-  const EditNotesForm({Key? key, required this.note}) : super(key: key);
+  const EditNotesForm({Key? key, required this.note, required this.state})
+      : super(key: key);
 
   @override
   State<EditNotesForm> createState() => _EditNotesFormState();
@@ -23,15 +36,21 @@ class EditNotesForm extends StatefulWidget {
 
 class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   late QuillController _controller;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     try {
+      _focusNode.addListener(() {
+        if (_focusNode.hasFocus) {
+          context.read<EditNotesBloc>().updateEditMode(false);
+        }
+      });
       var myJSON = jsonDecode(widget.note.content);
       _controller = QuillController(
           document: Document.fromJson(myJSON),
-          selection: TextSelection.collapsed(offset: 0));
+          selection: const TextSelection.collapsed(offset: 0));
     } catch (e) {
       _controller = QuillController.basic();
     }
@@ -46,11 +65,16 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   @override
   Widget build(BuildContext context) {
     final subtitle = AppLocalizations.of(context)?.edit_notes_page__subtitle;
+    final bool readOnly = widget.state.readOnly;
 
     return PswsBackButtonListener(
       context,
       backPressed: () {
-        showDialog(context);
+        if (readOnly) {
+          context.router.pop();
+        } else {
+          showDialog(context);
+        }
         return true;
       },
       child: Column(
@@ -73,12 +97,37 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                       '$subtitle ${DateFormat('dd.MM.yyyy - HH:mm').format(widget.note.createdDate)}'),
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(AppDim.eight),
                       child: QuillToolbar.basic(
                         controller: _controller,
                         showImageButton: false,
                         showVideoButton: false,
                         showLink: false,
+                        toolbarIconAlignment: WrapAlignment.start,
+                        showInlineCode: false,
+                        customIcons: [
+                          QuillCustomIcon(
+                              icon: widget.state.readOnly
+                                  ? Icons.edit
+                                  : Icons.save,
+                              onTap: () {
+                                context
+                                    .read<EditNotesBloc>()
+                                    .updateEditMode(!readOnly);
+                                if (!readOnly) {
+                                  context
+                                      .read<EditNotesBloc>()
+                                      .saveNote(content);
+                                  _focusNode.unfocus();
+                                }
+                              })
+                        ],
+                        fontSizeValues: fontSize,
+                        iconTheme: QuillIconTheme(
+                          iconSelectedFillColor:
+                              Theme.of(context).colorScheme.secondary,
+                          borderRadius: AppDim.four,
+                        ),
                       ),
                     ),
                   ],
@@ -87,7 +136,11 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                   padding: const EdgeInsets.only(top: AppDim.twelve),
                   child: IconButton(
                       onPressed: () {
-                        showDialog(context);
+                        if (readOnly) {
+                          context.router.pop();
+                        } else {
+                          showDialog(context);
+                        }
                       },
                       icon: const Icon(Icons.arrow_back)),
                 ),
@@ -96,13 +149,25 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
           ),
           Expanded(
               child: Padding(
+            child: QuillEditor(
+              controller: _controller,
+              scrollController: ScrollController(),
+              scrollable: true,
+              focusNode: _focusNode,
+              autoFocus: !readOnly,
+              readOnly: readOnly,
+              expands: false,
+              padding: EdgeInsets.zero,
+              keyboardAppearance: Brightness.light,
+            ),
             padding: const EdgeInsets.all(AppDim.eight),
-            child: QuillEditor.basic(controller: _controller, readOnly: false),
           )),
         ],
       ),
     );
   }
+
+  String get content => jsonEncode(_controller.document.toDelta().toJson());
 
   void showDialog(BuildContext context) {
     final title =
@@ -113,7 +178,6 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
     createOkDialog(context, title: title, message: subTitle, tapNo: () {
       context.router.pop();
     }, tapOk: () {
-      final content = jsonEncode(_controller.document.toDelta().toJson());
       context.read<EditNotesBloc>().saveNote(content);
       context.router.pop();
     });

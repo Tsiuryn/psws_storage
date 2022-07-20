@@ -18,10 +18,14 @@ class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
   @override
   Widget buildBody(BuildContext context, EditNotesModel state) {
     final DirectoryModel? note = state.note;
+
     return note == null
         ? const Center(
-            child: Text('nothing to show'),
+            child: CircularProgressIndicator(),
           )
-        : EditNotesForm(note: note);
+        : EditNotesForm(
+            note: note,
+            state: state,
+          );
   }
 }

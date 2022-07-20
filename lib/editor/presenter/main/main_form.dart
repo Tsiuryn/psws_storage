@@ -8,6 +8,7 @@ import 'package:psws_storage/app/common/base_page.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/router/app_router.dart';
+import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
@@ -17,7 +18,7 @@ import 'package:psws_storage/editor/presenter/main/widgets/item_widget.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/main_appbar.dart';
 
 class MainForm extends StatelessBasePage<MainBloc, MainModelState>
-    with PswsSnackBar {
+    with PswsSnackBar, PswsDialogs {
   const MainForm({Key? key}) : super(key: key);
 
   @override
@@ -79,6 +80,12 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
                   context.router
                       .push(EditNotesRoute(idHive: currentDir.idHiveObject));
                 }
+              },
+              onEdit: () {
+                createFileDialog(context,
+                    title: 'Change File',
+                    isFolder: currentDir.isFolder,
+                    value: (value) {});
               },
               onDelete: () {
                 bloc.deleteFile(currentDir);
