@@ -95,7 +95,13 @@ extension ThemeTypeExt on ThemeType {
       map[e] = SizedBox(
         height: 24,
         child: Text(
-          e.name.toUpperCase(),
+          e == ThemeType.dark
+              ? AppLocalizations.of(context)!
+                  .main_appbar_bottom_theme_title_dark
+                  .toUpperCase()
+              : AppLocalizations.of(context)!
+                  .main_appbar_bottom_theme_title_light
+                  .toUpperCase(),
           style:
               TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
@@ -23,6 +24,7 @@ class ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const folderIcon = Icons.folder;
     const fileIcon = Icons.file_present_outlined;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       children: [
@@ -34,8 +36,9 @@ class ItemWidget extends StatelessWidget {
                   Icons.edit,
                   color: Colors.white,
                 ),
-                title: "Rename",
-                style: const TextStyle(fontSize: 14),
+                title: l10n.item_widget__rename,
+                style: const TextStyle(
+                    fontSize: AppDim.eight, color: Colors.white),
                 onTap: (CompletionHandler handler) async {
                   await handler(false);
                   onEdit?.call();
@@ -48,8 +51,9 @@ class ItemWidget extends StatelessWidget {
                   Icons.delete,
                   color: Colors.white,
                 ),
-                title: "Delete",
-                style: const TextStyle(fontSize: 14),
+                title: l10n.item_widget__delete,
+                style: const TextStyle(
+                    fontSize: AppDim.eight, color: Colors.white),
                 onTap: (CompletionHandler handler) async {
                   await handler(false);
                   onDelete?.call();

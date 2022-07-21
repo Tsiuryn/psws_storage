@@ -2,8 +2,10 @@
   "app_snack_exit": "Для выхода из приложения нажмите кнопку \"Назад\" еще раз",
   "main_appbar_dialog_folder": "Введите название папки",
   "main_appbar_dialog_note": "Введите название файла",
-  "main_appbar_bottom_theme": "Выберите цветовую схему: ",
-  "main_appbar_bottom_locale": "Выберите язык приложения: ",
+  "main_appbar_bottom_theme": "Цветовую схему: ",
+  "main_appbar_bottom_theme_title_dark": "Ночь",
+  "main_appbar_bottom_theme_title_light": "День",
+  "main_appbar_bottom_locale": "Язык приложения: ",
   "pin_page__title_first_create": "Введите новый пароль",
   "pin_page__title_second_create": "Повторите пароль, пожалуйста",
   "pin_page__title_check": "Введите пароль",
@@ -20,5 +22,9 @@
   "common_dialog_yes": "Да",
   "common_dialog_error": "Поле не может быть пустым",
   "common_dialog_placeholder_folder": "Название папки",
-  "common_dialog_placeholder_file": "Название файла"
+  "common_dialog_placeholder_file": "Название файла",
+  "main_page__dialog_rename_file_title": "Переименовать файл",
+  "main_page__dialog_rename_folder_title": "Переименовать папку",
+  "item_widget__rename": "ПЕРЕИМЕНОВАТЬ",
+  "item_widget__delete": "УДАЛИТЬ"
 }

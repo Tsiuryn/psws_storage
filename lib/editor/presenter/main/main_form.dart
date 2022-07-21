@@ -62,12 +62,15 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
   Widget buildBody(BuildContext context, MainModelState state) {
     final listDirectories = state.sortedList;
     final bloc = context.read<MainBloc>();
+    final l10n = AppLocalizations.of(context)!;
 
     return ListView.builder(
         itemCount: listDirectories.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
-            return UpFolder(state: state,);
+            return UpFolder(
+              state: state,
+            );
           } else {
             final DirectoryModel currentDir = listDirectories[index - 1];
             return ItemWidget(
@@ -83,9 +86,15 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
               },
               onEdit: () {
                 createFileDialog(context,
-                    title: 'Change File',
-                    isFolder: currentDir.isFolder,
-                    value: (value) {});
+                    title: currentDir.isFolder
+                        ? l10n.main_page__dialog_rename_folder_title
+                        : l10n.main_page__dialog_rename_file_title,
+                    isFolder: currentDir.isFolder, value: (value) {
+                  context.read<MainBloc>().updateName(
+                        model: currentDir,
+                        newName: value,
+                      );
+                });
               },
               onDelete: () {
                 bloc.deleteFile(currentDir);
@@ -98,6 +107,7 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
 
 class UpFolder extends StatelessWidget {
   final MainModelState state;
+
   const UpFolder({Key? key, required this.state}) : super(key: key);
 
   @override

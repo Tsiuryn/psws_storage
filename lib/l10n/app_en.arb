@@ -2,8 +2,10 @@
   "app_snack_exit": "To exit the application, press the \"Back\" button again",
   "main_appbar_dialog_folder": "Enter folder name",
   "main_appbar_dialog_note": "Enter file name",
-  "main_appbar_bottom_theme": "Choose a color scheme: ",
-  "main_appbar_bottom_locale": "Select application language:",
+  "main_appbar_bottom_theme": "Color scheme: ",
+  "main_appbar_bottom_theme_title_dark": "Night",
+  "main_appbar_bottom_theme_title_light": "Day",
+  "main_appbar_bottom_locale": "Application language:",
   "pin_page__title_first_create": "Enter a new password",
   "pin_page__title_second_create": "Repeat password please",
   "pin_page__title_check": "enter password",
@@ -18,7 +20,11 @@
   "common_dialog_ok": "OK",
   "common_dialog_no": "No",
   "common_dialog_yes": "Yes",
-  "common_dialog_error": "The field can/'t be empty",
+  "common_dialog_error": "The field can't be empty",
   "common_dialog_placeholder_folder": "Folder name",
-  "common_dialog_placeholder_file": "File name"
+  "common_dialog_placeholder_file": "File name",
+  "main_page__dialog_rename_file_title": "Rename file",
+  "main_page__dialog_rename_folder_title": "Rename folder",
+  "item_widget__rename": "RENAME",
+  "item_widget__delete": "DELETE"
 }
