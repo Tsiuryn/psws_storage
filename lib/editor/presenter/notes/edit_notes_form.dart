@@ -47,9 +47,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
           context.read<EditNotesBloc>().updateEditMode(false);
         }
       });
-      var myJSON = jsonDecode(widget.note.content);
+      final myJSON = jsonDecode(widget.note.content);
+      final document = Document.fromJson(myJSON);
       _controller = QuillController(
-          document: Document.fromJson(myJSON),
+          document: document,
           selection: const TextSelection.collapsed(offset: 0));
     } catch (e) {
       _controller = QuillController.basic();
@@ -105,8 +106,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                         showLink: false,
                         toolbarIconAlignment: WrapAlignment.start,
                         showInlineCode: false,
-                        customIcons: [
-                          QuillCustomIcon(
+                        customButtons: [
+                          QuillCustomButton(
                               icon: widget.state.readOnly
                                   ? Icons.edit
                                   : Icons.save,

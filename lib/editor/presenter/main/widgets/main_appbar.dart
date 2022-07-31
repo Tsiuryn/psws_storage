@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
-import 'package:psws_storage/editor/presenter/main/widgets/settings_bottom_sheet.dart';
+import 'package:psws_storage/settings/settings_page.dart';
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget, PswsSnackBar, PswsDialogs {
@@ -52,7 +52,7 @@ class MainAppBar extends StatelessWidget
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (context) {
-                  return const SettingsBottomSheet();
+                  return const SettingsPage();
                 });
           },
           icon: const Icon(

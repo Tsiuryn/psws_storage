@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:psws_storage/editor/presenter/main/main_page.dart';
 import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
+import 'package:psws_storage/settings/import_export/import_export_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -26,5 +27,9 @@ const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
   AutoRoute(
     path: 'edit_note',
     page: EditNotesPage,
+  ),
+  AutoRoute(
+    path: 'import_export',
+    page: ImportExportPage,
   ),
 ]);

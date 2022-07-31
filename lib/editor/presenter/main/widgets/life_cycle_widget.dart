@@ -59,13 +59,15 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    final String routeName = context.router.current.name;
     if (state == AppLifecycleState.inactive) {
-      setState(() {
-        showApp = false;
-      });
+      if (MainRoute.name == routeName || EditNotesRoute.name == routeName) {
+        setState(() {
+          showApp = false;
+        });
+      }
     }
     if (state == AppLifecycleState.resumed) {
-      final String routeName = context.router.current.name;
       if (PinRoute.name != routeName) {
         if (!showApp) {
           widget.router.push(PinRoute(isFirstPage: false));

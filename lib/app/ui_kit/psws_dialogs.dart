@@ -57,11 +57,13 @@ mixin PswsDialogs {
     required String message,
     required VoidCallback tapOk,
     required VoidCallback tapNo,
+    bool barrierDismissible = false,
   }) {
     final l10n = AppLocalizations.of(context)!;
 
     showDialog<String>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),

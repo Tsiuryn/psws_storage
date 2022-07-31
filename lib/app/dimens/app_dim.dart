@@ -4,6 +4,7 @@ class AppDim {
   static const double eight = 8;
   static const double twelve = 12;
   static const double sixteen = 16;
+  static const double twenty = 20;
   static const double twentyFour = 24;
   static const double thirtyTwo = 32;
   static const double fourty = 40;
