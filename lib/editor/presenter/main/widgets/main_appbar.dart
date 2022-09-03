@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,7 +11,8 @@ import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
 
 class MainAppBar extends StatelessWidget
-    with PreferredSizeWidget, PswsSnackBar, PswsDialogs {
+    with PreferredSizeWidget, PswsSnackBar, PswsDialogs
+    implements PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
 
   @override
@@ -25,7 +25,6 @@ class MainAppBar extends StatelessWidget
 
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: appColors?.appBarColor,
       titleSpacing: AppDim.zero,
       bottom: const PreferredSize(
         child: Divider(),

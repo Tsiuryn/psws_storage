@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
@@ -33,8 +34,13 @@ ThemeData lightTheme(BuildContext context) {
       ),
     ],
     appBarTheme: const AppBarTheme(
-      elevation: 0,
+      elevation: 5,
       backgroundColor: Color(0xFFC0C0C0),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Color(0xFFC0C0C0),
+        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+      ),
     ),
     dividerTheme: const DividerThemeData(
       color: Color(0xFF8A8A8A),

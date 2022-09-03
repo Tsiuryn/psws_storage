@@ -25,14 +25,16 @@ const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
     path: 'home',
     page: MainPage,
   ),
-  AutoRoute(
+  CustomRoute(
     path: 'edit_note',
     page: EditNotesPage,
+    transitionsBuilder: TransitionsBuilders.slideRight,
   ),
   CustomRoute(
-      path: 'settings',
-      page: SettingsPage,
-      transitionsBuilder: TransitionsBuilders.slideLeft),
+    path: 'settings',
+    page: SettingsPage,
+    transitionsBuilder: TransitionsBuilders.slideLeft,
+  ),
   AutoRoute(
     path: 'import_export',
     page: ImportExportPage,

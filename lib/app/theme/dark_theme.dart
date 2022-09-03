@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
@@ -32,10 +33,14 @@ ThemeData darkTheme(BuildContext context) {
         ),
       ),
     ],
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       elevation: 5,
-      backgroundColor: Colors.black54,
-      titleTextStyle: Theme.of(context).textTheme.headline6,
+      backgroundColor: Color(0xFF212121),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Color(0xFF212121),
+        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+        statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+      ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       unselectedItemColor: Color(0xFF91969E),
