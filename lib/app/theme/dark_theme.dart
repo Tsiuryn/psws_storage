@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/theme/app_colors_ext.dart';
+import 'package:psws_storage/app/theme/app_text_style_ext.dart';
 
 ThemeData darkTheme(BuildContext context) {
   return ThemeData.dark().copyWith(
+    extensions: <ThemeExtension<dynamic>>[
+      const AppColorsExt(
+        textColor: Color(0xFFFFFFFF),
+        appBarColor: Color(0xFF212121),
+        bodyColor: Color(0xFF3C3B3B),
+        cardColor: Color(0xFF858585),
+        negativeActionColor: Color(0xFF9D0000),
+        positiveActionColor: Color(0xFF002ABD),
+        dividerColor: Color(0xFFBBB6B6),
+      ),
+      const AppTextStyleExt(
+        subtitle: TextStyle(
+          color: Color(0xFFFFFFFF),
+          fontSize: AppDim.twelve,
+        ),
+        titleMedium: TextStyle(
+          color: Color(0xFFFFFFFF),
+          fontSize: AppDim.fourteen,
+          fontWeight: FontWeight.bold,
+        ),
+        titleLarge: TextStyle(
+          color: Color(0xFFFFFFFF),
+          fontSize: AppDim.twentyFour,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ],
     appBarTheme: AppBarTheme(
       elevation: 5,
       backgroundColor: Colors.black54,
       titleTextStyle: Theme.of(context).textTheme.headline6,
-    ),
-    iconTheme: const IconThemeData(
-      size: 24.0,
-      color: Colors.yellow,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       unselectedItemColor: Color(0xFF91969E),
@@ -29,6 +55,11 @@ ThemeData darkTheme(BuildContext context) {
         backgroundColor: Colors.transparent,
       ),
     ),
+    dividerTheme: const DividerThemeData(
+      color: Color(0xFFBBB6B6),
+      space: 1,
+      thickness: 1,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -42,13 +73,14 @@ ThemeData darkTheme(BuildContext context) {
       ),
     ),
     colorScheme: const ColorScheme.dark().copyWith(
-      secondary: const Color(0xFF538BEF),
+        secondary: const Color(0xFF538BEF),
         primary: const Color(0xFF3C71CD),
         onPrimary: const Color(0xFF8B8E94),
         onSecondary: const Color(0xFF101112),
         onBackground: const Color(0xFF212325),
         surface: Colors.red),
-    backgroundColor: const Color(0xFF303847),
+    backgroundColor: const Color(0xFF3C3B3B),
+    scaffoldBackgroundColor: const Color(0xFF3C3B3B),
     primaryColor: const Color(0xFF212325),
     unselectedWidgetColor: const Color(0xFF6C6D70),
     primaryColorLight: const Color(0xFF262F40),

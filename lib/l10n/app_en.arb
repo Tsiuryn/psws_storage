@@ -26,5 +26,13 @@
   "main_page__dialog_rename_file_title": "Rename file",
   "main_page__dialog_rename_folder_title": "Rename folder",
   "item_widget__rename": "RENAME",
-  "item_widget__delete": "DELETE"
+  "item_widget__delete": "DELETE",
+  "item_widget__created": "Created: {label}",
+  "@item_widget__created": {
+    "placeholders": {
+      "label": {
+        "format": "string"
+      }
+    }
+  }
 }

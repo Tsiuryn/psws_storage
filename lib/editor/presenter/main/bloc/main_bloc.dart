@@ -36,7 +36,9 @@ class MainBloc extends Cubit<MainModelState> {
   }
 
   void openFolder(DirectoryModel directory) {
-    emit(state.copyWith(parentId: directory.id));
+    List<String> path = state.path..add(directory.name);
+
+    emit(state.copyWith(parentId: directory.id, path: path));
   }
 
   void closeFolder() {
@@ -45,7 +47,9 @@ class MainBloc extends Cubit<MainModelState> {
     );
 
     if (parentDirectory != null && state.parentId != rootDirectory) {
-      emit(state.copyWith(parentId: parentDirectory.parentId));
+      List<String> path = state.path..removeLast();
+
+      emit(state.copyWith(parentId: parentDirectory.parentId, path: path));
     }
   }
 

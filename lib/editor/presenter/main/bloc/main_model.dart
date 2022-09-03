@@ -4,27 +4,32 @@ import 'package:psws_storage/editor/presenter/main/const/constants.dart';
 class MainModelState {
   final String parentId;
   final List<DirectoryModel> directories;
+  final List<String> path;
   final DateTime currentBackPressTime;
 
   MainModelState({
     required this.directories,
     required this.currentBackPressTime,
     required this.parentId,
+    required this.path,
   });
 
   MainModelState.empty()
       : parentId = rootDirectory,
         currentBackPressTime = DateTime(1980),
+        path = [],
         directories = [];
 
   MainModelState copyWith({
     String? parentId,
     List<DirectoryModel>? directories,
+    List<String>? path,
     DateTime? currentBackPressTime,
   }) {
     return MainModelState(
       parentId: parentId ?? this.parentId,
       currentBackPressTime: currentBackPressTime ?? this.currentBackPressTime,
+      path: path ?? this.path,
       directories: directories ?? this.directories,
     );
   }
@@ -35,6 +40,14 @@ class MainModelState {
           (element) => element.parentId == parentId,
         )
         .toList();
+  }
+
+  String getPathString() {
+    String pathString = '..';
+    for (String element in path) {
+      pathString += '/$element';
+    }
+    return pathString;
   }
 
   List<DirectoryModel> get sortedList {

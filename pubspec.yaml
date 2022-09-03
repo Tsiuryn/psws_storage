@@ -24,6 +24,8 @@ dependencies:
   # router:
   auto_route: ^4.0.1
 
+  flutter_svg: ^1.1.4
+
   # storage:
   hive: ^2.2.1
   hive_flutter: ^1.1.0

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
+import 'package:intl/intl.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/theme/app_colors_ext.dart';
+import 'package:psws_storage/app/theme/app_text_style_ext.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 
 class ItemWidget extends StatelessWidget {
@@ -22,9 +26,19 @@ class ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const folderIcon = Icons.folder;
-    const fileIcon = Icons.file_present_outlined;
+    final AppColorsExt? appColors = Theme.of(context).extension<AppColorsExt>();
+    final AppTextStyleExt? appTextStyles =
+        Theme.of(context).extension<AppTextStyleExt>();
+    final folderIcon = SvgPicture.asset(
+      'assets/icons/ic_folder.svg',
+      color: appColors?.textColor,
+    );
+    final fileIcon = SvgPicture.asset(
+      'assets/icons/ic_file.svg',
+      color: appColors?.textColor,
+    );
     final l10n = AppLocalizations.of(context)!;
+    final formatter = DateFormat('dd.MM.yyyy HH:mm');
 
     return Column(
       children: [
@@ -62,33 +76,55 @@ class ItemWidget extends StatelessWidget {
           ],
           child: InkWell(
             onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDim.eight,
-                vertical: AppDim.four,
-              ),
-              child: Row(
+            child: SizedBox(
+              height: AppDim.thirtyTwo * 2,
+              child: Column(
                 children: [
-                  Icon(
-                    model.isFolder ? folderIcon : fileIcon,
-                    size: AppDim.fourty,
-                  ),
-                  const SizedBox(
-                    width: AppDim.sixteen,
-                  ),
                   Expanded(
-                      child: Text(
-                    model.name,
-                    overflow: TextOverflow.ellipsis,
-                  )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: AppDim.sixteen,
+                            ),
+                            model.isFolder ? folderIcon : fileIcon,
+                            const SizedBox(
+                              width: AppDim.thirtyTwo,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    model.name,
+                                    style: appTextStyles?.titleMedium,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    l10n.item_widget__created(
+                                        formatter.format(model.createdDate)),
+                                    style: appTextStyles?.subtitle,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
                 ],
               ),
             ),
           ),
         ),
-        Divider(
-          color: Theme.of(context).dividerColor,
-        ),
+        // Divider(
+        //   color: Theme.of(context).dividerColor,
+        // ),
       ],
     );
   }

@@ -4,10 +4,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/common/base_page.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/router/app_router.dart';
+import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
@@ -112,24 +114,41 @@ class UpFolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppColorsExt? appColors = Theme.of(context).extension<AppColorsExt>();
+
     return Visibility(
       visible: state.parentId != rootDirectory,
       child: InkWell(
         onTap: () {
           context.read<MainBloc>().closeFolder();
         },
-        child: Padding(
-          padding: const EdgeInsets.all(AppDim.sixteen),
+        child: SizedBox(
+          height: AppDim.thirtyTwo * 2,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: const [
-                  Icon(Icons.undo_sharp),
-                  Icon(Icons.more_horiz),
-                ],
+              Text(state.getPathString()),
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox(
+                      width: AppDim.sixteen,
+                    ),
+                    SvgPicture.asset(
+                      'assets/icons/ic_up.svg',
+                      color: appColors?.textColor,
+                    ),
+                    const SizedBox(
+                      width: AppDim.thirtyTwo,
+                    ),
+                    SvgPicture.asset(
+                      'assets/icons/ic_points.svg',
+                      color: appColors?.textColor,
+                    ),
+                  ],
+                ),
               ),
               const Divider(),
             ],

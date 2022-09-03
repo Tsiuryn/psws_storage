@@ -26,5 +26,6 @@
   "main_page__dialog_rename_file_title": "Переименовать файл",
   "main_page__dialog_rename_folder_title": "Переименовать папку",
   "item_widget__rename": "ПЕРЕИМЕНОВАТЬ",
-  "item_widget__delete": "УДАЛИТЬ"
+  "item_widget__delete": "УДАЛИТЬ",
+  "item_widget__created": "Создано: {label}"
 }
