@@ -1,14 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
-import 'package:psws_storage/settings/settings_page.dart';
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget, PswsSnackBar, PswsDialogs {
@@ -38,8 +39,8 @@ class MainAppBar extends StatelessWidget
             onPressed: () {
               createFileDialog(context, title: fileName, isFolder: false,
                   value: (value) {
-                bloc.addFile(value);
-              });
+                    bloc.addFile(value);
+                  });
             },
             icon: SvgPicture.asset(
               'assets/icons/ic_file.svg',
@@ -61,12 +62,7 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
           onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (context) {
-                  return const SettingsPage();
-                });
+            context.router.push(const SettingsRoute());
           },
           icon: SvgPicture.asset(
             'assets/icons/ic_settings.svg',

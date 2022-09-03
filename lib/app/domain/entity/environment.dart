@@ -5,7 +5,7 @@ class Environment {
   Environment({required this.themeType, required this.appLocale});
 
   Environment.empty()
-      : appLocale = AppLocale.ru,
+      : appLocale = AppLocale.rus,
         themeType = ThemeType.dark;
 
   Environment copyWith({
@@ -21,4 +21,4 @@ class Environment {
 
 enum ThemeType { light, dark }
 
-enum AppLocale { ru, en }
+enum AppLocale { rus, eng }

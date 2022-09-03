@@ -5,7 +5,7 @@
   "main_appbar_bottom_theme": "Color scheme: ",
   "main_appbar_bottom_theme_title_dark": "Night",
   "main_appbar_bottom_theme_title_light": "Day",
-  "main_appbar_bottom_locale": "Application language:",
+  "main_appbar_bottom_locale": "Language:",
   "pin_page__title_first_create": "Enter a new password",
   "pin_page__title_second_create": "Repeat password please",
   "pin_page__title_check": "enter password",
@@ -34,5 +34,16 @@
         "format": "string"
       }
     }
-  }
+  },
+  "settings_page__title": "Settings",
+  "settings_page__color_scheme_day": "DAY",
+  "settings_page__color_scheme_night": "NIGHT",
+  "settings_page__language_rus": "Russian",
+  "settings_page__language_eng": "English",
+  "settings_page__export": "Export:",
+  "settings_page__export_btn": "Export database",
+  "settings_page__export_tooltip": "All notes will be encoded in the file. The file will be saved on the device. The user chooses the way to save. Important: if you lose your password, the file cannot be recovered!",
+  "settings_page__import": "Import:",
+  "settings_page__import_btn": "Import database",
+  "settings_page__import_tooltip": "Notes will be imported from the file. The user specifies the path to the file and then enters the password for the notes archive. You will also be asked to add a notes database or replace all notes in the application."
 }

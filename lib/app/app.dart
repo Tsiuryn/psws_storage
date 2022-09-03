@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         create: (context) => getIt.get<AppBloc>()..init(),
         child: BlocBuilder<AppBloc, Environment>(
           builder: (context, settings) {
-            final Locale locale = settings.appLocale == AppLocale.ru
+            final Locale locale = settings.appLocale == AppLocale.rus
                 ? const Locale('ru')
                 : const Locale('en');
             return MaterialApp.router(

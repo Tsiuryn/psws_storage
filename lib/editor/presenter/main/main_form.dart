@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -50,6 +51,14 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
         context,
         message: l10n.app_snack_exit,
       );
+    } else {
+      closeApp();
+    }
+  }
+
+  void closeApp() {
+    if (Platform.isAndroid) {
+      SystemNavigator.pop();
     } else {
       exit(0);
     }

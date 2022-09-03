@@ -40,16 +40,17 @@ extension EnvironmentBeanExt on EnvironmentBean {
   Environment fromBean() => Environment(
         themeType:
             themeType == ThemeTypeBean.dark ? ThemeType.dark : ThemeType.light,
-        appLocale: appLocale == AppLocaleBean.ru ? AppLocale.ru : AppLocale.en,
+        appLocale:
+            appLocale == AppLocaleBean.ru ? AppLocale.rus : AppLocale.eng,
       );
 }
 
 extension EnvironmentExt on Environment {
   EnvironmentBean toBean() => EnvironmentBean(
-        themeType: themeType == ThemeType.dark
+    themeType: themeType == ThemeType.dark
             ? ThemeTypeBean.dark
             : ThemeTypeBean.light,
         appLocale:
-            appLocale == AppLocale.ru ? AppLocaleBean.ru : AppLocaleBean.en,
+            appLocale == AppLocale.rus ? AppLocaleBean.ru : AppLocaleBean.en,
       );
 }

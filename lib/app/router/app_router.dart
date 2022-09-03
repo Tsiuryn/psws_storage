@@ -4,6 +4,7 @@ import 'package:psws_storage/editor/presenter/main/main_page.dart';
 import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
 import 'package:psws_storage/settings/import_export/import_export_page.dart';
+import 'package:psws_storage/settings/settings_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -28,6 +29,10 @@ const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
     path: 'edit_note',
     page: EditNotesPage,
   ),
+  CustomRoute(
+      path: 'settings',
+      page: SettingsPage,
+      transitionsBuilder: TransitionsBuilders.slideLeft),
   AutoRoute(
     path: 'import_export',
     page: ImportExportPage,

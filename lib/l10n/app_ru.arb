@@ -5,7 +5,7 @@
   "main_appbar_bottom_theme": "Цветовую схему: ",
   "main_appbar_bottom_theme_title_dark": "Ночь",
   "main_appbar_bottom_theme_title_light": "День",
-  "main_appbar_bottom_locale": "Язык приложения: ",
+  "main_appbar_bottom_locale": "Язык:",
   "pin_page__title_first_create": "Введите новый пароль",
   "pin_page__title_second_create": "Повторите пароль, пожалуйста",
   "pin_page__title_check": "Введите пароль",
@@ -27,5 +27,16 @@
   "main_page__dialog_rename_folder_title": "Переименовать папку",
   "item_widget__rename": "ПЕРЕИМЕНОВАТЬ",
   "item_widget__delete": "УДАЛИТЬ",
-  "item_widget__created": "Создано: {label}"
+  "item_widget__created": "Создано: {label}",
+  "settings_page__title": "Настройки",
+  "settings_page__color_scheme_day": "ДЕНЬ",
+  "settings_page__color_scheme_night": "НОЧЬ",
+  "settings_page__language_rus": "Русский",
+  "settings_page__language_eng": "Английский",
+  "settings_page__export": "Экспорт:",
+  "settings_page__export_btn": "Экспорт заметок",
+  "settings_page__export_tooltip": "Все заметки будут закодированы в файле. Файл будет сохранен на девайсе. Пользователь сам выбирает путь сохранения. Важно: при потере пароля, файл восстановлению не подлежит!",
+  "settings_page__import": "Импорт:",
+  "settings_page__import_btn": "Импорт заметок",
+  "settings_page__import_tooltip": "Из файла будут импортированы заметки. Пользователь указывает путь к файлу и затем вводит пароль архива заметок. Также будет предложено дописать базу данных заметок либо заменить все заметки в приложении."
 }
