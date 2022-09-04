@@ -4,6 +4,7 @@ import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/domain/usecase/add_file_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/delete_directory_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/delete_list_directories_usecase.dart';
+import 'package:psws_storage/editor/domain/usecase/get_directory_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/get_list_directories_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/update_directory_usecase.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_model.dart';
@@ -16,6 +17,7 @@ class MainBloc extends Cubit<MainModelState> {
   final DeleteDirectoryUseCase _deleteDirectoryUseCase;
   final DeleteListDirectoriesUseCase _deleteListDirectories;
   final UpdateDirectoryUseCase _updateDirectory;
+  final GetDirectoryUseCase _getDirectoryUseCase;
 
   MainBloc({
     required AddFileUseCase addFileUseCase,
@@ -23,11 +25,13 @@ class MainBloc extends Cubit<MainModelState> {
     required DeleteDirectoryUseCase deleteDirectoryUseCase,
     required DeleteListDirectoriesUseCase deleteListDirectories,
     required UpdateDirectoryUseCase updateDirectory,
+    required GetDirectoryUseCase getDirectory,
   })  : _addFileUseCase = addFileUseCase,
         _getListDirectories = getListDirectoriesUseCase,
         _deleteDirectoryUseCase = deleteDirectoryUseCase,
         _deleteListDirectories = deleteListDirectories,
         _updateDirectory = updateDirectory,
+        _getDirectoryUseCase = getDirectory,
         super(MainModelState.empty());
 
   void initBloc() async {
@@ -85,8 +89,12 @@ class MainBloc extends Cubit<MainModelState> {
 
   Future<void> updateName(
       {required DirectoryModel model, required String newName}) async {
-    final directory = model.copyWith(name: newName);
-    emit(state.copyWith(directories: await _updateDirectory(directory)));
+    final directory = await _getDirectoryUseCase(model.idHiveObject);
+    if (directory != null) {
+      emit(state.copyWith(
+          directories:
+              await _updateDirectory(directory.copyWith(name: newName))));
+    }
   }
 
   Future<void> changeCurrentBackPressTime(DateTime currentBackPressTime) async {

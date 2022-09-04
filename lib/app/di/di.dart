@@ -74,6 +74,7 @@ void initDi() {
         deleteDirectoryUseCase: getIt.get<DeleteDirectoryUseCase>(),
         deleteListDirectories: getIt.get<DeleteListDirectoriesUseCase>(),
         updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
+        getDirectory: getIt.get<GetDirectoryUseCase>(),
       ));
 
   getIt.registerFactory(() =>
