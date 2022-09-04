@@ -8,7 +8,9 @@ import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -20,135 +22,143 @@ class SettingsPage extends StatelessWidget {
     final titleLocale = l10n?.main_appbar_bottom_locale ?? '';
     final appTheme = AppTheme(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          l10n?.settings_page__title ?? '',
-          style: appTheme.appTextStyles?.titleLarge,
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: appTheme.appColors?.textColor,
+    return LifeCycleWidget(
+      router: context.router,
+      currentRouteName: SettingsRoute.name,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            l10n?.settings_page__title ?? '',
+            style: appTheme.appTextStyles?.titleLarge,
           ),
-          onPressed: context.popRoute,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: appTheme.appColors?.textColor,
+            ),
+            onPressed: context.popRoute,
+          ),
+          bottom: const PreferredSize(
+            child: Divider(),
+            preferredSize: Size.fromHeight(1),
+          ),
         ),
-        bottom: const PreferredSize(
-          child: Divider(),
-          preferredSize: Size.fromHeight(1),
-        ),
-      ),
-      body: BlocBuilder<AppBloc, Environment>(
-          bloc: getIt.get<AppBloc>(),
-          builder: (context, environment) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(AppDim.sixteen),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SettingsItem(
-                      title: titleTheme,
-                      child: Row(
-                        children: [
-                          Text(
-                            environment.themeType == ThemeType.dark
-                                ? l10n?.settings_page__color_scheme_night ?? ''
-                                : l10n?.settings_page__color_scheme_day ?? '',
-                            style: appTheme.appTextStyles?.subtitle,
-                          ),
-                          const Expanded(child: SizedBox()),
-                          CupertinoSlidingSegmentedControl<ThemeType>(
-                            children: ThemeTypeExt.toMap(context),
-                            groupValue: environment.themeType == ThemeType.dark
-                                ? ThemeType.dark
-                                : ThemeType.light,
-                            onValueChanged: (newValue) {
-                              if (newValue != null) {
-                                context.read<AppBloc>().changeTheme(newValue);
-                              }
-                            },
-                          ),
-                        ],
+        body: BlocBuilder<AppBloc, Environment>(
+            bloc: getIt.get<AppBloc>(),
+            builder: (context, environment) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppDim.sixteen),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SettingsItem(
+                        title: titleTheme,
+                        child: Row(
+                          children: [
+                            Text(
+                              environment.themeType == ThemeType.dark
+                                  ? l10n?.settings_page__color_scheme_night ??
+                                      ''
+                                  : l10n?.settings_page__color_scheme_day ?? '',
+                              style: appTheme.appTextStyles?.subtitle,
+                            ),
+                            const Expanded(child: SizedBox()),
+                            CupertinoSlidingSegmentedControl<ThemeType>(
+                              children: ThemeTypeExt.toMap(context),
+                              groupValue:
+                                  environment.themeType == ThemeType.dark
+                                      ? ThemeType.dark
+                                      : ThemeType.light,
+                              onValueChanged: (newValue) {
+                                if (newValue != null) {
+                                  context.read<AppBloc>().changeTheme(newValue);
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SettingsItem(
-                      title: titleLocale,
-                      child: Row(
-                        children: [
-                          Text(
-                              environment.appLocale == AppLocale.rus
-                                  ? l10n?.settings_page__language_rus ?? ''
-                                  : l10n?.settings_page__language_eng ?? '',
-                              style: appTheme.appTextStyles?.subtitle),
-                          const Expanded(child: SizedBox()),
-                          CupertinoSlidingSegmentedControl<AppLocale>(
-                            children: AppLocaleExt.toMap(context),
-                            groupValue: environment.appLocale == AppLocale.rus
-                                ? AppLocale.rus
-                                : AppLocale.eng,
-                            onValueChanged: (newValue) {
-                              if (newValue != null) {
-                                context.read<AppBloc>().changeLocale(newValue);
-                              }
-                            },
-                          ),
-                        ],
+                      SettingsItem(
+                        title: titleLocale,
+                        child: Row(
+                          children: [
+                            Text(
+                                environment.appLocale == AppLocale.rus
+                                    ? l10n?.settings_page__language_rus ?? ''
+                                    : l10n?.settings_page__language_eng ?? '',
+                                style: appTheme.appTextStyles?.subtitle),
+                            const Expanded(child: SizedBox()),
+                            CupertinoSlidingSegmentedControl<AppLocale>(
+                              children: AppLocaleExt.toMap(context),
+                              groupValue: environment.appLocale == AppLocale.rus
+                                  ? AppLocale.rus
+                                  : AppLocale.eng,
+                              onValueChanged: (newValue) {
+                                if (newValue != null) {
+                                  context
+                                      .read<AppBloc>()
+                                      .changeLocale(newValue);
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SettingsItem(
-                      title: l10n?.settings_page__export ?? '',
-                      informationMessage:
-                          l10n?.settings_page__export_tooltip ?? '',
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Text(
-                                    l10n?.settings_page__export_btn ?? '',
-                                    style: appTheme.appTextStyles?.subtitle,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/icons/ic_export.svg',
-                                    color: appTheme.appColors?.textColor,
-                                  )
-                                ],
-                              ))
-                        ],
+                      SettingsItem(
+                        title: l10n?.settings_page__export ?? '',
+                        informationMessage:
+                            l10n?.settings_page__export_tooltip ?? '',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                                onPressed: () {},
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      l10n?.settings_page__export_btn ?? '',
+                                      style: appTheme.appTextStyles?.subtitle,
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/ic_export.svg',
+                                      color: appTheme.appColors?.textColor,
+                                    )
+                                  ],
+                                ))
+                          ],
+                        ),
                       ),
-                    ),
-                    SettingsItem(
-                      title: l10n?.settings_page__import ?? '',
-                      informationMessage:
-                          l10n?.settings_page__import_tooltip ?? '',
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Text(
-                                    l10n?.settings_page__import_btn ?? '',
-                                    style: appTheme.appTextStyles?.subtitle,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/icons/ic_import.svg',
-                                    color: appTheme.appColors?.textColor,
-                                  )
-                                ],
-                              ))
-                        ],
+                      SettingsItem(
+                        title: l10n?.settings_page__import ?? '',
+                        informationMessage:
+                            l10n?.settings_page__import_tooltip ?? '',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                                onPressed: () {},
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      l10n?.settings_page__import_btn ?? '',
+                                      style: appTheme.appTextStyles?.subtitle,
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/ic_import.svg',
+                                      color: appTheme.appColors?.textColor,
+                                    )
+                                  ],
+                                ))
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 }

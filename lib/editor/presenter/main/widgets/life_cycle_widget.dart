@@ -5,12 +5,14 @@ import 'package:psws_storage/app/router/app_router.dart';
 
 class LifeCycleWidget extends StatefulWidget {
   final StackRouter router;
+  final String currentRouteName;
   final Widget child;
 
   const LifeCycleWidget({
     Key? key,
-    required this.child,
     required this.router,
+    required this.currentRouteName,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -60,22 +62,22 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final String routeName = context.router.current.name;
-    if (state == AppLifecycleState.inactive) {
-      if (MainRoute.name == routeName || EditNotesRoute.name == routeName) {
+    if (widget.currentRouteName == routeName) {
+      if (state == AppLifecycleState.inactive) {
         setState(() {
           showApp = false;
         });
       }
-    }
-    if (state == AppLifecycleState.resumed) {
-      if (PinRoute.name != routeName) {
-        if (!showApp) {
-          widget.router.push(PinRoute(isFirstPage: false));
+      if (state == AppLifecycleState.resumed) {
+        if (PinRoute.name != routeName) {
+          if (!showApp) {
+            widget.router.push(PinRoute(isFirstPage: false));
+          }
         }
+        setState(() {
+          showApp = true;
+        });
       }
-      setState(() {
-        showApp = true;
-      });
     }
   }
 }
