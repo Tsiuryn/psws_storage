@@ -11,6 +11,7 @@ import 'package:psws_storage/app/domain/entity/environment.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
+import 'package:psws_storage/res/resources.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -121,7 +122,7 @@ class SettingsPage extends StatelessWidget {
                                       style: appTheme.appTextStyles?.subtitle,
                                     ),
                                     SvgPicture.asset(
-                                      'assets/icons/ic_export.svg',
+                                      AppIcons.icExport,
                                       color: appTheme.appColors?.textColor,
                                     )
                                   ],
@@ -145,7 +146,7 @@ class SettingsPage extends StatelessWidget {
                                       style: appTheme.appTextStyles?.subtitle,
                                     ),
                                     SvgPicture.asset(
-                                      'assets/icons/ic_import.svg',
+                                      AppIcons.icImport,
                                       color: appTheme.appColors?.textColor,
                                     )
                                   ],
@@ -255,7 +256,7 @@ class _SettingsItemState extends State<SettingsItem> {
                       tooltipKey.currentState?.ensureTooltipVisible();
                     },
                     icon: SvgPicture.asset(
-                      'assets/icons/ic_information.svg',
+                      AppIcons.icInformation,
                       color: appTheme.appColors?.textColor,
                     ),
                   ),

@@ -19,6 +19,7 @@ import 'package:psws_storage/editor/presenter/main/bloc/main_model.dart';
 import 'package:psws_storage/editor/presenter/main/const/constants.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/item_widget.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/main_appbar.dart';
+import 'package:psws_storage/res/resources.dart';
 
 class MainForm extends StatelessBasePage<MainBloc, MainModelState>
     with PswsSnackBar, PswsDialogs {
@@ -146,14 +147,14 @@ class UpFolder extends StatelessWidget {
                       width: AppDim.sixteen,
                     ),
                     SvgPicture.asset(
-                      'assets/icons/ic_up.svg',
+                      AppIcons.icUp,
                       color: appColors?.textColor,
                     ),
                     const SizedBox(
                       width: AppDim.thirtyTwo,
                     ),
                     SvgPicture.asset(
-                      'assets/icons/ic_points.svg',
+                      AppIcons.icPoints,
                       color: appColors?.textColor,
                     ),
                   ],

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/router/app_router.dart';
+import 'package:psws_storage/res/resources.dart';
 
 class LifeCycleWidget extends StatefulWidget {
   final StackRouter router;
@@ -37,7 +38,7 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
             color: Theme.of(context).unselectedWidgetColor,
             child: Center(
               child: SvgPicture.asset(
-                'assets/icons/lock.svg',
+                AppIcons.icLock,
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),

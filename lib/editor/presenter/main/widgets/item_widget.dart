@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
-import 'package:intl/intl.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
+import 'package:psws_storage/app/utils/constants.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
+import 'package:psws_storage/res/resources.dart';
 
 class ItemWidget extends StatelessWidget {
   final DirectoryModel model;
@@ -30,15 +31,14 @@ class ItemWidget extends StatelessWidget {
     final AppTextStyleExt? appTextStyles =
         Theme.of(context).extension<AppTextStyleExt>();
     final folderIcon = SvgPicture.asset(
-      'assets/icons/ic_folder.svg',
+      AppIcons.icFolder,
       color: appColors?.textColor,
     );
     final fileIcon = SvgPicture.asset(
-      'assets/icons/ic_file.svg',
+      AppIcons.icFile,
       color: appColors?.textColor,
     );
     final l10n = AppLocalizations.of(context)!;
-    final formatter = DateFormat('dd.MM.yyyy HH:mm');
 
     return Column(
       children: [
@@ -105,8 +105,8 @@ class ItemWidget extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    l10n.item_widget__created(
-                                        formatter.format(model.createdDate)),
+                                    l10n.item_widget__created(dateFormatter
+                                        .format(model.createdDate)),
                                     style: appTextStyles?.subtitle,
                                     overflow: TextOverflow.ellipsis,
                                   ),

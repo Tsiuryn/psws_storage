@@ -9,6 +9,7 @@ import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
+import 'package:psws_storage/res/resources.dart';
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget, PswsSnackBar, PswsDialogs
@@ -42,7 +43,7 @@ class MainAppBar extends StatelessWidget
                   });
             },
             icon: SvgPicture.asset(
-              'assets/icons/ic_file.svg',
+              AppIcons.icFile,
               color: appColors?.textColor,
             )),
         IconButton(
@@ -52,7 +53,7 @@ class MainAppBar extends StatelessWidget
             });
           },
           icon: SvgPicture.asset(
-            'assets/icons/ic_folder.svg',
+            AppIcons.icFolder,
             color: appColors?.textColor,
           ),
         ),
@@ -64,7 +65,7 @@ class MainAppBar extends StatelessWidget
             context.router.push(const SettingsRoute());
           },
           icon: SvgPicture.asset(
-            'assets/icons/ic_settings.svg',
+            AppIcons.icSettings,
             color: appColors?.textColor,
           ),
         ),

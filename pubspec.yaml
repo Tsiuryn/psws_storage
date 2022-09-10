@@ -54,7 +54,7 @@ dependencies:
   #export files:
   permission_handler: ^9.2.0
   path_provider: ^2.0.11
-
+  spider: ^2.2.2
 
 dev_dependencies:
   flutter_test:
