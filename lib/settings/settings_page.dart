@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
-import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
+import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
+import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/res/resources.dart';
+import 'package:psws_storage/settings/bloc/settings_bloc.dart';
+import 'package:psws_storage/settings/bloc/settings_state.dart';
+import 'package:psws_storage/settings/import_export/import_export_page.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatelessWidget with PswsDialogs {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
@@ -22,145 +27,179 @@ class SettingsPage extends StatelessWidget {
     final titleTheme = l10n?.main_appbar_bottom_theme ?? '';
     final titleLocale = l10n?.main_appbar_bottom_locale ?? '';
     final appTheme = AppTheme(context);
+    final mainBloc = getIt.get<AppBloc>();
+    final environment = mainBloc.state;
 
-    return LifeCycleWidget(
-      router: context.router,
-      currentRouteName: SettingsRoute.name,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            l10n?.settings_page__title ?? '',
-            style: appTheme.appTextStyles?.titleLarge,
-          ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: appTheme.appColors?.textColor,
-            ),
-            onPressed: context.popRoute,
-          ),
-          bottom: const PreferredSize(
-            child: Divider(),
-            preferredSize: Size.fromHeight(1),
-          ),
-        ),
-        body: BlocBuilder<AppBloc, Environment>(
-            bloc: getIt.get<AppBloc>(),
-            builder: (context, environment) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppDim.sixteen),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SettingsItem(
-                        title: titleTheme,
-                        child: Row(
-                          children: [
-                            Text(
-                              environment.themeType == ThemeType.dark
-                                  ? l10n?.settings_page__color_scheme_night ??
-                                      ''
-                                  : l10n?.settings_page__color_scheme_day ?? '',
-                              style: appTheme.appTextStyles?.subtitle,
-                            ),
-                            const Expanded(child: SizedBox()),
-                            CupertinoSlidingSegmentedControl<ThemeType>(
-                              children: ThemeTypeExt.toMap(context),
-                              groupValue:
-                                  environment.themeType == ThemeType.dark
-                                      ? ThemeType.dark
-                                      : ThemeType.light,
-                              onValueChanged: (newValue) {
-                                if (newValue != null) {
-                                  context.read<AppBloc>().changeTheme(newValue);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SettingsItem(
-                        title: titleLocale,
-                        child: Row(
-                          children: [
-                            Text(
-                                environment.appLocale == AppLocale.rus
-                                    ? l10n?.settings_page__language_rus ?? ''
-                                    : l10n?.settings_page__language_eng ?? '',
-                                style: appTheme.appTextStyles?.subtitle),
-                            const Expanded(child: SizedBox()),
-                            CupertinoSlidingSegmentedControl<AppLocale>(
-                              children: AppLocaleExt.toMap(context),
-                              groupValue: environment.appLocale == AppLocale.rus
-                                  ? AppLocale.rus
-                                  : AppLocale.eng,
-                              onValueChanged: (newValue) {
-                                if (newValue != null) {
-                                  context
-                                      .read<AppBloc>()
-                                      .changeLocale(newValue);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SettingsItem(
-                        title: l10n?.settings_page__export ?? '',
-                        informationMessage:
-                            l10n?.settings_page__export_tooltip ?? '',
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      l10n?.settings_page__export_btn ?? '',
-                                      style: appTheme.appTextStyles?.subtitle,
-                                    ),
-                                    SvgPicture.asset(
-                                      AppIcons.icExport,
-                                      color: appTheme.appColors?.textColor,
-                                    )
-                                  ],
-                                ))
-                          ],
-                        ),
-                      ),
-                      SettingsItem(
-                        title: l10n?.settings_page__import ?? '',
-                        informationMessage:
-                            l10n?.settings_page__import_tooltip ?? '',
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      l10n?.settings_page__import_btn ?? '',
-                                      style: appTheme.appTextStyles?.subtitle,
-                                    ),
-                                    SvgPicture.asset(
-                                      AppIcons.icImport,
-                                      color: appTheme.appColors?.textColor,
-                                    )
-                                  ],
-                                ))
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+    return BlocProvider<SettingsBloc>(
+      create: (BuildContext context) {
+        return getIt.get<SettingsBloc>();
+      },
+      child: BlocConsumer<SettingsBloc, SettingsState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                l10n?.settings_page__title ?? '',
+                style: appTheme.appTextStyles?.titleLarge,
+              ),
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: appTheme.appColors?.textColor,
                 ),
-              );
-            }),
+                onPressed: context.popRoute,
+              ),
+              bottom: const PreferredSize(
+                child: Divider(),
+                preferredSize: Size.fromHeight(1),
+              ),
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(AppDim.sixteen),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SettingsItem(
+                      title: titleTheme,
+                      child: Row(
+                        children: [
+                          Text(
+                            environment.themeType == ThemeType.dark
+                                ? l10n?.settings_page__color_scheme_night ?? ''
+                                : l10n?.settings_page__color_scheme_day ?? '',
+                            style: appTheme.appTextStyles?.subtitle,
+                          ),
+                          const Expanded(child: SizedBox()),
+                          CupertinoSlidingSegmentedControl<ThemeType>(
+                            children: ThemeTypeExt.toMap(context),
+                            groupValue: environment.themeType == ThemeType.dark
+                                ? ThemeType.dark
+                                : ThemeType.light,
+                            onValueChanged: (newValue) {
+                              if (newValue != null) {
+                                context.read<AppBloc>().changeTheme(newValue);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SettingsItem(
+                      title: titleLocale,
+                      child: Row(
+                        children: [
+                          Text(
+                              environment.appLocale == AppLocale.rus
+                                  ? l10n?.settings_page__language_rus ?? ''
+                                  : l10n?.settings_page__language_eng ?? '',
+                              style: appTheme.appTextStyles?.subtitle),
+                          const Expanded(child: SizedBox()),
+                          CupertinoSlidingSegmentedControl<AppLocale>(
+                            children: AppLocaleExt.toMap(context),
+                            groupValue: environment.appLocale == AppLocale.rus
+                                ? AppLocale.rus
+                                : AppLocale.eng,
+                            onValueChanged: (newValue) {
+                              if (newValue != null) {
+                                context.read<AppBloc>().changeLocale(newValue);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SettingsItem(
+                      title: l10n?.settings_page__export ?? '',
+                      informationMessage:
+                          l10n?.settings_page__export_tooltip ?? '',
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                context.read<SettingsBloc>().checkPermission(
+                                    ImportExportPageType.export);
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    l10n?.settings_page__export_btn ?? '',
+                                    style: appTheme.appTextStyles?.subtitle,
+                                  ),
+                                  SvgPicture.asset(
+                                    AppIcons.icExport,
+                                    color: appTheme.appColors?.textColor,
+                                  )
+                                ],
+                              ))
+                        ],
+                      ),
+                    ),
+                    SettingsItem(
+                      title: l10n?.settings_page__import ?? '',
+                      informationMessage:
+                          l10n?.settings_page__import_tooltip ?? '',
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                context.read<SettingsBloc>().checkPermission(
+                                    ImportExportPageType.import);
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    l10n?.settings_page__import_btn ?? '',
+                                    style: appTheme.appTextStyles?.subtitle,
+                                  ),
+                                  SvgPicture.asset(
+                                    AppIcons.icImport,
+                                    color: appTheme.appColors?.textColor,
+                                  )
+                                ],
+                              ))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        listener: _settingsBlocListener,
       ),
     );
+  }
+
+  void _settingsBlocListener(BuildContext context, SettingsState state) {
+    final bloc = context.read<SettingsBloc>();
+    if (state is ShowPermissionDialog) {
+      state.model;
+      _showOkDialog(context, tapOk: () {
+        bloc.checkPermission(state.type);
+      });
+    }
+    if (state is ShowSettings) {
+      _showOkDialog(context, tapOk: () {
+        openAppSettings();
+        context.popRoute();
+      });
+    }
+    if (state is StoragePermissionGranted) {
+      context.pushRoute(ImportExportRoute(type: state.type));
+    }
+  }
+
+  void _showOkDialog(BuildContext context, {required VoidCallback tapOk}) {
+    final l10n = AppLocalizations.of(context)!;
+    createOkDialog(context,
+        title: l10n.settings_page__ok_dialog_title,
+        message: l10n.settings_page__ok_dialog_description,
+        tapOk: tapOk,
+        tapNo: () {});
   }
 }
 
@@ -206,7 +245,7 @@ extension AppLocaleExt on AppLocale {
   }
 }
 
-class SettingsItem extends StatefulWidget {
+class SettingsItem extends StatelessWidget {
   final String title;
   final Widget child;
   final String informationMessage;
@@ -217,13 +256,6 @@ class SettingsItem extends StatefulWidget {
     required this.child,
     this.informationMessage = '',
   }) : super(key: key);
-
-  @override
-  State<SettingsItem> createState() => _SettingsItemState();
-}
-
-class _SettingsItemState extends State<SettingsItem> {
-  final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
@@ -241,30 +273,23 @@ class _SettingsItemState extends State<SettingsItem> {
             children: [
               Expanded(
                 child: Text(
-                  widget.title,
+                  title,
                   style: appTheme.appTextStyles?.titleMedium,
                 ),
               ),
               Visibility(
-                visible: widget.informationMessage.isNotEmpty,
-                child: Tooltip(
-                  key: tooltipKey,
-                  message: widget.informationMessage,
-                  margin: const EdgeInsets.symmetric(horizontal: AppDim.eight),
-                  child: IconButton(
-                    onPressed: () {
-                      tooltipKey.currentState?.ensureTooltipVisible();
-                    },
-                    icon: SvgPicture.asset(
-                      AppIcons.icInformation,
-                      color: appTheme.appColors?.textColor,
-                    ),
+                visible: informationMessage.isNotEmpty,
+                child: IconWithTooltip(
+                  message: informationMessage,
+                  icon: SvgPicture.asset(
+                    AppIcons.icInformation,
+                    color: appTheme.appColors?.textColor,
                   ),
                 ),
               )
             ],
           ),
-          widget.child,
+          child,
           const SizedBox(
             height: AppDim.sixteen,
           ),

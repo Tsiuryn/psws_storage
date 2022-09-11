@@ -45,5 +45,19 @@
   "settings_page__export_tooltip": "All notes will be encoded in the file. The file will be saved on the device. The user chooses the way to save. Important: if you lose your password, the file cannot be recovered!",
   "settings_page__import": "Import:",
   "settings_page__import_btn": "Import database",
-  "settings_page__import_tooltip": "Notes will be imported from the file. The user specifies the path to the file and then enters the password for the notes archive. You will also be asked to add a notes database or replace all notes in the application."
+  "settings_page__import_tooltip": "Notes will be imported from the file. The user specifies the path to the file and then enters the password for the notes archive. You will also be asked to add a notes database or replace all notes in the application.",
+  "settings_page__ok_dialog_title": "Check storage permissions",
+  "settings_page__ok_dialog_description": "We need permission to upload a file or get a file from your storage. Allow?",
+  "import_export_page__export_appbar_title": "Export",
+  "import_export_page__import_appbar_title": "Import",
+  "import_export_page__export_btn_choose_folder": "Select a folder to save the file",
+  "import_export_page__import_btn_choose_file": "Choose file",
+  "import_export_page__input_file_placeholder": "File name",
+  "import_export_page__input_file_hint": "Add file name",
+  "import_export_page__input_password_placeholder": "Password",
+  "import_export_page__input_rpt_psw_placeholder": "Repeat password",
+  "import_export_page__input_password_hint": "Add password",
+  "import_export_page__input_rpt_psw_hint": "Add repeat password",
+  "import_export_page__path": "Path:",
+  "import_export_page__empty_path": "no path selected"
 }

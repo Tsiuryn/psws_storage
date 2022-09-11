@@ -1,91 +1,69 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:psws_storage/app/common/base_page.dart';
-import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psws_storage/app/di/di.dart';
+import 'package:psws_storage/app/theme/app_theme.dart';
+import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
+import 'package:psws_storage/res/resources.dart';
 import 'package:psws_storage/settings/import_export/bloc/import_export_bloc.dart';
 import 'package:psws_storage/settings/import_export/export/export_form.dart';
+import 'package:psws_storage/settings/import_export/import/import_form.dart';
 
-class ImportExportPage
-    extends StatelessBasePage<ImportExportBloc, ImportExportState>
-    with PswsDialogs {
-  const ImportExportPage({Key? key}) : super(key: key);
+class ImportExportPage extends StatefulWidget {
+  @QueryParam('page_type')
+  final ImportExportPageType type;
 
-  @override
-  ImportExportBloc createBloc(BuildContext context) {
-    return ImportExportBloc()..add(ImportExportEvent.checkPermission());
-  }
+  const ImportExportPage({Key? key, required this.type}) : super(key: key);
 
   @override
-  void onListener(BuildContext context, state) {
-    final bloc = context.read<ImportExportBloc>();
-    if (state is ImportExportShowPermissionDialogState) {
-      _showOkDialog(context, tapOk: () {
-        bloc.add(ImportExportEvent.checkPermission());
-      });
-    }
-    if (state is ImportExportShowSettingsState) {
-      _showOkDialog(context, tapOk: () {
-        openAppSettings();
-        context.popRoute();
-      });
-    }
-  }
-
-  void _showOkDialog(BuildContext context, {required VoidCallback tapOk}) {
-    createOkDialog(context,
-        title: 'Check permission',
-        message: 'We need write permission',
-        tapOk: tapOk, tapNo: () {
-      context.popRoute();
-      context.popRoute();
-    });
-  }
-
-  @override
-  AppBar? buildAppBar(BuildContext context, state) {
-    return AppBar(
-      title: const Text('Import/Export Page'),
-    );
-  }
-
-  @override
-  Widget buildBody(BuildContext context, state) {
-    return state is ImportExportLoadingState
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : Column(
-            children: [
-              Expanded(child: ImportForm()),
-              Divider(
-                height: 2,
-                indent: 16,
-                endIndent: 16,
-                thickness: 4,
-              ),
-              Expanded(
-                  child: ExportForm(
-                state: state,
-              )),
-            ],
-          );
-  }
+  State<ImportExportPage> createState() => _ImportExportPageState();
 }
 
-class ImportForm extends StatelessWidget {
-  const ImportForm({Key? key}) : super(key: key);
+class _ImportExportPageState extends State<ImportExportPage> {
+  bool get isImportPage => widget.type == ImportExportPageType.import;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        color: Colors.green,
-        child: Column(
-          children: [Text('Импортировать базу данных')],
-        ),
+    return BlocProvider<ImportExportBloc>(
+      create: (context) => getIt.get<ImportExportBloc>(),
+      child: BlocConsumer<ImportExportBloc, ImportExportState>(
+        builder: _pageStateBuilder,
+        listener: _pageStateListener,
       ),
     );
   }
+
+  void _pageStateListener(BuildContext context, ImportExportState state) {}
+
+  Widget _pageStateBuilder(BuildContext context, ImportExportState state) {
+    final l10n = AppLocalizations.of(context)!;
+    final appTheme = AppTheme(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          isImportPage
+              ? l10n.import_export_page__import_appbar_title
+              : l10n.import_export_page__export_appbar_title,
+          style: appTheme.appTextStyles?.titleLarge,
+        ),
+        actions: [
+          IconWithTooltip(
+            message: isImportPage
+                ? l10n.settings_page__import_tooltip
+                : l10n.settings_page__export_tooltip,
+            icon: SvgPicture.asset(
+              AppIcons.icInformation,
+              color: appTheme.appColors?.textColor,
+            ),
+          ),
+        ],
+      ),
+      body: isImportPage ? ImportForm(state: state) : ExportForm(state: state),
+    );
+  }
 }
+
+enum ImportExportPageType { import, export }

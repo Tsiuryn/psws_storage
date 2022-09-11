@@ -35,8 +35,9 @@ const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
     page: SettingsPage,
     transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
-  AutoRoute(
+  CustomRoute(
     path: 'import_export',
     page: ImportExportPage,
+    transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
 ]);

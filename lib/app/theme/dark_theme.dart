@@ -42,6 +42,29 @@ ThemeData darkTheme(BuildContext context) {
         statusBarBrightness: Brightness.dark, // For iOS (dark icons)
       ),
     ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(AppDim.eight)),
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xFFFFFFFF),
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(AppDim.eight)),
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xFFFFFFFF),
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(AppDim.eight)),
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xFF002ABD),
+        ),
+      ),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       unselectedItemColor: Color(0xFF91969E),
       selectedItemColor: Color(0xFFF2F3F5),

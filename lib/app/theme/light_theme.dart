@@ -50,6 +50,20 @@ ThemeData lightTheme(BuildContext context) {
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: Colors.black,
     ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppDim.eight)),
+          borderSide: BorderSide(
+            width: 1,
+            color: Color(0xFF000000),
+          )),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppDim.eight)),
+          borderSide: BorderSide(
+            width: 1,
+            color: Color(0xFF002ABD),
+          )),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(

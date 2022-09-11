@@ -20,6 +20,8 @@ import 'package:psws_storage/pin/domain/pin_repo.dart';
 import 'package:psws_storage/pin/domain/usecase/read_registration_pin_usecase.dart';
 import 'package:psws_storage/pin/domain/usecase/write_registration_pin_usecase.dart';
 import 'package:psws_storage/pin/presentation/bloc/pin_bloc.dart';
+import 'package:psws_storage/settings/bloc/settings_bloc.dart';
+import 'package:psws_storage/settings/import_export/bloc/import_export_bloc.dart';
 
 GetIt getIt = GetIt.instance;
 const _idSecureStorage = '_idSecureStorage';
@@ -77,15 +79,16 @@ void initDi() {
         getDirectory: getIt.get<GetDirectoryUseCase>(),
       ));
 
-  getIt.registerFactory(() =>
-      EditNotesBloc(
+  getIt.registerFactory(() => EditNotesBloc(
         updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
         getDirectory: getIt.get<GetDirectoryUseCase>(),
       ));
 
-  getIt.registerFactory<PinBloc>(() =>
-      PinBloc(
+  getIt.registerFactory<PinBloc>(() => PinBloc(
         readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
         writeRegistrationPin: getIt.get<WriteRegistrationPinUseCase>(),
       ));
+
+  getIt.registerFactory<SettingsBloc>(() => SettingsBloc());
+  getIt.registerFactory<ImportExportBloc>(() => ImportExportBloc());
 }

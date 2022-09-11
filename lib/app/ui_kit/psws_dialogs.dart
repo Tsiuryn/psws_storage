@@ -17,11 +17,22 @@ mixin PswsDialogs {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),
-          content: PswsInput(
-            onChanged: (text) {
-              fileName = text;
-            },
-            isFolder: isFolder,
+          content: Form(
+            autovalidateMode: AutovalidateMode.always,
+            child: PswsInput(
+              onChanged: (text) {
+                fileName = text;
+              },
+              validator: (String? value) {
+                if ((value ?? '').isEmpty) {
+                  return AppLocalizations.of(context)!.common_dialog_error;
+                }
+                return null;
+              },
+              placeholder: isFolder
+                  ? l10n.common_dialog_placeholder_folder
+                  : l10n.common_dialog_placeholder_file,
+            ),
           ),
           actions: [
             TextButton(

@@ -38,5 +38,19 @@
   "settings_page__export_tooltip": "Все заметки будут закодированы в файле. Файл будет сохранен на девайсе. Пользователь сам выбирает путь сохранения. Важно: при потере пароля, файл восстановлению не подлежит!",
   "settings_page__import": "Импорт:",
   "settings_page__import_btn": "Импорт заметок",
-  "settings_page__import_tooltip": "Из файла будут импортированы заметки. Пользователь указывает путь к файлу и затем вводит пароль архива заметок. Также будет предложено дописать базу данных заметок либо заменить все заметки в приложении."
+  "settings_page__import_tooltip": "Из файла будут импортированы заметки. Пользователь указывает путь к файлу и затем вводит пароль архива заметок. Также будет предложено дописать базу данных заметок либо заменить все заметки в приложении.",
+  "settings_page__ok_dialog_title": "Проверка разрешений на доступ к хранилищу",
+  "settings_page__ok_dialog_description": "Для выгрузки файла либо получения файла из вашего хранилища нам необходимо разрешение. Разрешить?",
+  "import_export_page__export_appbar_title": "Экспорт",
+  "import_export_page__import_appbar_title": "Импорт",
+  "import_export_page__export_btn_choose_folder": "Выбрать папку для сохранения файла",
+  "import_export_page__import_btn_choose_file": "Выбрать файл",
+  "import_export_page__input_file_placeholder": "Имя файла",
+  "import_export_page__input_file_hint": "Добавьте имя файла",
+  "import_export_page__input_password_placeholder": "Пароль",
+  "import_export_page__input_rpt_psw_placeholder": "Повтор пароля",
+  "import_export_page__input_password_hint": "Введите пароль",
+  "import_export_page__input_rpt_psw_hint": "Повторите ввод пароля",
+  "import_export_page__path": "Путь:",
+  "import_export_page__empty_path": "путь не выбран"
 }
