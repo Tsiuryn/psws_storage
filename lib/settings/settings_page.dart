@@ -9,14 +9,14 @@ import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';
-import 'package:psws_storage/app/router/app_router.dart';
+import 'package:psws_storage/app/router/app_router.gr.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/res/resources.dart';
-import 'package:psws_storage/settings/bloc/settings_bloc.dart';
-import 'package:psws_storage/settings/bloc/settings_state.dart';
-import 'package:psws_storage/settings/import_export/import_export_page.dart';
+import 'package:psws_storage/settings/presentation/bloc/settings_bloc.dart';
+import 'package:psws_storage/settings/presentation/bloc/settings_state.dart';
+import 'package:psws_storage/settings/presentation/import_export/import_export_page.dart';
 
 class SettingsPage extends StatelessWidget with PswsDialogs {
   const SettingsPage({Key? key}) : super(key: key);

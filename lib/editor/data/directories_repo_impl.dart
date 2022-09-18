@@ -1,9 +1,8 @@
 import 'package:hive/hive.dart';
+import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/editor/data/bean/directory_bean.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/domain/repo/directories_repo.dart';
-
-const String _idStorage = 'PSWS_STORAGE_ID';
 
 class DirectoriesRepoImpl implements DirectoriesRepo {
   @override
@@ -39,7 +38,7 @@ class DirectoriesRepoImpl implements DirectoriesRepo {
   }
 
   Future<Box<DirectoryBean>> _openBox() {
-    return Hive.openBox(_idStorage);
+    return getIt.get(instanceName: databaseName);
   }
 
   List<DirectoryModel> _getDirectories(Box<DirectoryBean> box) =>

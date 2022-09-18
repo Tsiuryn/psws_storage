@@ -30,7 +30,7 @@ dependencies:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
 
-  flutter_quill: ^5.2.5
+  flutter_quill: ^6.0.4
 
   # secure_storage:
   flutter_secure_storage: ^5.0.2
@@ -41,8 +41,6 @@ dependencies:
   # uuid
   uuid_type: ^2.0.0
 
-  # hash psw
-  crypto: ^3.0.2
 
 
   get_it: ^7.2.0
@@ -52,10 +50,16 @@ dependencies:
 
 
   #export files:
-  permission_handler: ^9.2.0
+  permission_handler: ^10.0.0
   path_provider: ^2.0.11
   spider: ^2.2.2
   collection: ^1.16.0
+
+  file_picker: ^5.1.0
+
+  #crypto and encrypt
+  crypto: ^3.0.2
+  encrypt: ^5.0.1
 
 dev_dependencies:
   flutter_test:

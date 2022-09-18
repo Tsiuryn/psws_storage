@@ -39,6 +39,14 @@ class MainBloc extends Cubit<MainModelState> {
     emit(state.copyWith(directories: directories));
   }
 
+  Future<void> changeToDefaultState() async {
+    final directories = await _getListDirectories();
+    final defaultState = MainModelState.empty();
+    emit(
+      defaultState.copyWith(directories: directories),
+    );
+  }
+
   void openFolder(DirectoryModel directory) {
     List<String> path = state.path..add(directory.name);
 
@@ -47,7 +55,7 @@ class MainBloc extends Cubit<MainModelState> {
 
   void closeFolder() {
     final DirectoryModel? parentDirectory = state.directories.firstWhereOrNull(
-          (element) => element.id == state.parentId,
+      (element) => element.id == state.parentId,
     );
 
     if (parentDirectory != null && state.parentId != rootDirectory) {
@@ -67,7 +75,7 @@ class MainBloc extends Cubit<MainModelState> {
 
   void addFile(String fileName) async {
     final directories =
-    await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
+        await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
 
     emit(state.copyWith(
       directories: directories,

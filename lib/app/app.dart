@@ -5,8 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';
+import 'package:psws_storage/app/router/app_router.gr.dart';
 
-import 'router/app_router.dart';
 import 'theme/dark_theme.dart';
 import 'theme/light_theme.dart';
 

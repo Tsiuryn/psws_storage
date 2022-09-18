@@ -4,13 +4,13 @@ import 'package:psws_storage/app/app.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/editor/data/bean/directory_bean.dart';
 
-import 'app/router/app_router.dart';
+import 'app/router/app_router.gr.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // init GetIt
-  initDi();
   await _initHive();
+  await initDi();
   _initializedGetIt();
 }
 

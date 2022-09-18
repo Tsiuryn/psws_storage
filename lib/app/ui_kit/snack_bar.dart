@@ -35,6 +35,7 @@ mixin PswsSnackBar {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
+      duration: const Duration(seconds: 1),
       margin: const EdgeInsets.only(bottom: 12.0, left: 16.0, right: 16.0),
       behavior: SnackBarBehavior.floating,
     ));

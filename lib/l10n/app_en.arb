@@ -59,5 +59,15 @@
   "import_export_page__input_password_hint": "Add password",
   "import_export_page__input_rpt_psw_hint": "Add repeat password",
   "import_export_page__path": "Path:",
-  "import_export_page__empty_path": "no path selected"
+  "import_export_page__empty_path": "no path selected",
+  "export_form__confirm_btn_title": "Export database",
+  "export_form__empty_path": "Choose a folder to save the file!",
+  "export_form__export_success": "The database has been successfully uploaded to a file!",
+  "input_error__empty": "Input can not be empty",
+  "input_error__do_not_match_psw": "Repeat password does not match",
+  "import_form__type_add": "Add to database",
+  "import_form__type_rewrite": "Rewrite the database",
+  "import_form__confirm_btn_title": "Import database",
+  "import_form__empty_path": "Select the file from which notes will be added!",
+  "import_form__import_success": "The database has been successfully loaded and updated!"
 }

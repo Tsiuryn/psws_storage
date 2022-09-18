@@ -101,8 +101,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                       padding: const EdgeInsets.all(AppDim.eight),
                       child: QuillToolbar.basic(
                         controller: _controller,
-                        showImageButton: false,
-                        showVideoButton: false,
+                        showItalicButton: false,
                         showLink: false,
                         toolbarIconAlignment: WrapAlignment.start,
                         showInlineCode: false,

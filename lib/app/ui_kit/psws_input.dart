@@ -6,24 +6,28 @@ class PswsInput extends StatelessWidget {
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final bool autofocus;
 
-  const PswsInput({
-    Key? key,
-    required this.placeholder,
-    this.onChanged,
-    this.hintText,
-    this.controller,
-    this.validator,
-  }) : super(key: key);
+  const PswsInput(
+      {Key? key,
+      required this.placeholder,
+      this.onChanged,
+      this.hintText,
+      this.controller,
+      this.validator,
+      this.autofocus = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autofocus: true,
+      autofocus: autofocus,
       onChanged: onChanged,
       validator: validator,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
+        isDense: true,
         labelText: placeholder,
         hintText: hintText,
       ),

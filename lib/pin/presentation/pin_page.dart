@@ -4,13 +4,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/common/base_page.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.dart';
+import 'package:psws_storage/app/router/app_router.gr.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/pin/presentation/widget/circle.dart';
 import 'package:psws_storage/pin/presentation/widget/passcode_screen.dart';
+import 'package:psws_storage/res/resources.dart';
 
 import 'bloc/pin_bloc.dart';
 
@@ -84,14 +86,14 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
         children: [
           Expanded(
             child: PinCodeWidget(
-              passcodeLength: 8,
-              confirmButton: Icon(
-                Icons.check,
+              passcodeLength: AppDim.eight.toInt(),
+              confirmButton: SvgPicture.asset(
+                AppIcons.icCheck,
                 color: Theme.of(context).unselectedWidgetColor,
-                size: AppDim.thirtyTwo,
+                fit: BoxFit.scaleDown,
               ),
               circleUIConfig: CircleUIConfig(
-                circleSize: 12,
+                circleSize: AppDim.twelve,
                 filledColor: Theme.of(context).colorScheme.secondary,
                 borderColor: Theme.of(context).primaryColorDark,
               ),

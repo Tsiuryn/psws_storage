@@ -52,5 +52,15 @@
   "import_export_page__input_password_hint": "Введите пароль",
   "import_export_page__input_rpt_psw_hint": "Повторите ввод пароля",
   "import_export_page__path": "Путь:",
-  "import_export_page__empty_path": "путь не выбран"
+  "import_export_page__empty_path": "путь не выбран",
+  "export_form__confirm_btn_title": "Экспортировать данные",
+  "export_form__empty_path": "Выберите папку для сохранения файла!",
+  "export_form__export_success": "База данных успешно выгружена в файл!",
+  "input_error__empty": "Поле не может быть пустым",
+  "input_error__do_not_match_psw": "Введенные пароли не совпадают",
+  "import_form__type_add": "Добавить в базу данных",
+  "import_form__type_rewrite": "Переписать базу данных",
+  "import_form__confirm_btn_title": "Импортировать данные",
+  "import_form__empty_path": "Выберите файл из которого будут добавлены заметки!",
+  "import_form__import_success": "База данных успешно загружена и обновлена!"
 }

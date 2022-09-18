@@ -5,6 +5,7 @@ import 'package:psws_storage/res/resources.dart';
 
 void main() {
   test('app_icons assets test', () {
+    expect(File(AppIcons.icCheck).existsSync(), true);
     expect(File(AppIcons.icExport).existsSync(), true);
     expect(File(AppIcons.icFile).existsSync(), true);
     expect(File(AppIcons.icFolder).existsSync(), true);
