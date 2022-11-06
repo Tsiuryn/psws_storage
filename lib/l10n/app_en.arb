@@ -69,5 +69,12 @@
   "import_form__type_rewrite": "Rewrite the database",
   "import_form__confirm_btn_title": "Import database",
   "import_form__empty_path": "Select the file from which notes will be added!",
-  "import_form__import_success": "The database has been successfully loaded and updated!"
+  "import_form__import_success": "The database has been successfully loaded and updated!",
+  "import_mtn_settings_title": "Import from MTN:",
+  "import_mtn_settings_btn_title": "Open import MTN page",
+  "import_mtn_appbar_title": "Import from MyTreeNotes",
+  "import_mtn_btn_title": "Import",
+  "import_mtn_success_message": "Conversion and import went well!",
+  "import_mtn_error_message": "Unable to convert data",
+  "import_mtn_info_appbar_title": "Import statement from MyTreeNotes"
 }

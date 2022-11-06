@@ -13,7 +13,8 @@ class EditNotesBloc extends Cubit<EditNotesModel> {
   }) : super(EditNotesModel.initial());
 
   Future<void> getNoteData(int idHiveObject) async {
-    emit(state.copyWith(note: await getDirectory(idHiveObject)));
+    final dfdf = await getDirectory(idHiveObject);
+    emit(state.copyWith(note: dfdf));
   }
 
   Future<void> saveNote(String content) async {

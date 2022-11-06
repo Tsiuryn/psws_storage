@@ -73,9 +73,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           const Expanded(child: SizedBox()),
                           CupertinoSlidingSegmentedControl<ThemeType>(
                             children: ThemeTypeExt.toMap(context),
-                            groupValue: environment.themeType == ThemeType.dark
-                                ? ThemeType.dark
-                                : ThemeType.light,
+                            groupValue: environment.themeType == ThemeType.dark ? ThemeType.dark : ThemeType.light,
                             onValueChanged: (newValue) {
                               if (newValue != null) {
                                 context.read<AppBloc>().changeTheme(newValue);
@@ -97,9 +95,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           const Expanded(child: SizedBox()),
                           CupertinoSlidingSegmentedControl<AppLocale>(
                             children: AppLocaleExt.toMap(context),
-                            groupValue: environment.appLocale == AppLocale.rus
-                                ? AppLocale.rus
-                                : AppLocale.eng,
+                            groupValue: environment.appLocale == AppLocale.rus ? AppLocale.rus : AppLocale.eng,
                             onValueChanged: (newValue) {
                               if (newValue != null) {
                                 context.read<AppBloc>().changeLocale(newValue);
@@ -111,15 +107,13 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                     ),
                     SettingsItem(
                       title: l10n?.settings_page__export ?? '',
-                      informationMessage:
-                          l10n?.settings_page__export_tooltip ?? '',
+                      informationMessage: l10n?.settings_page__export_tooltip ?? '',
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
                               onPressed: () {
-                                context.read<SettingsBloc>().checkPermission(
-                                    ImportExportPageType.export);
+                                context.read<SettingsBloc>().checkPermission(ImportExportPageType.export);
                               },
                               child: Row(
                                 children: [
@@ -138,15 +132,13 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                     ),
                     SettingsItem(
                       title: l10n?.settings_page__import ?? '',
-                      informationMessage:
-                          l10n?.settings_page__import_tooltip ?? '',
+                      informationMessage: l10n?.settings_page__import_tooltip ?? '',
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
                               onPressed: () {
-                                context.read<SettingsBloc>().checkPermission(
-                                    ImportExportPageType.import);
+                                context.read<SettingsBloc>().checkPermission(ImportExportPageType.import);
                               },
                               child: Row(
                                 children: [
@@ -163,6 +155,22 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                         ],
                       ),
                     ),
+                    SettingsItem(
+                        title: l10n?.import_mtn_settings_title ?? '',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                context.router.push(const ImportMtnRoute());
+                              },
+                              child: Text(
+                                l10n?.import_mtn_settings_btn_title ?? '',
+                                style: appTheme.appTextStyles?.subtitle,
+                              ),
+                            ),
+                          ],
+                        )),
                   ],
                 ),
               ),
@@ -211,14 +219,9 @@ extension ThemeTypeExt on ThemeType {
         height: 24,
         child: Text(
           e == ThemeType.dark
-              ? AppLocalizations.of(context)!
-                  .main_appbar_bottom_theme_title_dark
-                  .toUpperCase()
-              : AppLocalizations.of(context)!
-                  .main_appbar_bottom_theme_title_light
-                  .toUpperCase(),
-          style:
-              TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+              ? AppLocalizations.of(context)!.main_appbar_bottom_theme_title_dark.toUpperCase()
+              : AppLocalizations.of(context)!.main_appbar_bottom_theme_title_light.toUpperCase(),
+          style: TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),
       );
     }
@@ -235,8 +238,7 @@ extension AppLocaleExt on AppLocale {
         height: 24,
         child: Text(
           e.name.toUpperCase(),
-          style:
-              TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+          style: TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),
       );
     }

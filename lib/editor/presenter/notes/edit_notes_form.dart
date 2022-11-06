@@ -49,11 +49,13 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
       });
       final myJSON = jsonDecode(widget.note.content);
       final document = Document.fromJson(myJSON);
-      _controller = QuillController(
-          document: document,
-          selection: const TextSelection.collapsed(offset: 0));
+      _controller = QuillController(document: document, selection: const TextSelection.collapsed(offset: 0));
+      _controller.moveCursorToEnd();
     } catch (e) {
-      _controller = QuillController.basic();
+      final doc = Document();
+      doc.insert(0, widget.note.content);
+      _controller = QuillController(document: doc, selection: const TextSelection.collapsed(offset: 0));
+      _controller.moveCursorToEnd();
     }
   }
 

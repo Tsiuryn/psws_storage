@@ -15,5 +15,10 @@ void main() {
     expect(File(AppIcons.icPoints).existsSync(), true);
     expect(File(AppIcons.icSettings).existsSync(), true);
     expect(File(AppIcons.icUp).existsSync(), true);
+    expect(File(AppIcons.five).existsSync(), true);
+    expect(File(AppIcons.four).existsSync(), true);
+    expect(File(AppIcons.one).existsSync(), true);
+    expect(File(AppIcons.three).existsSync(), true);
+    expect(File(AppIcons.two).existsSync(), true);
   });
 }

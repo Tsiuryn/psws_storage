@@ -62,5 +62,12 @@
   "import_form__type_rewrite": "Переписать базу данных",
   "import_form__confirm_btn_title": "Импортировать данные",
   "import_form__empty_path": "Выберите файл из которого будут добавлены заметки!",
-  "import_form__import_success": "База данных успешно загружена и обновлена!"
+  "import_form__import_success": "База данных успешно загружена и обновлена!",
+  "import_mtn_settings_title": "Импортировать из MTN:",
+  "import_mtn_settings_btn_title": "Открыть экран импорта из MTN",
+  "import_mtn_appbar_title": "Импорт из MyTreeNotes",
+  "import_mtn_btn_title": "Импортировать",
+  "import_mtn_success_message": "Конвертация и импорт прошли удачно!",
+  "import_mtn_error_message": "Невозможно конвертировать данные",
+  "import_mtn_info_appbar_title": "Инструкция импорта из MyTreeNotes"
 }
