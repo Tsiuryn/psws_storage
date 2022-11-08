@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/router/app_router.gr.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class ImportMtnInfoPage extends StatelessWidget {
@@ -13,27 +15,31 @@ class ImportMtnInfoPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final appTheme = AppTheme(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: FittedBox(
-          child: Text(
-            l10n?.import_mtn_info_appbar_title ?? '',
-            style: appTheme.appTextStyles?.titleLarge,
+    return LifeCycleWidget(
+      router: context.router,
+      currentRouteName: ImportMtnInfoRoute.name,
+      child: Scaffold(
+        appBar: AppBar(
+          title: FittedBox(
+            child: Text(
+              l10n?.import_mtn_info_appbar_title ?? '',
+              style: appTheme.appTextStyles?.titleLarge,
+            ),
+          ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: appTheme.appColors?.textColor,
+            ),
+            onPressed: context.popRoute,
+          ),
+          bottom: const PreferredSize(
+            child: Divider(),
+            preferredSize: Size.fromHeight(1),
           ),
         ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: appTheme.appColors?.textColor,
-          ),
-          onPressed: context.popRoute,
-        ),
-        bottom: const PreferredSize(
-          child: Divider(),
-          preferredSize: Size.fromHeight(1),
-        ),
+        body: const ImportMtnInfoForm(),
       ),
-      body: const ImportMtnInfoForm(),
     );
   }
 }

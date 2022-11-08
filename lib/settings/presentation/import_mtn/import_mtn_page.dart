@@ -11,6 +11,7 @@ import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_button.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 import 'package:psws_storage/res/resources.dart';
 import 'package:psws_storage/settings/presentation/import_mtn/bloc/import_mtn_bloc.dart';
 
@@ -35,94 +36,98 @@ class _ImportMtnPageState extends State<ImportMtnPage> with PswsSnackBar {
     final l10n = AppLocalizations.of(context);
     final appTheme = AppTheme(context);
 
-    return BlocProvider(
-      create: (context) => getIt.get<ImportMtnBloc>(),
-      child: BlocConsumer<ImportMtnBloc, ImportMtnState>(
-        builder: (BuildContext context, ImportMtnState state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: FittedBox(
-                child: Text(
-                  l10n?.import_mtn_appbar_title ?? '',
-                  style: appTheme.appTextStyles?.titleLarge,
+    return LifeCycleWidget(
+      router: context.router,
+      currentRouteName: ImportMtnRoute.name,
+      child: BlocProvider(
+        create: (context) => getIt.get<ImportMtnBloc>(),
+        child: BlocConsumer<ImportMtnBloc, ImportMtnState>(
+          builder: (BuildContext context, ImportMtnState state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: FittedBox(
+                  child: Text(
+                    l10n?.import_mtn_appbar_title ?? '',
+                    style: appTheme.appTextStyles?.titleLarge,
+                  ),
                 ),
-              ),
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_rounded,
-                  color: appTheme.appColors?.textColor,
-                ),
-                onPressed: context.popRoute,
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    context.pushRoute(const ImportMtnInfoRoute());
-                  },
-                  icon: SvgPicture.asset(
-                    AppIcons.icInformation,
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_rounded,
                     color: appTheme.appColors?.textColor,
                   ),
-                )
-              ],
-              bottom: const PreferredSize(
-                child: Divider(),
-                preferredSize: Size.fromHeight(1),
-              ),
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: PswsButton(
-              content: ButtonText(l10n?.import_mtn_btn_title ?? ''),
-              onPressed: () async {
-                final sourceText = _controller.text;
-                if (sourceText.isNotEmpty) {
-                  context.read<ImportMtnBloc>().convertMtnText(sourceText);
-                }
-              },
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _controller,
-                    maxLines: null,
-                    autofocus: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(borderSide: BorderSide.none),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-                      errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                  onPressed: context.popRoute,
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      context.pushRoute(const ImportMtnInfoRoute());
+                    },
+                    icon: SvgPicture.asset(
+                      AppIcons.icInformation,
+                      color: appTheme.appColors?.textColor,
                     ),
-                  ),
-                  const SizedBox(
-                    height: AppDim.fourtyFour,
                   )
                 ],
+                bottom: const PreferredSize(
+                  child: Divider(),
+                  preferredSize: Size.fromHeight(1),
+                ),
               ),
-            ),
-          );
-        },
-        listener: (BuildContext context, ImportMtnState state) {
-          switch (state.type) {
-            case ImportMtnStateType.initial:
-              context.loaderOverlay.hide();
-              return;
-            case ImportMtnStateType.loading:
-              context.loaderOverlay.show();
-              return;
-            case ImportMtnStateType.error:
-              context.loaderOverlay.hide();
-              context.popRoute();
-              showRequestSnackBar(context, message: l10n?.import_mtn_error_message ?? '', isSuccess: false);
-              return;
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              floatingActionButton: PswsButton(
+                content: ButtonText(l10n?.import_mtn_btn_title ?? ''),
+                onPressed: () async {
+                  final sourceText = _controller.text;
+                  if (sourceText.isNotEmpty) {
+                    context.read<ImportMtnBloc>().convertMtnText(sourceText);
+                  }
+                },
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _controller,
+                      maxLines: null,
+                      autofocus: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                        focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                        errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: AppDim.fourtyFour,
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+          listener: (BuildContext context, ImportMtnState state) {
+            switch (state.type) {
+              case ImportMtnStateType.initial:
+                context.loaderOverlay.hide();
+                return;
+              case ImportMtnStateType.loading:
+                context.loaderOverlay.show();
+                return;
+              case ImportMtnStateType.error:
+                context.loaderOverlay.hide();
+                context.popRoute();
+                showRequestSnackBar(context, message: l10n?.import_mtn_error_message ?? '', isSuccess: false);
+                return;
 
-            case ImportMtnStateType.importSuccess:
-              context.loaderOverlay.hide();
-              getIt.get<MainBloc>().initBloc();
-              context.popRoute();
-              showRequestSnackBar(context, message: l10n?.import_mtn_success_message ?? '', isSuccess: true);
-              return;
-          }
-        },
+              case ImportMtnStateType.importSuccess:
+                context.loaderOverlay.hide();
+                getIt.get<MainBloc>().initBloc();
+                context.popRoute();
+                showRequestSnackBar(context, message: l10n?.import_mtn_success_message ?? '', isSuccess: true);
+                return;
+            }
+          },
+        ),
       ),
     );
   }
