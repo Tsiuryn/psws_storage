@@ -5,14 +5,11 @@ abstract class SettingsState {
 
   SettingsState(this.model);
 
-  factory SettingsState.initial() =>
-      InitialSettings(const SettingsModel.empty());
+  factory SettingsState.initial() => InitialSettings(const SettingsModel.empty());
 
   factory SettingsState.updatePage(SettingsModel model) = UpdatePage;
 
-  factory SettingsState.permissionGranted(
-          SettingsModel model, ImportExportPageType type) =
-      StoragePermissionGranted;
+  factory SettingsState.permissionGranted(SettingsModel model, ImportExportPageType type) = StoragePermissionGranted;
 
   factory SettingsState.showSettings(SettingsModel model) = ShowSettings;
 
@@ -50,5 +47,18 @@ class ShowPermissionDialog extends SettingsState {
 }
 
 class SettingsModel {
-  const SettingsModel.empty();
+  final bool showMtnImport;
+
+  const SettingsModel.empty() : showMtnImport = false;
+
+  const SettingsModel({
+    required this.showMtnImport,
+  });
+
+  SettingsModel copyWith({
+    bool? showMtnImport,
+  }) =>
+      SettingsModel(
+        showMtnImport: showMtnImport ?? this.showMtnImport,
+      );
 }

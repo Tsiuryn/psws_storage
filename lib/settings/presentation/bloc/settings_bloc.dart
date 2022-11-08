@@ -11,6 +11,12 @@ import 'settings_state.dart';
 class SettingsBloc extends Cubit<SettingsState> {
   SettingsBloc() : super(SettingsState.initial());
 
+  Future<void> setShowMtnImport(bool showMtnImport) async {
+    emit(SettingsState.updatePage(state.model.copyWith(
+      showMtnImport: showMtnImport,
+    )));
+  }
+
   Future<void> checkPermission(ImportExportPageType type) async {
     if (state is! UpdatePage) {
       emit(SettingsState.updatePage(state.model));
@@ -22,8 +28,7 @@ class SettingsBloc extends Cubit<SettingsState> {
       if (writeStorageStatus == AppStoragePermissionStatus.granted) {
         emit(SettingsState.permissionGranted(state.model, type));
       } else {
-        if (writeStorageStatus ==
-            AppStoragePermissionStatus.permanentlyDenied) {
+        if (writeStorageStatus == AppStoragePermissionStatus.permanentlyDenied) {
           emit(SettingsState.showSettings(state.model));
         } else {
           emit(SettingsState.showPermissionDialog(state.model, type));

@@ -42,9 +42,14 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: Text(
-                  l10n?.settings_page__title ?? '',
-                  style: appTheme.appTextStyles?.titleLarge,
+                title: GestureDetector(
+                  onLongPress: () {
+                    context.read<SettingsBloc>().setShowMtnImport(!state.model.showMtnImport);
+                  },
+                  child: Text(
+                    l10n?.settings_page__title ?? '',
+                    style: appTheme.appTextStyles?.titleLarge,
+                  ),
                 ),
                 leading: IconButton(
                   icon: Icon(
@@ -159,22 +164,30 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           ],
                         ),
                       ),
-                      SettingsItem(
-                          title: l10n?.import_mtn_settings_title ?? '',
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  context.router.push(const ImportMtnRoute());
-                                },
-                                child: Text(
-                                  l10n?.import_mtn_settings_btn_title ?? '',
-                                  style: appTheme.appTextStyles?.subtitle,
-                                ),
-                              ),
-                            ],
-                          )),
+                      AnimatedSize(
+                        duration: const Duration(
+                          milliseconds: 300,
+                        ),
+                        child: Visibility(
+                          visible: state.model.showMtnImport,
+                          child: SettingsItem(
+                              title: l10n?.import_mtn_settings_title ?? '',
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      context.router.push(const ImportMtnRoute());
+                                    },
+                                    child: Text(
+                                      l10n?.import_mtn_settings_btn_title ?? '',
+                                      style: appTheme.appTextStyles?.subtitle,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
                     ],
                   ),
                 ),
