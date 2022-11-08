@@ -28,11 +28,9 @@ class PinCodeWidget extends StatefulWidget {
     KeyboardUIConfig? keyboardUIConfig,
     this.confirmCallback,
     this.title,
-  })
-      : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
+  })  : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
         keyboardUIConfig = keyboardUIConfig ?? const KeyboardUIConfig(),
-        assert(confirmButton != null && confirmCallback != null ||
-            confirmButton == null && confirmCallback == null),
+        assert(confirmButton != null && confirmCallback != null || confirmButton == null && confirmCallback == null),
         super(key: key);
 
   @override

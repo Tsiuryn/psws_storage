@@ -37,10 +37,9 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
             onPressed: () {
-              createFileDialog(context, title: fileName, isFolder: false,
-                  value: (value) {
-                    bloc.addFile(value);
-                  });
+              createFileDialog(context, title: fileName, isFolder: false, value: (value) {
+                bloc.addFile(value);
+              });
             },
             icon: SvgPicture.asset(
               AppIcons.icFile,
