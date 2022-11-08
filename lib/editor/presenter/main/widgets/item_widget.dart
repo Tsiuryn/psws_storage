@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +12,9 @@ import 'package:psws_storage/res/resources.dart';
 
 class ItemWidget extends StatelessWidget {
   final DirectoryModel model;
+  final String searchValue;
   final int id;
+  final bool canSwipe;
   final Function()? onDelete;
   final Function()? onEdit;
   final Function() onTap;
@@ -21,6 +24,8 @@ class ItemWidget extends StatelessWidget {
       required this.model,
       required this.onTap,
       required this.id,
+      this.canSwipe = true,
+      this.searchValue = '',
       this.onDelete,
       this.onEdit})
       : super(key: key);
@@ -28,8 +33,7 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppColorsExt? appColors = Theme.of(context).extension<AppColorsExt>();
-    final AppTextStyleExt? appTextStyles =
-        Theme.of(context).extension<AppTextStyleExt>();
+    final AppTextStyleExt? appTextStyles = Theme.of(context).extension<AppTextStyleExt>();
     final folderIcon = SvgPicture.asset(
       AppIcons.icFolder,
       color: appColors?.textColor,
@@ -39,43 +43,48 @@ class ItemWidget extends StatelessWidget {
       color: appColors?.textColor,
     );
     final l10n = AppLocalizations.of(context)!;
+    final leadingActions = [
+      SwipeAction(
+        icon: const Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
+        title: l10n.item_widget__rename,
+        style: const TextStyle(fontSize: AppDim.eight, color: Colors.white),
+        onTap: (CompletionHandler handler) async {
+          await handler(false);
+          onEdit?.call();
+        },
+        color: appColors?.positiveActionColor ?? Colors.green,
+      ),
+    ];
+
+    final trailingActions = [
+      SwipeAction(
+        icon: const Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+        title: l10n.item_widget__delete,
+        style: const TextStyle(fontSize: AppDim.eight, color: Colors.white),
+        onTap: (CompletionHandler handler) async {
+          await handler(false);
+          onDelete?.call();
+        },
+        color: appColors?.negativeActionColor ?? Colors.red,
+      ),
+    ];
+
+    final textStyle = appTextStyles?.titleMedium ?? const TextStyle();
+    final textHighLightStyle =
+        appTextStyles?.titleMedium?.copyWith(backgroundColor: Colors.grey[600]) ?? const TextStyle();
 
     return Column(
       children: [
         SwipeActionCell(
           key: ValueKey(id),
-          leadingActions: [
-            SwipeAction(
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.white,
-              ),
-              title: l10n.item_widget__rename,
-              style:
-                  const TextStyle(fontSize: AppDim.eight, color: Colors.white),
-              onTap: (CompletionHandler handler) async {
-                await handler(false);
-                onEdit?.call();
-              },
-              color: appColors?.positiveActionColor ?? Colors.green,
-            ),
-          ],
-          trailingActions: <SwipeAction>[
-            SwipeAction(
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
-              title: l10n.item_widget__delete,
-              style:
-                  const TextStyle(fontSize: AppDim.eight, color: Colors.white),
-              onTap: (CompletionHandler handler) async {
-                await handler(false);
-                onDelete?.call();
-              },
-              color: appColors?.negativeActionColor ?? Colors.red,
-            ),
-          ],
+          leadingActions: canSwipe ? leadingActions : [],
+          trailingActions: canSwipe ? trailingActions : [],
           child: InkWell(
             onTap: onTap,
             child: SizedBox(
@@ -99,14 +108,16 @@ class ItemWidget extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    model.name,
-                                    style: appTextStyles?.titleMedium,
-                                    overflow: TextOverflow.ellipsis,
+                                  RichText(
+                                    text: highlightText(
+                                        context: context,
+                                        value: model.name,
+                                        searchQuery: searchValue,
+                                        textStyle: textStyle,
+                                        textHighLightStyle: textHighLightStyle),
                                   ),
                                   Text(
-                                    l10n.item_widget__created(dateFormatter
-                                        .format(model.createdDate)),
+                                    l10n.item_widget__created(dateFormatter.format(model.createdDate)),
                                     style: appTextStyles?.subtitle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -130,4 +141,50 @@ class ItemWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+/// RU: [highlightText] функция выделения текста:
+/// [value] - основной текст, который нужно выделить;
+/// [searchQuery] - искомый текст в основном тексте;
+/// [textStyle] - стиль основного текста (аргумент не обязательный, по умолчанию используется [UnibankStyles.listItemSubtitleTextStyle]);
+/// [textHighLightStyle] - стиль выделенного текста (аргумент не обязательный, по умолчанию используется [UnibankStyles.listItemTitleTextStyle]);
+///
+/// ENG: [highlightText] is a text highlighting function:
+/// [value] - the main text to be highlighting;
+/// [searchQuery] - the search text in the main text;
+/// [textStyle] - style of the main text (the argument is optional, by default [UnibankStyles.listItemSubtitleTextStyle]);
+/// [textHighLightStyle] - style of the selected text (the argument is optional, the default is [UnibankStyles.listItemTitleTextStyle]);
+///
+TextSpan highlightText({
+  required BuildContext context,
+  required String value,
+  required String searchQuery,
+  Function? onHighlightedTextTap,
+  required TextStyle textStyle,
+  required TextStyle textHighLightStyle,
+}) {
+  TextStyle defStyle = textStyle;
+  TextStyle customStyle = textHighLightStyle;
+
+  List<InlineSpan> children = [];
+  final lowerValue = value.toLowerCase();
+  final lowerSearchQuery = searchQuery.toLowerCase();
+
+  if (searchQuery.isNotEmpty && lowerValue.contains(lowerSearchQuery)) {
+    var firstIndex = lowerValue.indexOf(lowerSearchQuery);
+    var lastIndex = lowerValue.indexOf(lowerSearchQuery) + searchQuery.length;
+
+    children
+      ..add(TextSpan(text: value.substring(0, firstIndex)))
+      ..add(TextSpan(
+        style: customStyle,
+        text: value.substring(firstIndex, lastIndex),
+        recognizer: TapGestureRecognizer()..onTap = onHighlightedTextTap as GestureTapCallback?,
+      ))
+      ..add(TextSpan(text: value.substring(lastIndex, value.length)));
+  } else {
+    children.add(TextSpan(text: value));
+  }
+
+  return TextSpan(style: defStyle, children: children);
 }

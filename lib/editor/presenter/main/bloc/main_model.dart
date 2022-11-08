@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/const/constants.dart';
 
@@ -38,7 +39,7 @@ class MainModelState {
     return directories
         .where(
           (element) => element.parentId == parentId,
-        )
+    )
         .toList();
   }
 
@@ -64,6 +65,22 @@ class MainModelState {
       ...folders,
       ...files,
     ];
+  }
+
+  List<String> getPathByParentId(DirectoryModel choosingDirectory) {
+    List<String> path = [choosingDirectory.name];
+    String searchParentId = choosingDirectory.parentId;
+    while (searchParentId != rootDirectory) {
+      final parentDirectory = directories.firstWhereOrNull((element) => element.id == searchParentId);
+      if (parentDirectory != null) {
+        path.add(parentDirectory.name);
+        searchParentId = parentDirectory.parentId;
+      } else {
+        searchParentId = rootDirectory;
+      }
+    }
+
+    return path.reversed.toList();
   }
 
   List<DirectoryModel> getListAttachedFiles(String parentId) {

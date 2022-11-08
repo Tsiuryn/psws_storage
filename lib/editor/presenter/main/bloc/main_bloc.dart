@@ -53,6 +53,12 @@ class MainBloc extends Cubit<MainModelState> {
     emit(state.copyWith(parentId: directory.id, path: path));
   }
 
+  void openFolderFromSearch(DirectoryModel directory) {
+    List<String> path = state.getPathByParentId(directory);
+
+    emit(state.copyWith(parentId: directory.id, path: path));
+  }
+
   void closeFolder() {
     final DirectoryModel? parentDirectory = state.directories.firstWhereOrNull(
       (element) => element.id == state.parentId,

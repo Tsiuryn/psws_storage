@@ -67,7 +67,9 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
 
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context, MainModelState state) {
-    return const MainAppBar();
+    return MainAppBar(
+      directories: state.directories,
+    );
   }
 
   @override

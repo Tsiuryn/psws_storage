@@ -8,13 +8,19 @@ import 'package:psws_storage/app/router/app_router.gr.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
+import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget, PswsSnackBar, PswsDialogs
     implements PreferredSizeWidget {
-  const MainAppBar({Key? key}) : super(key: key);
+  final List<DirectoryModel> directories;
+
+  const MainAppBar({
+    Key? key,
+    required this.directories,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +65,23 @@ class MainAppBar extends StatelessWidget
         const Expanded(
           child: SizedBox(),
         ),
+        IconButton(
+            onPressed: () async {
+              context.router.push(SearchDirectoryRoute(directories: directories)).then((directory) {
+                if (directory != null && directory is DirectoryModel) {
+                  if (directory.isFolder) {
+                    context.read<MainBloc>().openFolderFromSearch(directory);
+                  } else {
+                    context.pushRoute(EditNotesRoute(idHive: directory.idHiveObject));
+                  }
+                }
+              });
+            },
+            icon: Icon(
+              Icons.search_rounded,
+              color: appColors?.textColor,
+              size: AppDim.thirtyTwo,
+            )),
         IconButton(
           onPressed: () {
             context.router.push(const SettingsRoute());

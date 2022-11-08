@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:psws_storage/editor/presenter/main/main_page.dart';
+import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
 import 'package:psws_storage/settings/presentation/import_export/import_export_page.dart';
@@ -23,6 +24,11 @@ const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
   AutoRoute(
     path: 'home',
     page: MainPage,
+  ),
+  CustomRoute(
+    path: 'search',
+    page: SearchDirectoryPage,
+    transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
   CustomRoute(
     path: 'edit_note',
