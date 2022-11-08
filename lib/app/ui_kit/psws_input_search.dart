@@ -11,16 +11,16 @@ class PswsInputSearch extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final bool autofocus;
 
-  const PswsInputSearch(
-      {Key? key,
-      this.onChanged,
-      this.hintText,
-      this.controller,
-      this.validator,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.autofocus = false})
-      : super(key: key);
+  const PswsInputSearch({
+    Key? key,
+    this.onChanged,
+    this.hintText,
+    this.controller,
+    this.validator,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.autofocus = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
