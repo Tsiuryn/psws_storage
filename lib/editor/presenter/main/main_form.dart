@@ -97,19 +97,34 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
                 }
               },
               onEdit: () {
-                createFileDialog(context,
-                    title: currentDir.isFolder
-                        ? l10n.main_page__dialog_rename_folder_title
-                        : l10n.main_page__dialog_rename_file_title,
-                    isFolder: currentDir.isFolder, value: (value) {
-                  context.read<MainBloc>().updateName(
-                        model: currentDir,
-                        newName: value,
-                      );
-                });
+                createFileDialog(
+                  context,
+                  title: currentDir.isFolder
+                      ? l10n.main_page__dialog_rename_folder_title
+                      : l10n.main_page__dialog_rename_file_title,
+                  isFolder: currentDir.isFolder,
+                  value: (value) {
+                    context.read<MainBloc>().updateName(
+                          model: currentDir,
+                          newName: value,
+                        );
+                  },
+                );
               },
               onDelete: () {
-                bloc.deleteFile(currentDir);
+                createOkDialog(
+                  context,
+                  title: currentDir.isFolder
+                      ? l10n.main_page__dialog_delete_folder_title
+                      : l10n.main_page__dialog_delete_file_title,
+                  message: currentDir.isFolder
+                      ? l10n.main_page__dialog_delete_folder_description(currentDir.name)
+                      : l10n.main_page__dialog_delete_file_description(currentDir.name),
+                  tapOk: () {
+                    bloc.deleteFile(currentDir);
+                  },
+                  tapNo: () {},
+                );
               },
             );
           }

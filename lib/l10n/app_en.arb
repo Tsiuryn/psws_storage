@@ -25,6 +25,24 @@
   "common_dialog_placeholder_file": "File name",
   "main_page__dialog_rename_file_title": "Rename file",
   "main_page__dialog_rename_folder_title": "Rename folder",
+  "main_page__dialog_delete_folder_title": "Delete folder",
+  "main_page__dialog_delete_file_title": "Delete file",
+  "main_page__dialog_delete_folder_description": "Are you sure you want to permanently delete the folder \"{dirName}\"? ",
+  "@main_page__dialog_delete_folder_description": {
+    "placeholders": {
+      "dirName": {
+        "format": "string"
+      }
+    }
+  },
+  "main_page__dialog_delete_file_description": "Are you sure you want to permanently delete the file \"{dirName}\"?",
+  "@main_page__dialog_delete_file_description": {
+    "placeholders": {
+      "dirName": {
+        "format": "string"
+      }
+    }
+  },
   "item_widget__rename": "RENAME",
   "item_widget__delete": "DELETE",
   "item_widget__created": "Created: {label}",
