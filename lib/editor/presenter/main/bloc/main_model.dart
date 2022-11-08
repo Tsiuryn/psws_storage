@@ -39,7 +39,7 @@ class MainModelState {
     return directories
         .where(
           (element) => element.parentId == parentId,
-    )
+        )
         .toList();
   }
 
