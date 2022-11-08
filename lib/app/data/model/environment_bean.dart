@@ -48,7 +48,6 @@ extension EnvironmentBeanExt on EnvironmentBean {
 extension EnvironmentExt on Environment {
   EnvironmentBean toBean() => EnvironmentBean(
         themeType: themeType == ThemeType.dark ? ThemeTypeBean.dark : ThemeTypeBean.light,
-        appLocale:
-            appLocale == AppLocale.rus ? AppLocaleBean.ru : AppLocaleBean.en,
+        appLocale: appLocale == AppLocale.rus ? AppLocaleBean.ru : AppLocaleBean.en,
       );
 }
