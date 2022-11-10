@@ -78,5 +78,12 @@
   "search_directory__title": "Выберите папку назначения:",
   "search_directory__no_folders_message": "Папки отсутствуют!",
   "search_directory__cant_be_destination_folder_message": "Выбранная папка не может быть папкой назначения!",
-  "search_directory__text_btn": "--выбрать корневой каталог--"
+  "search_directory__text_btn": "--выбрать корневой каталог--",
+  "password_change__title": "Замена пароля",
+  "password_change__btn_settings_title": "Открыть экран смены пароля",
+  "password_change__btn_title": "Изменить",
+  "password_change__message_info": "На данной экране Вы можете изменить пароль для входа в приложение",
+  "password_change__old_psw": "Старый пароль",
+  "password_change__message_success": "Пароль успешно изменен!",
+  "password_change__message_error": "Пароли не совпадают!"
 }

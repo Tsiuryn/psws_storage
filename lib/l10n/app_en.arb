@@ -99,5 +99,12 @@
   "search_directory__title": "Select destination folder:",
   "search_directory__no_folders_message": "No Folders!",
   "search_directory__cant_be_destination_folder_message": "The selected folder cannot be the destination folder!",
-  "search_directory__text_btn": "--select root directory--"
+  "search_directory__text_btn": "--select root directory--",
+  "password_change__title": "Password change",
+  "password_change__btn_settings_title": "Open password change screen",
+  "password_change__btn_title": "Change",
+  "password_change__message_info": "On this screen, you can change the password to enter the application",
+  "password_change__old_psw": "Old password",
+  "password_change__message_success": "Password changed successfully!",
+  "password_change__message_error": "Passwords do not match!"
 }

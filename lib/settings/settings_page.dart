@@ -115,6 +115,23 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                         ),
                       ),
                       SettingsItem(
+                          title: l10n?.password_change__title ?? '',
+                          informationMessage: l10n?.password_change__message_info ?? '',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  context.pushRoute(const ChangePswRoute());
+                                },
+                                child: Text(
+                                  l10n?.password_change__btn_settings_title ?? '',
+                                  style: appTheme.appTextStyles?.subtitle,
+                                ),
+                              ),
+                            ],
+                          )),
+                      SettingsItem(
                         title: l10n?.settings_page__export ?? '',
                         informationMessage: l10n?.settings_page__export_tooltip ?? '',
                         child: Row(

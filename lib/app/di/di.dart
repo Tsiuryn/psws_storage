@@ -27,6 +27,7 @@ import 'package:psws_storage/settings/domain/gateway/import_export_gateway.dart'
 import 'package:psws_storage/settings/domain/usecase/export_database_usecase.dart';
 import 'package:psws_storage/settings/domain/usecase/import_database_usecase.dart';
 import 'package:psws_storage/settings/presentation/bloc/settings_bloc.dart';
+import 'package:psws_storage/settings/presentation/change_psw/change_psw_bloc.dart';
 import 'package:psws_storage/settings/presentation/import_export/bloc/import_export_bloc.dart';
 import 'package:psws_storage/settings/presentation/import_mtn/bloc/import_mtn_bloc.dart';
 
@@ -37,9 +38,7 @@ const String _idDatabase = 'PSWS_STORAGE_ID';
 
 Future<void> initDi() async {
   //SecureStorage
-  getIt.registerLazySingleton<FlutterSecureStorage>(
-      () => const FlutterSecureStorage(),
-      instanceName: _idSecureStorage);
+  getIt.registerLazySingleton<FlutterSecureStorage>(() => const FlutterSecureStorage(), instanceName: _idSecureStorage);
 
   getIt.registerFactory<Future<Box<DirectoryBean>>>(
     () async => await Hive.openBox(_idDatabase),
@@ -48,39 +47,26 @@ Future<void> initDi() async {
 
   // Repository
   getIt.registerSingleton<DirectoriesRepo>(DirectoriesRepoImpl());
-  getIt.registerSingleton<PinRepo>(PinRepoImpl(
-      getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
-  getIt.registerSingleton<SettingsGateway>(SettingsGatewayImpl(
-      getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
+  getIt.registerSingleton<PinRepo>(PinRepoImpl(getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
+  getIt.registerSingleton<SettingsGateway>(
+      SettingsGatewayImpl(getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
   getIt.registerSingleton<ImportExportGateway>(ImportExportGatewayImpl());
 
   //UseCase
-  getIt.registerFactory<GetEnvironmentUseCase>(
-      () => GetEnvironmentUseCase(getIt.get<SettingsGateway>()));
-  getIt.registerFactory<SaveEnvironmentUseCase>(
-      () => SaveEnvironmentUseCase(getIt.get<SettingsGateway>()));
-  getIt.registerFactory<ExportDatabaseUseCase>(
-      () => ExportDatabaseUseCase(getIt.get<ImportExportGateway>()));
-  getIt.registerFactory<ImportDatabaseUseCase>(
-      () => ImportDatabaseUseCase(getIt.get<ImportExportGateway>()));
+  getIt.registerFactory<GetEnvironmentUseCase>(() => GetEnvironmentUseCase(getIt.get<SettingsGateway>()));
+  getIt.registerFactory<SaveEnvironmentUseCase>(() => SaveEnvironmentUseCase(getIt.get<SettingsGateway>()));
+  getIt.registerFactory<ExportDatabaseUseCase>(() => ExportDatabaseUseCase(getIt.get<ImportExportGateway>()));
+  getIt.registerFactory<ImportDatabaseUseCase>(() => ImportDatabaseUseCase(getIt.get<ImportExportGateway>()));
 
-  getIt.registerFactory<AddFileUseCase>(
-      () => AddFileUseCase(getIt.get<DirectoriesRepo>()));
-  getIt.registerFactory<GetListDirectoriesUseCase>(
-      () => GetListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
-  getIt.registerFactory<GetDirectoryUseCase>(
-      () => GetDirectoryUseCase(getIt.get<DirectoriesRepo>()));
-  getIt.registerFactory<DeleteDirectoryUseCase>(
-      () => DeleteDirectoryUseCase(getIt.get<DirectoriesRepo>()));
-  getIt.registerFactory<DeleteListDirectoriesUseCase>(
-      () => DeleteListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
-  getIt.registerFactory<UpdateDirectoryUseCase>(
-      () => UpdateDirectoryUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<AddFileUseCase>(() => AddFileUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<GetListDirectoriesUseCase>(() => GetListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<GetDirectoryUseCase>(() => GetDirectoryUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<DeleteDirectoryUseCase>(() => DeleteDirectoryUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<DeleteListDirectoriesUseCase>(() => DeleteListDirectoriesUseCase(getIt.get<DirectoriesRepo>()));
+  getIt.registerFactory<UpdateDirectoryUseCase>(() => UpdateDirectoryUseCase(getIt.get<DirectoriesRepo>()));
 
-  getIt.registerFactory<ReadRegistrationPinUseCase>(
-      () => ReadRegistrationPinUseCase(getIt.get<PinRepo>()));
-  getIt.registerFactory<WriteRegistrationPinUseCase>(
-      () => WriteRegistrationPinUseCase(getIt.get<PinRepo>()));
+  getIt.registerFactory<ReadRegistrationPinUseCase>(() => ReadRegistrationPinUseCase(getIt.get<PinRepo>()));
+  getIt.registerFactory<WriteRegistrationPinUseCase>(() => WriteRegistrationPinUseCase(getIt.get<PinRepo>()));
 
   //Bloc
   getIt.registerSingleton<AppBloc>(
@@ -119,6 +105,12 @@ Future<void> initDi() async {
   getIt.registerFactory<ImportMtnBloc>(() => ImportMtnBloc(
         addFileUseCase: getIt.get<AddFileUseCase>(),
       ));
+
+  getIt.registerFactory<ChangePswBloc>(() => ChangePswBloc(
+        readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
+        writeRegistrationPin: getIt.get<WriteRegistrationPinUseCase>(),
+      ));
+
   getIt.registerFactory<ImportExportBloc>(
     () => ImportExportBloc(
       exportDatabaseUseCase: getIt.get<ExportDatabaseUseCase>(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PswsPasswordInput extends StatefulWidget {
   final ValueChanged<String>? onChanged;
@@ -6,11 +7,15 @@ class PswsPasswordInput extends StatefulWidget {
   final String? hintText;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
 
   const PswsPasswordInput({
     Key? key,
     required this.placeholder,
-    required this.hintText,
+    this.keyboardType,
+    this.inputFormatters,
+    this.hintText,
     this.onChanged,
     this.controller,
     this.validator,
@@ -29,6 +34,8 @@ class _PswsPasswordInputState extends State<PswsPasswordInput> {
       onChanged: widget.onChanged,
       controller: widget.controller,
       validator: widget.validator,
+      inputFormatters: widget.inputFormatters,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
           labelText: widget.placeholder,
           isDense: true,

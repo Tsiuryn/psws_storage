@@ -3,6 +3,7 @@ import 'package:psws_storage/editor/presenter/main/main_page.dart';
 import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
+import 'package:psws_storage/settings/presentation/change_psw/change_psw_page.dart';
 import 'package:psws_storage/settings/presentation/import_export/import_export_page.dart';
 import 'package:psws_storage/settings/presentation/import_mtn/import_mtn_page.dart';
 import 'package:psws_storage/settings/presentation/import_mtn/info/import_mtn_info_page.dart';
@@ -53,6 +54,11 @@ const pages = AutoRoute(path: '/', page: EmptyRouterPage, children: [
   CustomRoute(
     path: 'mtn_import_info',
     page: ImportMtnInfoPage,
+    transitionsBuilder: TransitionsBuilders.slideLeft,
+  ),
+  CustomRoute(
+    path: 'change_password',
+    page: ChangePswPage,
     transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
 ]);
