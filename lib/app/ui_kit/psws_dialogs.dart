@@ -7,6 +7,7 @@ mixin PswsDialogs {
     BuildContext context, {
     required String title,
     bool isFolder = true,
+    String? initialTextValue,
     required Function(String) value,
   }) {
     String fileName = '';
@@ -20,6 +21,7 @@ mixin PswsDialogs {
           content: Form(
             autovalidateMode: AutovalidateMode.always,
             child: PswsInput(
+              initialValue: initialTextValue,
               onChanged: (text) {
                 fileName = text;
               },
@@ -29,9 +31,7 @@ mixin PswsDialogs {
                 }
                 return null;
               },
-              placeholder: isFolder
-                  ? l10n.common_dialog_placeholder_folder
-                  : l10n.common_dialog_placeholder_file,
+              placeholder: isFolder ? l10n.common_dialog_placeholder_folder : l10n.common_dialog_placeholder_file,
             ),
           ),
           actions: [

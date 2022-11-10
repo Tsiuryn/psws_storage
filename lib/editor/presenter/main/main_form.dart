@@ -99,6 +99,7 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
             onEdit: () {
               createFileDialog(
                 context,
+                initialTextValue: currentDir.name,
                 title: currentDir.isFolder
                     ? l10n.main_page__dialog_rename_folder_title
                     : l10n.main_page__dialog_rename_file_title,
