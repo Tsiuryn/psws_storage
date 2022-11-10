@@ -31,6 +31,7 @@
   "main_page__dialog_delete_file_description": "Вы действительно хотите удалить файл \"{dirName}\" без возможности восстановления?",
   "item_widget__rename": "ПЕРЕИМЕНОВАТЬ",
   "item_widget__delete": "УДАЛИТЬ",
+  "item_widget__move": "ПЕРЕМЕСТИТЬ",
   "item_widget__created": "Создано: {label}",
   "settings_page__title": "Настройки",
   "settings_page__color_scheme_day": "ДЕНЬ",
@@ -73,5 +74,9 @@
   "import_mtn_btn_title": "Импортировать",
   "import_mtn_success_message": "Конвертация и импорт прошли удачно!",
   "import_mtn_error_message": "Невозможно конвертировать данные",
-  "import_mtn_info_appbar_title": "Инструкция импорта из MyTreeNotes"
+  "import_mtn_info_appbar_title": "Инструкция импорта из MyTreeNotes",
+  "search_directory__title": "Выберите папку назначения:",
+  "search_directory__no_folders_message": "Папки отсутствуют!",
+  "search_directory__cant_be_destination_folder_message": "Выбранная папка не может быть папкой назначения!",
+  "search_directory__text_btn": "--выбрать корневой каталог--"
 }

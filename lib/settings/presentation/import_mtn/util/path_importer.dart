@@ -5,7 +5,7 @@ import 'package:uuid_type/uuid_type.dart';
 
 const _splitContent = '<note_content>';
 const _splitName = '[NAME]';
-const rootId = rootDirectory;
+const rootId = rootDirectoryId;
 
 class PathImporter {
   final String sourceText;

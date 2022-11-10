@@ -45,6 +45,7 @@
   },
   "item_widget__rename": "RENAME",
   "item_widget__delete": "DELETE",
+  "item_widget__move": "MOVE",
   "item_widget__created": "Created: {label}",
   "@item_widget__created": {
     "placeholders": {
@@ -94,5 +95,9 @@
   "import_mtn_btn_title": "Import",
   "import_mtn_success_message": "Conversion and import went well!",
   "import_mtn_error_message": "Unable to convert data",
-  "import_mtn_info_appbar_title": "Import statement from MyTreeNotes"
+  "import_mtn_info_appbar_title": "Import statement from MyTreeNotes",
+  "search_directory__title": "Select destination folder:",
+  "search_directory__no_folders_message": "No Folders!",
+  "search_directory__cant_be_destination_folder_message": "The selected folder cannot be the destination folder!",
+  "search_directory__text_btn": "--select root directory--"
 }

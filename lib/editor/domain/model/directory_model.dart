@@ -1,3 +1,5 @@
+import 'package:psws_storage/editor/presenter/main/const/constants.dart';
+
 class DirectoryModel {
   final bool isFolder;
   final String id;
@@ -40,4 +42,14 @@ class DirectoryModel {
   String toString() {
     return 'DirectoryModel{isFolder: $isFolder, id: $id, parentId: $parentId, createdDate: $createdDate, name: $name, content: $content, idHiveObject: $idHiveObject}';
   }
+
+  static DirectoryModel buildRootDirectory() => DirectoryModel(
+        isFolder: true,
+        id: rootDirectoryId,
+        parentId: '',
+        createdDate: DateTime(1979),
+        name: '',
+        content: '',
+        idHiveObject: -1,
+      );
 }

@@ -66,22 +66,23 @@ class MainAppBar extends StatelessWidget
           child: SizedBox(),
         ),
         IconButton(
-            onPressed: () async {
-              context.router.push(SearchDirectoryRoute(directories: directories)).then((directory) {
-                if (directory != null && directory is DirectoryModel) {
-                  if (directory.isFolder) {
-                    context.read<MainBloc>().openFolderFromSearch(directory);
-                  } else {
-                    context.pushRoute(EditNotesRoute(idHive: directory.idHiveObject));
-                  }
+          onPressed: () async {
+            context.router.push(SearchDirectoryRoute(directories: directories)).then((directory) {
+              if (directory != null && directory is DirectoryModel) {
+                if (directory.isFolder) {
+                  context.read<MainBloc>().openFolderFromSearch(directory);
+                } else {
+                  context.pushRoute(EditNotesRoute(idHive: directory.idHiveObject));
                 }
-              });
-            },
-            icon: Icon(
-              Icons.search_rounded,
-              color: appColors?.textColor,
-              size: AppDim.thirtyTwo,
-            )),
+              }
+            });
+          },
+          icon: Icon(
+            Icons.search_rounded,
+            color: appColors?.textColor,
+            size: AppDim.thirtyTwo,
+          ),
+        ),
         IconButton(
           onPressed: () {
             context.router.push(const SettingsRoute());

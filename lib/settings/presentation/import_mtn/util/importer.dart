@@ -20,7 +20,7 @@ class Importer {
 
   List<DirectoryModel> _createDirectories(List<_First> lst) {
     List<DirectoryModel> drc = [];
-    String rootId = rootDirectory;
+    String rootId = rootDirectoryId;
     lst.forEachIndexed((indexRoot, directories) {
       List<DirectoryModel> elementsDrc = [];
       directories.content.forEachIndexed((index, element) {

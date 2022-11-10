@@ -16,7 +16,7 @@ class MainModelState {
   });
 
   MainModelState.empty()
-      : parentId = rootDirectory,
+      : parentId = rootDirectoryId,
         currentBackPressTime = DateTime(1980),
         path = [],
         directories = [];
@@ -67,16 +67,24 @@ class MainModelState {
     ];
   }
 
+  List<DirectoryModel> get allFolders {
+    if (directories.isEmpty) {
+      return directories;
+    }
+
+    return directories.where((element) => element.isFolder).toList();
+  }
+
   List<String> getPathByParentId(DirectoryModel choosingDirectory) {
     List<String> path = [choosingDirectory.name];
     String searchParentId = choosingDirectory.parentId;
-    while (searchParentId != rootDirectory) {
+    while (searchParentId != rootDirectoryId) {
       final parentDirectory = directories.firstWhereOrNull((element) => element.id == searchParentId);
       if (parentDirectory != null) {
         path.add(parentDirectory.name);
         searchParentId = parentDirectory.parentId;
       } else {
-        searchParentId = rootDirectory;
+        searchParentId = rootDirectoryId;
       }
     }
 
@@ -102,5 +110,11 @@ class MainModelState {
     final List<DirectoryModel> childrenFolders = getChildren(parentId);
 
     return _getSubFolders(childrenFolders);
+  }
+
+  bool isChild(String sourceId, String targetId) {
+    final listAttachedFiles = getListAttachedFiles(sourceId);
+
+    return listAttachedFiles.firstWhereOrNull((element) => element.id == targetId) != null;
   }
 }

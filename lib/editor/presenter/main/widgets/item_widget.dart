@@ -17,18 +17,20 @@ class ItemWidget extends StatelessWidget {
   final bool canSwipe;
   final Function()? onDelete;
   final Function()? onEdit;
+  final Function()? onMove;
   final Function() onTap;
 
-  const ItemWidget(
-      {Key? key,
-      required this.model,
-      required this.onTap,
-      required this.id,
-      this.canSwipe = true,
-      this.searchValue = '',
-      this.onDelete,
-      this.onEdit})
-      : super(key: key);
+  const ItemWidget({
+    Key? key,
+    required this.model,
+    required this.onTap,
+    required this.id,
+    this.canSwipe = true,
+    this.searchValue = '',
+    this.onDelete,
+    this.onEdit,
+    this.onMove,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +47,20 @@ class ItemWidget extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final leadingActions = [
       SwipeAction(
-        icon: const Icon(
+        icon: _buildIcon(
+          Icons.open_with_rounded,
+        ),
+        title: l10n.item_widget__move,
+        style: const TextStyle(fontSize: AppDim.eight, color: Colors.white),
+        onTap: (CompletionHandler handler) async {
+          await handler(false);
+          onMove?.call();
+        },
+        color: appColors?.positiveActionColor ?? Colors.green,
+      ),
+      SwipeAction(
+        icon: _buildIcon(
           Icons.edit,
-          color: Colors.white,
         ),
         title: l10n.item_widget__rename,
         style: const TextStyle(fontSize: AppDim.eight, color: Colors.white),
@@ -61,9 +74,8 @@ class ItemWidget extends StatelessWidget {
 
     final trailingActions = [
       SwipeAction(
-        icon: const Icon(
+        icon: _buildIcon(
           Icons.delete,
-          color: Colors.white,
         ),
         title: l10n.item_widget__delete,
         style: const TextStyle(fontSize: AppDim.eight, color: Colors.white),
@@ -139,6 +151,16 @@ class ItemWidget extends StatelessWidget {
         //   color: Theme.of(context).dividerColor,
         // ),
       ],
+    );
+  }
+
+  Widget _buildIcon(IconData icon) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppDim.four),
+      child: Icon(
+        icon,
+        color: Colors.white,
+      ),
     );
   }
 }
