@@ -44,6 +44,10 @@ class MainModelState {
   }
 
   String getPathString() {
+    return convertListToPathText(path);
+  }
+
+  String convertListToPathText(List<String> path) {
     String pathString = '..';
     for (String element in path) {
       pathString += '/$element';

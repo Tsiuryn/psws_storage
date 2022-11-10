@@ -67,7 +67,7 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context, MainModelState state) {
     return MainAppBar(
-      directories: state.directories,
+      state: state,
     );
   }
 
@@ -93,7 +93,8 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
               if (currentDir.isFolder) {
                 bloc.openFolder(currentDir);
               } else {
-                context.router.push(EditNotesRoute(idHive: currentDir.idHiveObject));
+                final path = state.convertListToPathText(state.getPathByParentId(currentDir));
+                context.router.push(EditNotesRoute(idHive: currentDir.idHiveObject, path: path));
               }
             },
             onEdit: () {

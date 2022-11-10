@@ -10,8 +10,13 @@ import 'package:psws_storage/editor/presenter/notes/edit_notes_form.dart';
 
 class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
   final int idHive;
+  final String path;
 
-  const EditNotesPage({Key? key, required this.idHive}) : super(key: key);
+  const EditNotesPage({
+    Key? key,
+    required this.idHive,
+    required this.path,
+  }) : super(key: key);
 
   @override
   EditNotesBloc createBloc(BuildContext context) {
@@ -30,8 +35,9 @@ class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
                 child: CircularProgressIndicator(),
               )
             : EditNotesForm(
-                note: note,
+          note: note,
                 state: state,
+                path: path,
               ));
   }
 }

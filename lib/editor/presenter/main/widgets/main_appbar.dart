@@ -10,16 +10,17 @@ import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
+import 'package:psws_storage/editor/presenter/main/bloc/main_model.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget, PswsSnackBar, PswsDialogs
     implements PreferredSizeWidget {
-  final List<DirectoryModel> directories;
+  final MainModelState state;
 
   const MainAppBar({
     Key? key,
-    required this.directories,
+    required this.state,
   }) : super(key: key);
 
   @override
@@ -67,12 +68,16 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
           onPressed: () async {
-            context.router.push(SearchDirectoryRoute(directories: directories)).then((directory) {
+            context.router.push(SearchDirectoryRoute(directories: state.directories)).then((directory) {
               if (directory != null && directory is DirectoryModel) {
                 if (directory.isFolder) {
                   context.read<MainBloc>().openFolderFromSearch(directory);
                 } else {
-                  context.pushRoute(EditNotesRoute(idHive: directory.idHiveObject));
+                  final path = state.convertListToPathText(state.getPathByParentId(directory));
+                  context.pushRoute(EditNotesRoute(
+                    idHive: directory.idHiveObject,
+                    path: path,
+                  ));
                 }
               }
             });

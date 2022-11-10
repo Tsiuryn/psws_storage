@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:intl/intl.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_back_button_listener.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
@@ -26,9 +27,14 @@ const Map<String, String> fontSize = {
 class EditNotesForm extends StatefulWidget {
   final DirectoryModel note;
   final EditNotesModel state;
+  final String path;
 
-  const EditNotesForm({Key? key, required this.note, required this.state})
-      : super(key: key);
+  const EditNotesForm({
+    Key? key,
+    required this.note,
+    required this.state,
+    required this.path,
+  }) : super(key: key);
 
   @override
   State<EditNotesForm> createState() => _EditNotesFormState();
@@ -69,6 +75,9 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   Widget build(BuildContext context) {
     final subtitle = AppLocalizations.of(context)?.edit_notes_page__subtitle;
     final bool readOnly = widget.state.readOnly;
+    final l10n = AppLocalizations.of(context);
+    final pathPrefix = l10n?.import_export_page__path ?? '';
+    final theme = AppTheme(context);
 
     return PswsBackButtonListener(
       context,
@@ -88,16 +97,25 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
             child: Stack(
               children: [
                 ExpansionTile(
-                  title: Text(widget.note.name),
-                  tilePadding: const EdgeInsets.only(
-                      left: AppDim.fourtyFour, right: AppDim.eight),
+                  title: Text(
+                    widget.note.name,
+                    style: theme.appTextStyles?.titleMedium,
+                  ),
+                  tilePadding: const EdgeInsets.only(left: AppDim.fourtyFour, right: AppDim.eight),
                   iconColor: Theme.of(context).primaryColorDark,
                   collapsedIconColor: Theme.of(context).primaryColorDark,
                   textColor: Theme.of(context).primaryColorDark,
                   collapsedTextColor: Theme.of(context).primaryColorDark,
                   collapsedBackgroundColor: Colors.transparent,
-                  subtitle: Text(
-                      '$subtitle ${DateFormat('dd.MM.yyyy - HH:mm').format(widget.note.createdDate)}'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$pathPrefix ${widget.path}',
+                      ),
+                      Text('$subtitle ${DateFormat('dd.MM.yyyy - HH:mm').format(widget.note.createdDate)}'),
+                    ],
+                  ),
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(AppDim.eight),
@@ -135,7 +153,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: AppDim.twelve),
+                  padding: const EdgeInsets.only(top: AppDim.eight),
                   child: IconButton(
                       onPressed: () {
                         if (readOnly) {
