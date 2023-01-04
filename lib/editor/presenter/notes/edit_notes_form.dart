@@ -93,7 +93,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ColoredBox(
-            color: Theme.of(context).primaryColor,
+            color: theme.appColors?.appBarColor ?? Theme.of(context).primaryColor,
             child: Stack(
               children: [
                 ExpansionTile(
@@ -127,25 +127,30 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                         showInlineCode: false,
                         customButtons: [
                           QuillCustomButton(
-                              icon: widget.state.readOnly
-                                  ? Icons.edit
-                                  : Icons.save,
-                              onTap: () {
-                                context
-                                    .read<EditNotesBloc>()
-                                    .updateEditMode(!readOnly);
-                                if (!readOnly) {
-                                  context
-                                      .read<EditNotesBloc>()
-                                      .saveNote(content);
-                                  _focusNode.unfocus();
-                                }
-                              })
+                            icon: widget.state.readOnly ? Icons.edit : Icons.save,
+                            onTap: () {
+                              context.read<EditNotesBloc>().updateEditMode(!readOnly);
+                              if (!readOnly) {
+                                context.read<EditNotesBloc>().saveNote(content);
+                                _focusNode.unfocus();
+                              }
+                            },
+                          ),
+                          // TODO: Method to add text
+                          // QuillCustomButton(
+                          //   icon: Icons.add,
+                          //   onTap: (){
+                          //     const myText = 'hello';
+                          //     final index = _controller.selection.baseOffset;
+                          //     final len = _controller.selection.extentOffset - index;
+                          //     _controller.moveCursorToPosition(index + myText.length);
+                          //     _controller.replaceText(index, len, myText, null);
+                          //   }
+                          // )
                         ],
                         fontSizeValues: fontSize,
                         iconTheme: QuillIconTheme(
-                          iconSelectedFillColor:
-                              Theme.of(context).colorScheme.secondary,
+                          iconSelectedFillColor: Theme.of(context).colorScheme.secondary,
                           borderRadius: AppDim.four,
                         ),
                       ),
@@ -180,7 +185,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
               padding: EdgeInsets.zero,
               keyboardAppearance: Brightness.light,
             ),
-            padding: const EdgeInsets.all(AppDim.eight),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDim.sixteen,
+              vertical: AppDim.four,
+            ),
           )),
         ],
       ),
@@ -190,10 +198,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   String get content => jsonEncode(_controller.document.toDelta().toJson());
 
   void showDialog(BuildContext context) {
-    final title =
-        AppLocalizations.of(context)?.edit_notes_page__dialog_title ?? '';
-    final subTitle =
-        AppLocalizations.of(context)?.edit_notes_page__dialog_subTitle ?? '';
+    final title = AppLocalizations.of(context)?.edit_notes_page__dialog_title ?? '';
+    final subTitle = AppLocalizations.of(context)?.edit_notes_page__dialog_subTitle ?? '';
 
     createOkDialog(context, title: title, message: subTitle, tapNo: () {
       context.router.pop();
