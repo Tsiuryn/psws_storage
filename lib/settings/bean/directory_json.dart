@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:psws_storage/editor/data/bean/directory_bean.dart';
 
 part 'directory_json.g.dart';
 
-@immutable
 @JsonSerializable()
 class DirectoryJson {
   @JsonKey(name: 'isFolder')
