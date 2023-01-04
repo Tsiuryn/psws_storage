@@ -71,7 +71,7 @@ Future<void> initDi() async {
   //Bloc
   getIt.registerSingleton<AppBloc>(
     AppBloc(
-      getEnvironment: getIt.get<GetEnvironmentUseCase>(),
+      environment: await getIt.get<GetEnvironmentUseCase>().call(),
       saveEnvironment: getIt.get<SaveEnvironmentUseCase>(),
     ),
   );

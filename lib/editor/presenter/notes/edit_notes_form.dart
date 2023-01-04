@@ -79,120 +79,131 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
     final pathPrefix = l10n?.import_export_page__path ?? '';
     final theme = AppTheme(context);
 
-    return PswsBackButtonListener(
-      context,
-      backPressed: () {
-        if (readOnly) {
-          context.router.pop();
-        } else {
-          showDialog(context);
-        }
-        return true;
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          ColoredBox(
-            color: theme.appColors?.appBarColor ?? Theme.of(context).primaryColor,
-            child: Stack(
+    return PswsBackButtonListener(context, backPressed: () {
+      if (readOnly) {
+        context.router.pop();
+      } else {
+        showDialog(context);
+      }
+      return true;
+    },
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              toolbarHeight: 0,
+              title: const SizedBox(),
+            ),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ExpansionTile(
-                  title: Text(
-                    widget.note.name,
-                    style: theme.appTextStyles?.titleMedium,
-                  ),
-                  tilePadding: const EdgeInsets.only(left: AppDim.fourtyFour, right: AppDim.eight),
-                  iconColor: Theme.of(context).primaryColorDark,
-                  collapsedIconColor: Theme.of(context).primaryColorDark,
-                  textColor: Theme.of(context).primaryColorDark,
-                  collapsedTextColor: Theme.of(context).primaryColorDark,
-                  collapsedBackgroundColor: Colors.transparent,
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '$pathPrefix ${widget.path}',
-                      ),
-                      Text('$subtitle ${DateFormat('dd.MM.yyyy - HH:mm').format(widget.note.createdDate)}'),
-                    ],
-                  ),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(AppDim.eight),
-                      child: QuillToolbar.basic(
-                        controller: _controller,
-                        showItalicButton: false,
-                        showLink: false,
-                        toolbarIconAlignment: WrapAlignment.start,
-                        showInlineCode: false,
-                        customButtons: [
-                          QuillCustomButton(
-                            icon: widget.state.readOnly ? Icons.edit : Icons.save,
-                            onTap: () {
-                              context.read<EditNotesBloc>().updateEditMode(!readOnly);
-                              if (!readOnly) {
-                                context.read<EditNotesBloc>().saveNote(content);
-                                _focusNode.unfocus();
-                              }
-                            },
+                Material(
+                  elevation: 4,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      backgroundColor: theme.appColors?.appBarColor ?? Theme.of(context).primaryColor,
+                      collapsedBackgroundColor: theme.appColors?.appBarColor ?? Theme.of(context).primaryColor,
+                      childrenPadding: EdgeInsets.zero,
+                      tilePadding: const EdgeInsets.all(AppDim.four),
+                      leading: IconButton(
+                          onPressed: () {
+                            if (readOnly) {
+                              context.router.pop();
+                            } else {
+                              showDialog(context);
+                            }
+                          },
+                          icon: const Icon(Icons.arrow_back)),
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.note.name,
+                              style: theme.appTextStyles?.titleMedium,
+                            ),
                           ),
-                          // TODO: Method to add text
-                          // QuillCustomButton(
-                          //   icon: Icons.add,
-                          //   onTap: (){
-                          //     const myText = 'hello';
-                          //     final index = _controller.selection.baseOffset;
-                          //     final len = _controller.selection.extentOffset - index;
-                          //     _controller.moveCursorToPosition(index + myText.length);
-                          //     _controller.replaceText(index, len, myText, null);
-                          //   }
-                          // )
                         ],
-                        fontSizeValues: fontSize,
-                        iconTheme: QuillIconTheme(
-                          iconSelectedFillColor: Theme.of(context).colorScheme.secondary,
-                          borderRadius: AppDim.four,
-                        ),
                       ),
+                      iconColor: Theme.of(context).primaryColorDark,
+                      collapsedIconColor: Theme.of(context).primaryColorDark,
+                      textColor: Theme.of(context).primaryColorDark,
+                      collapsedTextColor: Theme.of(context).primaryColorDark,
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$pathPrefix ${widget.path}',
+                          ),
+                          Text('$subtitle ${DateFormat('dd.MM.yyyy - HH:mm').format(widget.note.createdDate)}'),
+                        ],
+                      ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(AppDim.eight),
+                          child: QuillToolbar.basic(
+                            controller: _controller,
+                            showItalicButton: false,
+                            showLink: false,
+                            toolbarIconAlignment: WrapAlignment.start,
+                            showInlineCode: false,
+                            customButtons: [
+                              QuillCustomButton(
+                                icon: widget.state.readOnly ? Icons.edit : Icons.save,
+                                onTap: () {
+                                  context.read<EditNotesBloc>().updateEditMode(!readOnly);
+                                  if (!readOnly) {
+                                    context.read<EditNotesBloc>().saveNote(content);
+                                    _focusNode.unfocus();
+                                  }
+                                },
+                              ),
+                              // TODO: Method to add text
+                              // QuillCustomButton(
+                              //   icon: Icons.add,
+                              //   onTap: (){
+                              //     const myText = 'hello';
+                              //     final index = _controller.selection.baseOffset;
+                              //     final len = _controller.selection.extentOffset - index;
+                              //     _controller.moveCursorToPosition(index + myText.length);
+                              //     _controller.replaceText(index, len, myText, null);
+                              //   }
+                              // )
+                            ],
+                            fontSizeValues: fontSize,
+                            iconTheme: QuillIconTheme(
+                              iconSelectedFillColor: Theme.of(context).colorScheme.secondary,
+                              borderRadius: AppDim.four,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: AppDim.eight),
-                  child: IconButton(
-                      onPressed: () {
-                        if (readOnly) {
-                          context.router.pop();
-                        } else {
-                          showDialog(context);
-                        }
-                      },
-                      icon: const Icon(Icons.arrow_back)),
-                ),
+                Expanded(
+                    child: Padding(
+                  child: QuillEditor(
+                    controller: _controller,
+                    scrollController: ScrollController(),
+                    scrollable: true,
+                    focusNode: _focusNode,
+                    autoFocus: !readOnly,
+                    readOnly: readOnly,
+                    expands: false,
+                    padding: EdgeInsets.zero,
+                    keyboardAppearance: Brightness.light,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDim.sixteen,
+                    vertical: AppDim.four,
+                  ),
+                )),
               ],
             ),
           ),
-          Expanded(
-              child: Padding(
-            child: QuillEditor(
-              controller: _controller,
-              scrollController: ScrollController(),
-              scrollable: true,
-              focusNode: _focusNode,
-              autoFocus: !readOnly,
-              readOnly: readOnly,
-              expands: false,
-              padding: EdgeInsets.zero,
-              keyboardAppearance: Brightness.light,
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDim.sixteen,
-              vertical: AppDim.four,
-            ),
-          )),
-        ],
-      ),
-    );
+        ));
   }
 
   String get content => jsonEncode(_controller.document.toDelta().toJson());

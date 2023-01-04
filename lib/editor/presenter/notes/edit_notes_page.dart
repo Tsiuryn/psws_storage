@@ -35,7 +35,7 @@ class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
                 child: CircularProgressIndicator(),
               )
             : EditNotesForm(
-          note: note,
+                note: note,
                 state: state,
                 path: path,
               ));
