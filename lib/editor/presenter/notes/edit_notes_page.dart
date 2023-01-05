@@ -11,16 +11,18 @@ import 'package:psws_storage/editor/presenter/notes/edit_notes_form.dart';
 class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
   final int idHive;
   final String path;
+  final List<DirectoryModel> directories;
 
   const EditNotesPage({
     Key? key,
     required this.idHive,
     required this.path,
+    required this.directories,
   }) : super(key: key);
 
   @override
   EditNotesBloc createBloc(BuildContext context) {
-    return getIt.get<EditNotesBloc>()..getNoteData(idHive);
+    return getIt.get<EditNotesBloc>()..getNoteData(idHive, directories: directories);
   }
 
   @override

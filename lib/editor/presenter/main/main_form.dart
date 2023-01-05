@@ -94,7 +94,11 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
                 bloc.openFolder(currentDir);
               } else {
                 final path = state.convertListToPathText(state.getPathByParentId(currentDir));
-                context.router.push(EditNotesRoute(idHive: currentDir.idHiveObject, path: path));
+                context.router.push(EditNotesRoute(
+                  idHive: currentDir.idHiveObject,
+                  path: path,
+                  directories: state.directories,
+                ));
               }
             },
             onEdit: () {

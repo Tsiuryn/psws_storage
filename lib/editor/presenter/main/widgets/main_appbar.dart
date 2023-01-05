@@ -77,6 +77,7 @@ class MainAppBar extends StatelessWidget
                   context.pushRoute(EditNotesRoute(
                     idHive: directory.idHiveObject,
                     path: path,
+                    directories: state.directories,
                   ));
                 }
               }

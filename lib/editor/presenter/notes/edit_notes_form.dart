@@ -2,16 +2,23 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:intl/intl.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
+import 'package:psws_storage/app/router/app_router.gr.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
+import 'package:psws_storage/app/ui_kit/calculator_dialog/calculator_dialog.dart';
 import 'package:psws_storage/app/ui_kit/psws_back_button_listener.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
+import 'package:psws_storage/app/utils/constants.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
+import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/notes/bloc/edit_notes_bloc.dart';
+import 'package:psws_storage/editor/presenter/notes/widget/custom_icon_button.dart';
+
+import 'widget/notes_embed_builder.dart';
 
 const Map<String, String> fontSize = {
   '5': '5',
@@ -133,10 +140,11 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '$pathPrefix ${widget.path}',
-                          ),
-                          Text('$subtitle ${DateFormat('dd.MM.yyyy - HH:mm').format(widget.note.createdDate)}'),
+                          if (widget.path.isNotEmpty)
+                            Text(
+                              '$pathPrefix ${widget.path}',
+                            ),
+                          Text('$subtitle ${dateFormatter.format(widget.note.createdDate)}'),
                         ],
                       ),
                       children: [
@@ -144,10 +152,72 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           padding: const EdgeInsets.all(AppDim.eight),
                           child: QuillToolbar.basic(
                             controller: _controller,
-                            showItalicButton: false,
                             showLink: false,
+                            toolbarSectionSpacing: 4,
+                            showHeaderStyle: false,
+                            showBackgroundColorButton: true,
+                            showAlignmentButtons: true,
                             toolbarIconAlignment: WrapAlignment.start,
                             showInlineCode: false,
+                            iconTheme: QuillIconTheme(
+                              iconSelectedFillColor: Theme.of(context).colorScheme.secondary,
+                              borderRadius: AppDim.four,
+                            ),
+                            showDividers: false,
+                            // embedButtons: FlutterQuillEmbeds.buttons(),
+                            embedButtons: [
+                              (controller, toolbarIconSize, iconTheme, dialogTheme) {
+                                return CustomIconButton(
+                                    iconTheme: iconTheme,
+                                    onPressed: () {
+                                      final index = controller.selection.baseOffset;
+                                      final length = controller.selection.extentOffset - index;
+                                      context.router
+                                          .push(SearchDirectoryRoute(
+                                        directories: widget.state.allNotesWithoutCurrent,
+                                        searchDestination: SearchDestination.move,
+                                      ))
+                                          .then((value) {
+                                        if (value is DirectoryModel) {
+                                          final block = BlockEmbed.custom(
+                                            NotesBlockEmbed.fromDocument(CustomDirectory(
+                                              name: value.name,
+                                              id: value.id,
+                                              hiveId: value.idHiveObject,
+                                            )),
+                                          );
+                                          controller.replaceText(index, length, block, null);
+                                        }
+                                      });
+                                    },
+                                    icon: Icons.link_rounded);
+                              },
+                              (controller, toolbarIconSize, iconTheme, dialogTheme) {
+                                return CustomIconButton(
+                                  icon: Icons.access_time_rounded,
+                                  iconTheme: iconTheme,
+                                  onPressed: () {
+                                    _setTextToCurrentPosition(dateFormatterWithMls.format(DateTime.now()));
+                                  },
+                                );
+                              },
+                              (controller, toolbarIconSize, iconTheme, dialogTheme) {
+                                return CustomIconButton(
+                                  icon: Icons.calculate_outlined,
+                                  iconTheme: iconTheme,
+                                  onPressed: () async {
+                                    final result = await material.showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const CalculatorDialog();
+                                        });
+                                    if (result != null && result is CalculatorResult) {
+                                      _setTextToCurrentPosition('${result.userInput} = ${result.answer}');
+                                    }
+                                  },
+                                );
+                              },
+                            ],
                             customButtons: [
                               QuillCustomButton(
                                 icon: widget.state.readOnly ? Icons.edit : Icons.save,
@@ -159,23 +229,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                   }
                                 },
                               ),
-                              // TODO: Method to add text
-                              // QuillCustomButton(
-                              //   icon: Icons.add,
-                              //   onTap: (){
-                              //     const myText = 'hello';
-                              //     final index = _controller.selection.baseOffset;
-                              //     final len = _controller.selection.extentOffset - index;
-                              //     _controller.moveCursorToPosition(index + myText.length);
-                              //     _controller.replaceText(index, len, myText, null);
-                              //   }
-                              // )
                             ],
                             fontSizeValues: fontSize,
-                            iconTheme: QuillIconTheme(
-                              iconSelectedFillColor: Theme.of(context).colorScheme.secondary,
-                              borderRadius: AppDim.four,
-                            ),
                           ),
                         ),
                       ],
@@ -193,6 +248,9 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     readOnly: readOnly,
                     expands: false,
                     padding: EdgeInsets.zero,
+                    embedBuilders: [
+                      NotesEmbedBuilder(addEditNote: _addEditNote),
+                    ],
                     keyboardAppearance: Brightness.light,
                   ),
                   padding: const EdgeInsets.symmetric(
@@ -204,6 +262,25 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
             ),
           ),
         ));
+  }
+
+  Future<void> _addEditNote(BuildContext context, {CustomDirectory? directory}) async {
+    final note = widget.state.getDirectoryById(directory?.id);
+    final path = widget.state.getPath(note);
+    if (directory != null && path != null) {
+      context.router.push(EditNotesRoute(
+        idHive: directory.hiveId,
+        path: path,
+        directories: widget.state.directories,
+      ));
+    }
+  }
+
+  void _setTextToCurrentPosition(String text) {
+    final index = _controller.selection.baseOffset;
+    final len = _controller.selection.extentOffset - index;
+    _controller.replaceText(index, len, text, null);
+    _controller.moveCursorToPosition(index + text.length);
   }
 
   String get content => jsonEncode(_controller.document.toDelta().toJson());
