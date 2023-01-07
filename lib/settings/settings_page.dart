@@ -27,6 +27,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
     final l10n = AppLocalizations.of(context);
     final titleTheme = l10n?.main_appbar_bottom_theme ?? '';
     final titleLocale = l10n?.main_appbar_bottom_locale ?? '';
+    final biometrics = l10n?.settings_page__biometrics_title ?? '';
     final appTheme = AppTheme(context);
     final mainBloc = getIt.get<AppBloc>();
     final environment = mainBloc.state;
@@ -114,8 +115,40 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           ],
                         ),
                       ),
+                      AnimatedSize(
+                        duration: const Duration(
+                          milliseconds: 300,
+                        ),
+                        child: Visibility(
+                          visible: state.model.showBiometrics,
+                          child: SettingsItem(
+                            title: biometrics,
+                            subtitle: l10n?.settings_page__biometrics_subtitle ?? '',
+                            child: Row(
+                              children: [
+                                Text(
+                                    environment.localAuth == LocalAuth.pin
+                                        ? l10n?.settings_page__biometrics_pin ?? ''
+                                        : l10n?.settings_page__biometrics_fingerprint ?? '',
+                                    style: appTheme.appTextStyles?.subtitle),
+                                const Expanded(child: SizedBox()),
+                                CupertinoSlidingSegmentedControl<LocalAuth>(
+                                  children: LocalAuthExt.toMap(context),
+                                  groupValue:
+                                      environment.localAuth == LocalAuth.pin ? LocalAuth.pin : LocalAuth.fingerprint,
+                                  onValueChanged: (newValue) {
+                                    if (newValue != null) {
+                                      context.read<AppBloc>().changeBiometrics(newValue);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       SettingsItem(
-                          title: l10n?.password_change__title ?? '',
+                          title: l10n?.settings_page__psw_change_title ?? '',
                           informationMessage: l10n?.password_change__message_info ?? '',
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -282,8 +315,30 @@ extension AppLocaleExt on AppLocale {
   }
 }
 
+extension LocalAuthExt on LocalAuth {
+  static Map<LocalAuth, Widget> toMap(BuildContext context) {
+    Map<LocalAuth, Widget> map = {};
+    final l10n = AppLocalizations.of(context);
+
+    for (var e in LocalAuth.values) {
+      final title = e == LocalAuth.pin ? l10n?.common_dialog_no ?? '' : l10n?.common_dialog_yes ?? '';
+
+      map[e] = SizedBox(
+        height: 24,
+        child: Text(
+          title,
+          style: TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+        ),
+      );
+    }
+
+    return map;
+  }
+}
+
 class SettingsItem extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final Widget child;
   final String informationMessage;
 
@@ -291,6 +346,7 @@ class SettingsItem extends StatelessWidget {
     Key? key,
     required this.title,
     required this.child,
+    this.subtitle,
     this.informationMessage = '',
   }) : super(key: key);
 
@@ -326,6 +382,21 @@ class SettingsItem extends StatelessWidget {
               )
             ],
           ),
+          if (subtitle != null)
+            Column(
+              children: [
+                const SizedBox(
+                  height: AppDim.eight,
+                ),
+                Text(
+                  subtitle ?? '',
+                  style: appTheme.appTextStyles?.subtitle,
+                ),
+                const SizedBox(
+                  height: AppDim.eight,
+                ),
+              ],
+            ),
           child,
           const SizedBox(
             height: AppDim.sixteen,

@@ -98,6 +98,7 @@ Future<void> initDi() async {
     () => PinBloc(
       readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
       writeRegistrationPin: getIt.get<WriteRegistrationPinUseCase>(),
+      getEnvironmentUseCase: getIt.get<GetEnvironmentUseCase>(),
     ),
   );
 

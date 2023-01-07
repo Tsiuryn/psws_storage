@@ -21,4 +21,10 @@ class AppBloc extends Cubit<Environment> {
     await saveEnvironment(environment);
     emit(environment);
   }
+
+  Future<void> changeBiometrics(LocalAuth localAuth) async {
+    final environment = state.copyWith(localAuth: localAuth);
+    await saveEnvironment(environment);
+    emit(environment);
+  }
 }

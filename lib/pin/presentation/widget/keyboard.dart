@@ -75,12 +75,12 @@ class Keyboard extends StatelessWidget {
         ? keyboardUIConfig.keyboardSize!
         : Size(keyboardWidth, keyboardHeight);
 
-    return Container(
+    return SizedBox(
       width: keyboardSize.width,
       height: keyboardSize.height,
-      margin: const EdgeInsets.only(
-        bottom: _keyboardBottomPadding,
-      ),
+      // margin: const EdgeInsets.only(
+      //   bottom: _keyboardBottomPadding,
+      // ),
       child: AlignedGrid(
         keyboardSize: keyboardSize,
         children: List.generate(keyboardItems.length, (index) {
