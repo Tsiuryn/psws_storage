@@ -96,7 +96,7 @@ class PinState {
 
   PinState({
     this.firstPin,
-    this.state = PinFlowState.firstCreate,
+    this.state = PinFlowState.loading,
     DateTime? currentBackPressTime,
     this.showAuthBtn = false,
   }) : currentBackPressTime = currentBackPressTime ?? DateTime(1980);
@@ -138,4 +138,5 @@ enum PinFlowState {
   unSuccessCreate,
   unSuccessCheck,
   fingerprint,
+  loading,
 }
