@@ -7,16 +7,18 @@ import 'package:psws_storage/app/domain/settings_gateway.dart';
 
 class SettingsGatewayImpl extends SettingsGateway {
   final FlutterSecureStorage secureStorage;
+  final AndroidOptions androidOptions;
 
-  SettingsGatewayImpl(this.secureStorage);
+  SettingsGatewayImpl({
+    required this.secureStorage,
+    required this.androidOptions,
+  });
 
-  AndroidOptions get _androidOptions =>
-      const AndroidOptions(encryptedSharedPreferences: true);
   static const _environmentKey = '_environmentKey';
 
   @override
   Future<Environment> getEnvironment() async {
-    final String? json = await secureStorage.read(key: _environmentKey, aOptions: _androidOptions);
+    final String? json = await secureStorage.read(key: _environmentKey, aOptions: androidOptions);
 
     try {
       return EnvironmentBean.fromJson(jsonDecode(json!)).fromBean();
@@ -28,6 +30,9 @@ class SettingsGatewayImpl extends SettingsGateway {
   @override
   Future<void> saveEnvironment(Environment environment) async {
     await secureStorage.write(
-        key: _environmentKey, value: jsonEncode(environment.toBean().toJson()));
+      key: _environmentKey,
+      value: jsonEncode(environment.toBean().toJson()),
+      aOptions: androidOptions,
+    );
   }
 }

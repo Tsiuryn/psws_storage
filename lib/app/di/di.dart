@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -35,21 +38,30 @@ GetIt getIt = GetIt.instance;
 const String databaseName = 'PSWS_Database';
 const _idSecureStorage = '_idSecureStorage';
 const String _idDatabase = 'PSWS_STORAGE_ID';
+const String _encryptionKey = 'encryptionKey';
+const aOptions = AndroidOptions(encryptedSharedPreferences: true);
 
 Future<void> initDi() async {
   //SecureStorage
-  getIt.registerLazySingleton<FlutterSecureStorage>(() => const FlutterSecureStorage(), instanceName: _idSecureStorage);
+  getIt.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage(), instanceName: _idSecureStorage);
 
-  getIt.registerFactory<Future<Box<DirectoryBean>>>(
-    () async => await Hive.openBox(_idDatabase),
-    instanceName: databaseName,
+  // initialize DataBase
+  await _initDB(
+    getIt.get<FlutterSecureStorage>(
+      instanceName: _idSecureStorage,
+    ),
   );
 
   // Repository
   getIt.registerSingleton<DirectoriesRepo>(DirectoriesRepoImpl());
-  getIt.registerSingleton<PinRepo>(PinRepoImpl(getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
-  getIt.registerSingleton<SettingsGateway>(
-      SettingsGatewayImpl(getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage)));
+  getIt.registerSingleton<PinRepo>(PinRepoImpl(
+    secureStorage: getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage),
+    androidOptions: aOptions,
+  ));
+  getIt.registerSingleton<SettingsGateway>(SettingsGatewayImpl(
+    secureStorage: getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage),
+    androidOptions: aOptions,
+  ));
   getIt.registerSingleton<ImportExportGateway>(ImportExportGatewayImpl());
 
   //UseCase
@@ -77,7 +89,7 @@ Future<void> initDi() async {
   );
 
   getIt.registerLazySingleton<MainBloc>(
-    () => MainBloc(
+        () => MainBloc(
       addFileUseCase: getIt.get<AddFileUseCase>(),
       getListDirectoriesUseCase: getIt.get<GetListDirectoriesUseCase>(),
       deleteDirectoryUseCase: getIt.get<DeleteDirectoryUseCase>(),
@@ -88,14 +100,14 @@ Future<void> initDi() async {
   );
 
   getIt.registerFactory(
-    () => EditNotesBloc(
+        () => EditNotesBloc(
       updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
       getDirectory: getIt.get<GetDirectoryUseCase>(),
     ),
   );
 
   getIt.registerFactory<PinBloc>(
-    () => PinBloc(
+        () => PinBloc(
       readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
       writeRegistrationPin: getIt.get<WriteRegistrationPinUseCase>(),
       getEnvironmentUseCase: getIt.get<GetEnvironmentUseCase>(),
@@ -104,8 +116,8 @@ Future<void> initDi() async {
 
   getIt.registerFactory<SettingsBloc>(() => SettingsBloc());
   getIt.registerFactory<ImportMtnBloc>(() => ImportMtnBloc(
-        addFileUseCase: getIt.get<AddFileUseCase>(),
-      ));
+    addFileUseCase: getIt.get<AddFileUseCase>(),
+  ));
 
   getIt.registerFactory<ChangePswBloc>(() => ChangePswBloc(
         readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
@@ -118,4 +130,30 @@ Future<void> initDi() async {
       importDatabaseUseCase: getIt.get<ImportDatabaseUseCase>(),
     ),
   );
+}
+
+Future<void> _initDB(FlutterSecureStorage secureStorage) async {
+  bool containsEncryptionKey = await secureStorage.containsKey(
+    key: _encryptionKey,
+    aOptions: aOptions,
+  );
+  if (!containsEncryptionKey) {
+    List<int> hiveKey = Hive.generateSecureKey();
+    await secureStorage.write(
+      key: _encryptionKey,
+      value: base64UrlEncode(hiveKey),
+      aOptions: aOptions,
+    );
+  }
+
+  final key = await secureStorage.read(key: _encryptionKey, aOptions: aOptions);
+
+  if (key != null) {
+    Uint8List encryptionKey = base64Url.decode(key);
+
+    getIt.registerFactory<Future<Box<DirectoryBean>>>(
+      () async => await Hive.openBox(_idDatabase, encryptionCipher: HiveAesCipher(encryptionKey)),
+      instanceName: databaseName,
+    );
+  }
 }
