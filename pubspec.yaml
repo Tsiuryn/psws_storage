@@ -6,7 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.4 <3.0.0"
+  sdk: ">=2.19.0-0 <4.0.0"
 
 
 dependencies:
@@ -24,16 +24,16 @@ dependencies:
   # router:
   auto_route: ^5.0.4
 
-  flutter_svg: ^1.1.4
+  flutter_svg: ^2.0.0+1
 
   # storage:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
 
-  flutter_quill: ^6.1.11
+  flutter_quill: ^6.3.4
 
   # secure_storage:
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^8.0.0
 
   # Back button interceptor:
   back_button_interceptor: ^6.0.0
@@ -76,7 +76,7 @@ dev_dependencies:
 
   build_runner: ^2.1.5
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   json_serializable: ^6.5.4
   json_annotation: ^4.6.0
 
