@@ -269,7 +269,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
     final path = widget.state.getPath(note);
     if (directory != null && path != null) {
       context.router.push(EditNotesRoute(
-        idHive: directory.hiveId,
+        idHive: note?.idHiveObject ?? directory.hiveId,
         path: path,
         directories: widget.state.directories,
       ));
