@@ -24,7 +24,7 @@
 **/doc/api/
 **/lib/res/
 **/ios/Flutter/.last_build_id
-/android/keystore.properties
+/android/key.properties
 /android/my_keys.jks
 .dart_tool/
 .flutter-plugins
