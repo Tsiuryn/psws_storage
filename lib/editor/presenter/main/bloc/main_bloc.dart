@@ -59,7 +59,9 @@ class MainBloc extends Cubit<MainModelState> {
     emit(state.copyWith(parentId: directory.id, path: path));
   }
 
-  Future<void> changeParentId({required DirectoryModel directory, required String destinationId}) async {
+  Future<void> changeParentId(
+      {required DirectoryModel directory,
+      required String destinationId}) async {
     final updatedDirectory = directory.copyWith(
       parentId: destinationId,
     );
@@ -92,7 +94,8 @@ class MainBloc extends Cubit<MainModelState> {
   }
 
   void addFile(String fileName) async {
-    final directories = await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
+    final directories =
+        await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
 
     emit(state.copyWith(
       directories: directories,
@@ -101,7 +104,10 @@ class MainBloc extends Cubit<MainModelState> {
 
   void deleteFile(DirectoryModel model) async {
     if (model.isFolder) {
-      final List<int> keys = state.getListAttachedFiles(model.id).map((e) => e.idHiveObject).toList();
+      final List<int> keys = state
+          .getListAttachedFiles(model.id)
+          .map((e) => e.idHiveObject)
+          .toList();
       await _deleteListDirectories(keys);
     }
     emit(state.copyWith(
@@ -109,10 +115,13 @@ class MainBloc extends Cubit<MainModelState> {
     ));
   }
 
-  Future<void> updateName({required DirectoryModel model, required String newName}) async {
+  Future<void> updateName(
+      {required DirectoryModel model, required String newName}) async {
     final directory = await _getDirectoryUseCase(model.idHiveObject);
     if (directory != null) {
-      emit(state.copyWith(directories: await _updateDirectory(directory.copyWith(name: newName))));
+      emit(state.copyWith(
+          directories:
+              await _updateDirectory(directory.copyWith(name: newName))));
     }
   }
 
@@ -120,7 +129,9 @@ class MainBloc extends Cubit<MainModelState> {
     return emit(state.copyWith(currentBackPressTime: currentBackPressTime));
   }
 
-  DirectoryModel _getDirectory({bool isFolder = true, required String name, String content = ''}) => DirectoryModel(
+  DirectoryModel _getDirectory(
+          {bool isFolder = true, required String name, String content = ''}) =>
+      DirectoryModel(
         isFolder: isFolder,
         id: TimeUuidGenerator().generate().toString(),
         parentId: state.parentId,

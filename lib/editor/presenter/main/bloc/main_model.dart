@@ -83,7 +83,8 @@ class MainModelState {
     List<String> path = [choosingDirectory.name];
     String searchParentId = choosingDirectory.parentId;
     while (searchParentId != rootDirectoryId) {
-      final parentDirectory = directories.firstWhereOrNull((element) => element.id == searchParentId);
+      final parentDirectory = directories
+          .firstWhereOrNull((element) => element.id == searchParentId);
       if (parentDirectory != null) {
         path.add(parentDirectory.name);
         searchParentId = parentDirectory.parentId;
@@ -119,6 +120,8 @@ class MainModelState {
   bool isChild(String sourceId, String targetId) {
     final listAttachedFiles = getListAttachedFiles(sourceId);
 
-    return listAttachedFiles.firstWhereOrNull((element) => element.id == targetId) != null;
+    return listAttachedFiles
+            .firstWhereOrNull((element) => element.id == targetId) !=
+        null;
   }
 }

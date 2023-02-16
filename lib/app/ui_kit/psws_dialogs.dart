@@ -31,7 +31,9 @@ mixin PswsDialogs {
                 }
                 return null;
               },
-              placeholder: isFolder ? l10n.common_dialog_placeholder_folder : l10n.common_dialog_placeholder_file,
+              placeholder: isFolder
+                  ? l10n.common_dialog_placeholder_folder
+                  : l10n.common_dialog_placeholder_file,
             ),
           ),
           actions: [

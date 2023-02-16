@@ -44,7 +44,8 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
         searchDirectories = widget.directories;
       } else {
         searchDirectories = widget.directories
-            .where((element) => element.name.toLowerCase().contains(_searchValue.toLowerCase()))
+            .where((element) =>
+                element.name.toLowerCase().contains(_searchValue.toLowerCase()))
             .toList();
       }
     });
@@ -71,7 +72,8 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
               : AppBar(
                   title: FittedBox(
                     child: Text(
-                      AppLocalizations.of(context)?.search_directory__title ?? '',
+                      AppLocalizations.of(context)?.search_directory__title ??
+                          '',
                       style: textStyles?.titleLarge,
                     ),
                   ),
@@ -87,16 +89,17 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
               children: [
                 PswsInputSearch(
                   controller: _controller,
-                  prefixIcon: widget.searchDestination == SearchDestination.search
-                      ? IconButton(
-                          onPressed: context.popRoute,
-                          icon: Icon(
-                            Icons.arrow_back_rounded,
-                            color: appColors?.textColor,
-                            size: AppDim.twentyFour,
-                          ),
-                        )
-                      : iconSearch,
+                  prefixIcon:
+                      widget.searchDestination == SearchDestination.search
+                          ? IconButton(
+                              onPressed: context.popRoute,
+                              icon: Icon(
+                                Icons.arrow_back_rounded,
+                                color: appColors?.textColor,
+                                size: AppDim.twentyFour,
+                              ),
+                            )
+                          : iconSearch,
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -115,7 +118,9 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                     visible: widget.searchDestination == SearchDestination.move,
                     child: TextButton(
                         child: Text(
-                          AppLocalizations.of(context)?.search_directory__text_btn ?? '',
+                          AppLocalizations.of(context)
+                                  ?.search_directory__text_btn ??
+                              '',
                           style: textStyles?.titleMedium,
                         ),
                         onPressed: () {

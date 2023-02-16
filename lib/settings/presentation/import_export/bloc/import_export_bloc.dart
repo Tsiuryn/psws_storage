@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:psws_storage/settings/domain/entity/export_config.dart';
 import 'package:psws_storage/settings/domain/entity/import_config.dart';
 import 'package:psws_storage/settings/domain/usecase/export_database_usecase.dart';
@@ -16,6 +19,13 @@ class ImportExportBloc extends Cubit<ImportExportState> {
     required this.exportDatabaseUseCase,
     required this.importDatabaseUseCase,
   }) : super(ImportExportState.empty());
+
+  Future<void> getPathDirectory() async {
+    List<Directory>? directories = await getExternalStorageDirectories();
+    if (directories != null && directories.isNotEmpty) {
+      emit(state.copyWith(pathToFileOrFolder: directories[0].path));
+    }
+  }
 
   Future<void> exportDatabase(ExportConfig exportConfig) async {
     try {

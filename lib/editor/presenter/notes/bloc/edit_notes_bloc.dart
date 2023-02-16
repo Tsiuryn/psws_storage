@@ -70,7 +70,9 @@ class EditNotesModel {
       return directories;
     }
 
-    return directories.where((element) => !element.isFolder && element.id != note?.id).toList();
+    return directories
+        .where((element) => !element.isFolder && element.id != note?.id)
+        .toList();
   }
 
   List<String>? _getPathByParentId(DirectoryModel? choosingDirectory) {
@@ -79,7 +81,8 @@ class EditNotesModel {
     List<String> path = [choosingDirectory.name];
     String searchParentId = choosingDirectory.parentId;
     while (searchParentId != rootDirectoryId) {
-      final parentDirectory = directories.firstWhereOrNull((element) => element.id == searchParentId);
+      final parentDirectory = directories
+          .firstWhereOrNull((element) => element.id == searchParentId);
       if (parentDirectory != null) {
         path.add(parentDirectory.name);
         searchParentId = parentDirectory.parentId;

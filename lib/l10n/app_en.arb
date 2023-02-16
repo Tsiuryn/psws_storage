@@ -62,7 +62,7 @@
   "settings_page__language_eng": "English",
   "settings_page__export": "Export:",
   "settings_page__export_btn": "Export database",
-  "settings_page__export_tooltip": "All notes will be encoded in the file. The file will be saved on the device. The user chooses the way to save. Important: if you lose your password, the file cannot be recovered!",
+  "settings_page__export_tooltip": "All notes will be encoded in the file. The file will be saved on the device: Android/data/com.tsiuryn.psws_storage/files. Important: if you lose your password, the file cannot be recovered!",
   "settings_page__import": "Import:",
   "settings_page__import_btn": "Import database",
   "settings_page__import_tooltip": "Notes will be imported from the file. The user specifies the path to the file and then enters the password for the notes archive. You will also be asked to add a notes database or replace all notes in the application.",

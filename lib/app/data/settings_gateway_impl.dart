@@ -18,7 +18,8 @@ class SettingsGatewayImpl extends SettingsGateway {
 
   @override
   Future<Environment> getEnvironment() async {
-    final String? json = await secureStorage.read(key: _environmentKey, aOptions: androidOptions);
+    final String? json = await secureStorage.read(
+        key: _environmentKey, aOptions: androidOptions);
 
     try {
       return EnvironmentBean.fromJson(jsonDecode(json!)).fromBean();

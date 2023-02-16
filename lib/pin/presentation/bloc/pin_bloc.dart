@@ -35,7 +35,10 @@ class PinBloc extends Cubit<PinState> {
 
     String? securePin = await readRegistrationPin();
 
-    emit(state.copyWith(state: securePin == null ? PinFlowState.firstCreate : PinFlowState.checkPassword));
+    emit(state.copyWith(
+        state: securePin == null
+            ? PinFlowState.firstCreate
+            : PinFlowState.checkPassword));
   }
 
   Future<void> writePin(String value) async {

@@ -16,7 +16,8 @@ class SettingsBloc extends Cubit<SettingsState> {
 
   Future<void> _initialSettings() async {
     final LocalAuthentication auth = LocalAuthentication();
-    final List<BiometricType> availableBiometrics = await auth.getAvailableBiometrics();
+    final List<BiometricType> availableBiometrics =
+        await auth.getAvailableBiometrics();
     if (availableBiometrics.isNotEmpty) {
       emit(SettingsState.updatePage(state.model.copyWith(
         showBiometrics: true,
@@ -41,7 +42,8 @@ class SettingsBloc extends Cubit<SettingsState> {
       if (writeStorageStatus == AppStoragePermissionStatus.granted) {
         emit(SettingsState.permissionGranted(state.model, type));
       } else {
-        if (writeStorageStatus == AppStoragePermissionStatus.permanentlyDenied) {
+        if (writeStorageStatus ==
+            AppStoragePermissionStatus.permanentlyDenied) {
           emit(SettingsState.showSettings(state.model));
         } else {
           emit(SettingsState.showPermissionDialog(state.model, type));

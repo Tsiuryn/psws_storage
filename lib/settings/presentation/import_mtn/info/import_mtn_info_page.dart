@@ -67,15 +67,18 @@ class ImportMtnInfoForm extends StatelessWidget {
               imagePath: AppIcons.one,
             ),
             _ImageWithTitle(
-              title: '2. Нажать на три точки справа сверху. В меню выбрать пункт - Поделиться',
+              title:
+                  '2. Нажать на три точки справа сверху. В меню выбрать пункт - Поделиться',
               imagePath: AppIcons.two,
             ),
             _ImageWithTitle(
-              title: '3. Выбрать \'Опции\' и заполнить как указано на рисунке ниже:',
+              title:
+                  '3. Выбрать \'Опции\' и заполнить как указано на рисунке ниже:',
               imagePath: AppIcons.three,
             ),
             _ImageWithTitle(
-              title: '4. Выбрать \'Предпросмотр\', выделить весь текст и скопировать',
+              title:
+                  '4. Выбрать \'Предпросмотр\', выделить весь текст и скопировать',
               imagePath: AppIcons.four,
             ),
             _ImageWithTitle(
@@ -104,7 +107,8 @@ class _ImageWithTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme(context);
     final defStyle = appTheme.appTextStyles?.titleMedium;
-    final imageWidth = MediaQuery.of(context).size.width - AppDim.fourtyFour * 4;
+    final imageWidth =
+        MediaQuery.of(context).size.width - AppDim.fourtyFour * 4;
 
     return Column(
       children: [

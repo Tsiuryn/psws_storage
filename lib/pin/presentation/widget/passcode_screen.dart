@@ -30,10 +30,10 @@ class PinCodeWidget extends StatefulWidget {
     this.confirmCallback,
     this.onTapBiometrics,
     this.title,
-  })
-      : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
+  })  : circleUIConfig = circleUIConfig ?? const CircleUIConfig(),
         keyboardUIConfig = keyboardUIConfig ?? const KeyboardUIConfig(),
-        assert(confirmButton != null && confirmCallback != null || confirmButton == null && confirmCallback == null),
+        assert(confirmButton != null && confirmCallback != null ||
+            confirmButton == null && confirmCallback == null),
         super(key: key);
 
   @override
@@ -128,7 +128,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
   }
 
   Widget _buildKeyboard() => Keyboard(
-    onKeyboardTap: _onKeyboardButtonPressed,
+        onKeyboardTap: _onKeyboardButtonPressed,
         keyboardUIConfig: widget.keyboardUIConfig,
         bottomLeftKey: _buildConfirmKey(),
         bottomRightKey: _buildBackspaceKey(context),

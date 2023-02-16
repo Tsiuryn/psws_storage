@@ -44,7 +44,8 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
             onPressed: () {
-              createFileDialog(context, title: fileName, isFolder: false, value: (value) {
+              createFileDialog(context, title: fileName, isFolder: false,
+                  value: (value) {
                 bloc.addFile(value);
               });
             },
@@ -68,12 +69,15 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
           onPressed: () async {
-            context.router.push(SearchDirectoryRoute(directories: state.directories)).then((directory) {
+            context.router
+                .push(SearchDirectoryRoute(directories: state.directories))
+                .then((directory) {
               if (directory != null && directory is DirectoryModel) {
                 if (directory.isFolder) {
                   context.read<MainBloc>().openFolderFromSearch(directory);
                 } else {
-                  final path = state.convertListToPathText(state.getPathByParentId(directory));
+                  final path = state.convertListToPathText(
+                      state.getPathByParentId(directory));
                   context.pushRoute(EditNotesRoute(
                     idHive: directory.idHiveObject,
                     path: path,

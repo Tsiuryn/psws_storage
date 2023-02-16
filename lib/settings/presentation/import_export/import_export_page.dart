@@ -92,8 +92,8 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
           ),
         ],
         bottom: const PreferredSize(
-          child: Divider(),
           preferredSize: Size.fromHeight(1),
+          child: Divider(),
         ),
       ),
       body: isImportPage ? ImportForm(state: state) : ExportForm(state: state),

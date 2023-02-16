@@ -13,12 +13,14 @@ class PinRepoImpl implements PinRepo {
   static const _pinKey = 'pinKey_App';
 
   @override
-  Future<void> writePinStorage(String value) async =>
-      await secureStorage.write(key: _pinKey, value: value, aOptions: androidOptions);
+  Future<void> writePinStorage(String value) async => await secureStorage.write(
+      key: _pinKey, value: value, aOptions: androidOptions);
 
   @override
-  Future<String?> readPinStorage() async => await secureStorage.read(key: _pinKey, aOptions: androidOptions);
+  Future<String?> readPinStorage() async =>
+      await secureStorage.read(key: _pinKey, aOptions: androidOptions);
 
   @override
-  Future<void> deletePinStorage() async => await secureStorage.delete(key: _pinKey, aOptions: androidOptions);
+  Future<void> deletePinStorage() async =>
+      await secureStorage.delete(key: _pinKey, aOptions: androidOptions);
 }

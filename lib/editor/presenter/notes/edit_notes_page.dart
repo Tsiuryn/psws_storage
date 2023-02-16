@@ -22,7 +22,8 @@ class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
 
   @override
   EditNotesBloc createBloc(BuildContext context) {
-    return getIt.get<EditNotesBloc>()..getNoteData(idHive, directories: directories);
+    return getIt.get<EditNotesBloc>()
+      ..getNoteData(idHive, directories: directories);
   }
 
   @override

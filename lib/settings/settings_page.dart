@@ -45,7 +45,9 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
               appBar: AppBar(
                 title: GestureDetector(
                   onLongPress: () {
-                    context.read<SettingsBloc>().setShowMtnImport(!state.model.showMtnImport);
+                    context
+                        .read<SettingsBloc>()
+                        .setShowMtnImport(!state.model.showMtnImport);
                   },
                   child: Text(
                     l10n?.settings_page__title ?? '',
@@ -76,14 +78,18 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           children: [
                             Text(
                               environment.themeType == ThemeType.dark
-                                  ? l10n?.settings_page__color_scheme_night ?? ''
+                                  ? l10n?.settings_page__color_scheme_night ??
+                                      ''
                                   : l10n?.settings_page__color_scheme_day ?? '',
                               style: appTheme.appTextStyles?.subtitle,
                             ),
                             const Expanded(child: SizedBox()),
                             CupertinoSlidingSegmentedControl<ThemeType>(
                               children: ThemeTypeExt.toMap(context),
-                              groupValue: environment.themeType == ThemeType.dark ? ThemeType.dark : ThemeType.light,
+                              groupValue:
+                                  environment.themeType == ThemeType.dark
+                                      ? ThemeType.dark
+                                      : ThemeType.light,
                               onValueChanged: (newValue) {
                                 if (newValue != null) {
                                   context.read<AppBloc>().changeTheme(newValue);
@@ -105,10 +111,14 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                             const Expanded(child: SizedBox()),
                             CupertinoSlidingSegmentedControl<AppLocale>(
                               children: AppLocaleExt.toMap(context),
-                              groupValue: environment.appLocale == AppLocale.rus ? AppLocale.rus : AppLocale.eng,
+                              groupValue: environment.appLocale == AppLocale.rus
+                                  ? AppLocale.rus
+                                  : AppLocale.eng,
                               onValueChanged: (newValue) {
                                 if (newValue != null) {
-                                  context.read<AppBloc>().changeLocale(newValue);
+                                  context
+                                      .read<AppBloc>()
+                                      .changeLocale(newValue);
                                 }
                               },
                             ),
@@ -123,22 +133,29 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           visible: state.model.showBiometrics,
                           child: SettingsItem(
                             title: biometrics,
-                            subtitle: l10n?.settings_page__biometrics_subtitle ?? '',
+                            subtitle:
+                                l10n?.settings_page__biometrics_subtitle ?? '',
                             child: Row(
                               children: [
                                 Text(
                                     environment.localAuth == LocalAuth.pin
-                                        ? l10n?.settings_page__biometrics_pin ?? ''
-                                        : l10n?.settings_page__biometrics_fingerprint ?? '',
+                                        ? l10n?.settings_page__biometrics_pin ??
+                                            ''
+                                        : l10n?.settings_page__biometrics_fingerprint ??
+                                            '',
                                     style: appTheme.appTextStyles?.subtitle),
                                 const Expanded(child: SizedBox()),
                                 CupertinoSlidingSegmentedControl<LocalAuth>(
                                   children: LocalAuthExt.toMap(context),
                                   groupValue:
-                                      environment.localAuth == LocalAuth.pin ? LocalAuth.pin : LocalAuth.fingerprint,
+                                      environment.localAuth == LocalAuth.pin
+                                          ? LocalAuth.pin
+                                          : LocalAuth.fingerprint,
                                   onValueChanged: (newValue) {
                                     if (newValue != null) {
-                                      context.read<AppBloc>().changeBiometrics(newValue);
+                                      context
+                                          .read<AppBloc>()
+                                          .changeBiometrics(newValue);
                                     }
                                   },
                                 ),
@@ -149,7 +166,8 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                       ),
                       SettingsItem(
                           title: l10n?.settings_page__psw_change_title ?? '',
-                          informationMessage: l10n?.password_change__message_info ?? '',
+                          informationMessage:
+                              l10n?.password_change__message_info ?? '',
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -158,7 +176,8 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                   context.pushRoute(const ChangePswRoute());
                                 },
                                 child: Text(
-                                  l10n?.password_change__btn_settings_title ?? '',
+                                  l10n?.password_change__btn_settings_title ??
+                                      '',
                                   style: appTheme.appTextStyles?.subtitle,
                                 ),
                               ),
@@ -166,13 +185,15 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           )),
                       SettingsItem(
                         title: l10n?.settings_page__export ?? '',
-                        informationMessage: l10n?.settings_page__export_tooltip ?? '',
+                        informationMessage:
+                            l10n?.settings_page__export_tooltip ?? '',
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextButton(
                                 onPressed: () {
-                                  context.read<SettingsBloc>().checkPermission(ImportExportPageType.export);
+                                  context.read<SettingsBloc>().checkPermission(
+                                      ImportExportPageType.export);
                                 },
                                 child: Row(
                                   children: [
@@ -191,13 +212,15 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                       ),
                       SettingsItem(
                         title: l10n?.settings_page__import ?? '',
-                        informationMessage: l10n?.settings_page__import_tooltip ?? '',
+                        informationMessage:
+                            l10n?.settings_page__import_tooltip ?? '',
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextButton(
                                 onPressed: () {
-                                  context.read<SettingsBloc>().checkPermission(ImportExportPageType.import);
+                                  context.read<SettingsBloc>().checkPermission(
+                                      ImportExportPageType.import);
                                 },
                                 child: Row(
                                   children: [
@@ -227,7 +250,8 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      context.router.push(const ImportMtnRoute());
+                                      context.router
+                                          .push(const ImportMtnRoute());
                                     },
                                     child: Text(
                                       l10n?.import_mtn_settings_btn_title ?? '',
@@ -287,9 +311,14 @@ extension ThemeTypeExt on ThemeType {
         height: 24,
         child: Text(
           e == ThemeType.dark
-              ? AppLocalizations.of(context)!.main_appbar_bottom_theme_title_dark.toUpperCase()
-              : AppLocalizations.of(context)!.main_appbar_bottom_theme_title_light.toUpperCase(),
-          style: TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+              ? AppLocalizations.of(context)!
+                  .main_appbar_bottom_theme_title_dark
+                  .toUpperCase()
+              : AppLocalizations.of(context)!
+                  .main_appbar_bottom_theme_title_light
+                  .toUpperCase(),
+          style:
+              TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),
       );
     }
@@ -306,7 +335,8 @@ extension AppLocaleExt on AppLocale {
         height: 24,
         child: Text(
           e.name.toUpperCase(),
-          style: TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+          style:
+              TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),
       );
     }
@@ -321,13 +351,16 @@ extension LocalAuthExt on LocalAuth {
     final l10n = AppLocalizations.of(context);
 
     for (var e in LocalAuth.values) {
-      final title = e == LocalAuth.pin ? l10n?.common_dialog_no ?? '' : l10n?.common_dialog_yes ?? '';
+      final title = e == LocalAuth.pin
+          ? l10n?.common_dialog_no ?? ''
+          : l10n?.common_dialog_yes ?? '';
 
       map[e] = SizedBox(
         height: 24,
         child: Text(
           title,
-          style: TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+          style:
+              TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),
       );
     }

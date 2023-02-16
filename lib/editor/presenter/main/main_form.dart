@@ -22,7 +22,8 @@ import 'package:psws_storage/editor/presenter/main/widgets/item_widget.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/main_appbar.dart';
 import 'package:psws_storage/res/resources.dart';
 
-class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnackBar, PswsDialogs {
+class MainForm extends StatelessBasePage<MainBloc, MainModelState>
+    with PswsSnackBar, PswsDialogs {
   const MainForm({Key? key}) : super(key: key);
 
   @override
@@ -45,7 +46,8 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
     DateTime now = DateTime.now();
     final AppLocalizations l10n = AppLocalizations.of(context)!;
     final MainBloc bloc = context.read<MainBloc>();
-    if (now.difference(state.currentBackPressTime) > const Duration(seconds: 2)) {
+    if (now.difference(state.currentBackPressTime) >
+        const Duration(seconds: 2)) {
       bloc.changeCurrentBackPressTime(now);
       showRequestSnackBar(
         context,
@@ -93,7 +95,8 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
               if (currentDir.isFolder) {
                 bloc.openFolder(currentDir);
               } else {
-                final path = state.convertListToPathText(state.getPathByParentId(currentDir));
+                final path = state
+                    .convertListToPathText(state.getPathByParentId(currentDir));
                 context.router.push(EditNotesRoute(
                   idHive: currentDir.idHiveObject,
                   path: path,
@@ -124,8 +127,10 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
                     ? l10n.main_page__dialog_delete_folder_title
                     : l10n.main_page__dialog_delete_file_title,
                 message: currentDir.isFolder
-                    ? l10n.main_page__dialog_delete_folder_description(currentDir.name)
-                    : l10n.main_page__dialog_delete_file_description(currentDir.name),
+                    ? l10n.main_page__dialog_delete_folder_description(
+                        currentDir.name)
+                    : l10n.main_page__dialog_delete_file_description(
+                        currentDir.name),
                 tapOk: () {
                   bloc.deleteFile(currentDir);
                 },
@@ -141,8 +146,10 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
                   searchDestination: SearchDestination.move,
                 ))
                     .then((destinationDirectory) {
-                  if (destinationDirectory != null && destinationDirectory is DirectoryModel) {
-                    final isChildDestinationFolder = state.isChild(currentDir.id, destinationDirectory.id);
+                  if (destinationDirectory != null &&
+                      destinationDirectory is DirectoryModel) {
+                    final isChildDestinationFolder =
+                        state.isChild(currentDir.id, destinationDirectory.id);
                     if (!isChildDestinationFolder &&
                         destinationDirectory.id != currentDir.id &&
                         destinationDirectory.parentId != currentDir.id) {
@@ -151,12 +158,15 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState> with PswsSnac
                             destinationId: destinationDirectory.id,
                           );
                     } else {
-                      showRequestSnackBar(context, message: l10n.search_directory__cant_be_destination_folder_message);
+                      showRequestSnackBar(context,
+                          message: l10n
+                              .search_directory__cant_be_destination_folder_message);
                     }
                   }
                 });
               } else {
-                showRequestSnackBar(context, message: l10n.search_directory__no_folders_message);
+                showRequestSnackBar(context,
+                    message: l10n.search_directory__no_folders_message);
               }
             },
           );

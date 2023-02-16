@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_button.dart';
@@ -35,12 +36,14 @@ class _ExportFormState extends State<ExportForm> with PswsSnackBar {
     super.initState();
     _fileName = '';
     _psw = '';
+    context.read<ImportExportBloc>().getPathDirectory();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final appTheme = AppTheme(context);
+    _fileName = DateFormat('ddMMyyyy_HHmmss').format(DateTime.now());
 
     return widget.state.type == ImportExportStateType.loading
         ? const Center(
@@ -61,11 +64,11 @@ class _ExportFormState extends State<ExportForm> with PswsSnackBar {
                           children: [
                             PathWidget(
                               path: widget.state.pathToFileOrFolder,
-                              onTap: () {
+                              /*onTap: () {
                                 context
                                     .read<ImportExportBloc>()
                                     .getFolderPath();
-                              },
+                              },*/
                               btnTitle: l10n
                                   .import_export_page__export_btn_choose_folder,
                               btnSuffix: SvgPicture.asset(
@@ -79,6 +82,7 @@ class _ExportFormState extends State<ExportForm> with PswsSnackBar {
                               onChanged: (value) {
                                 _fileName = value;
                               },
+                              initialValue: _fileName,
                               autofocus: false,
                               hintText:
                                   l10n.import_export_page__input_file_hint,

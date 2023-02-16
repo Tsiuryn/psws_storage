@@ -7,13 +7,13 @@ class PathWidget extends StatelessWidget {
   final String? path;
   final String btnTitle;
   final Widget btnSuffix;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const PathWidget({
     Key? key,
     required this.btnTitle,
     required this.btnSuffix,
-    required this.onTap,
+    this.onTap,
     this.path,
   }) : super(key: key);
 
@@ -42,23 +42,24 @@ class PathWidget extends StatelessWidget {
               )),
             ],
           ),
-          Row(
-            children: [
-              const Expanded(child: SizedBox()),
-              TextButton(
-                onPressed: onTap,
-                child: Row(
-                  children: [
-                    Text(
-                      btnTitle,
-                      style: theme.appTextStyles?.subtitle,
-                    ),
-                    btnSuffix,
-                  ],
+          if (onTap != null)
+            Row(
+              children: [
+                const Expanded(child: SizedBox()),
+                TextButton(
+                  onPressed: onTap,
+                  child: Row(
+                    children: [
+                      Text(
+                        btnTitle,
+                        style: theme.appTextStyles?.subtitle,
+                      ),
+                      btnSuffix,
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )
+              ],
+            )
         ],
       ),
     );

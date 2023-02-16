@@ -7,7 +7,8 @@ import 'package:psws_storage/app/theme/app_theme.dart';
 class NotesEmbedBuilder implements EmbedBuilder {
   NotesEmbedBuilder({required this.addEditNote});
 
-  Future<void> Function(BuildContext context, {CustomDirectory? directory}) addEditNote;
+  Future<void> Function(BuildContext context, {CustomDirectory? directory})
+      addEditNote;
 
   @override
   String get key => 'notes';
@@ -41,7 +42,8 @@ class NotesBlockEmbed extends CustomBlockEmbed {
 
   static const String noteType = 'notes';
 
-  static NotesBlockEmbed fromDocument(CustomDirectory directory) => NotesBlockEmbed(jsonEncode(directory.toMap()));
+  static NotesBlockEmbed fromDocument(CustomDirectory directory) =>
+      NotesBlockEmbed(jsonEncode(directory.toMap()));
 
   CustomDirectory get directory => CustomDirectory.fromMap(jsonDecode(data));
 }
@@ -51,7 +53,8 @@ class CustomDirectory {
   final String id;
   final int hiveId;
 
-  const CustomDirectory({required this.name, required this.id, required this.hiveId});
+  const CustomDirectory(
+      {required this.name, required this.id, required this.hiveId});
 
   Map<String, dynamic> toMap() {
     return {

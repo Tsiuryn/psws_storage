@@ -150,10 +150,12 @@ class RPN {
             postfix.add(stack.pop());
           }
         } else {
-          if (curr == minus && prev == '' || _isDelimiter(prev) && prev != bracketClose) {
+          if (curr == minus && prev == '' ||
+              _isDelimiter(prev) && prev != bracketClose) {
             curr = minusUnary;
           } else {
-            while (stack.isNotEmpty && _priority(curr) <= _priority(stack.peek())) {
+            while (stack.isNotEmpty &&
+                _priority(curr) <= _priority(stack.peek())) {
               postfix.add(stack.pop());
             }
           }
@@ -172,7 +174,8 @@ class RPN {
     return postfix;
   }
 
-  static const String _operators = '$plus$minus$multiply$divide$percent$exp$sqrt))';
+  static const String _operators =
+      '$plus$minus$multiply$divide$percent$exp$sqrt))';
   static const String _delimiters = '()$_operators';
 
   static bool _isDelimiter(String token) {
@@ -205,7 +208,8 @@ class RPN {
   }
 
   static Future<List<String>> _getTokens(String infix) async {
-    final setDelimiters = _delimiters.runes.map((e) => String.fromCharCode(e)).toSet();
+    final setDelimiters =
+        _delimiters.runes.map((e) => String.fromCharCode(e)).toSet();
 
     final tokenizer = Tokenizer(setDelimiters);
     final stream = StreamController<String>();

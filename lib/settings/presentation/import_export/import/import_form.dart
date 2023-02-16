@@ -62,7 +62,8 @@ class _ImportFormState extends State<ImportForm> with PswsSnackBar {
                               onTap: () {
                                 context.read<ImportExportBloc>().getFilePath();
                               },
-                              btnTitle: l10n.import_export_page__import_btn_choose_file,
+                              btnTitle: l10n
+                                  .import_export_page__import_btn_choose_file,
                               btnSuffix: SvgPicture.asset(
                                 AppIcons.icImport,
                                 color: appTheme.appColors?.textColor,

@@ -5,11 +5,14 @@ abstract class SettingsState {
 
   SettingsState(this.model);
 
-  factory SettingsState.initial() => InitialSettings(const SettingsModel.empty());
+  factory SettingsState.initial() =>
+      InitialSettings(const SettingsModel.empty());
 
   factory SettingsState.updatePage(SettingsModel model) = UpdatePage;
 
-  factory SettingsState.permissionGranted(SettingsModel model, ImportExportPageType type) = StoragePermissionGranted;
+  factory SettingsState.permissionGranted(
+          SettingsModel model, ImportExportPageType type) =
+      StoragePermissionGranted;
 
   factory SettingsState.showSettings(SettingsModel model) = ShowSettings;
 

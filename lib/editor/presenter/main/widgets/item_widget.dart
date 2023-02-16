@@ -35,7 +35,8 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppColorsExt? appColors = Theme.of(context).extension<AppColorsExt>();
-    final AppTextStyleExt? appTextStyles = Theme.of(context).extension<AppTextStyleExt>();
+    final AppTextStyleExt? appTextStyles =
+        Theme.of(context).extension<AppTextStyleExt>();
     final folderIcon = SvgPicture.asset(
       AppIcons.icFolder,
       color: appColors?.textColor,
@@ -88,8 +89,9 @@ class ItemWidget extends StatelessWidget {
     ];
 
     final textStyle = appTextStyles?.titleMedium ?? const TextStyle();
-    final textHighLightStyle =
-        appTextStyles?.titleMedium?.copyWith(backgroundColor: Colors.grey[600]) ?? const TextStyle();
+    final textHighLightStyle = appTextStyles?.titleMedium
+            ?.copyWith(backgroundColor: Colors.grey[600]) ??
+        const TextStyle();
 
     return Column(
       children: [
@@ -129,7 +131,8 @@ class ItemWidget extends StatelessWidget {
                                         textHighLightStyle: textHighLightStyle),
                                   ),
                                   Text(
-                                    l10n.item_widget__created(dateFormatter.format(model.createdDate)),
+                                    l10n.item_widget__created(dateFormatter
+                                        .format(model.createdDate)),
                                     style: appTextStyles?.subtitle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -201,7 +204,8 @@ TextSpan highlightText({
       ..add(TextSpan(
         style: customStyle,
         text: value.substring(firstIndex, lastIndex),
-        recognizer: TapGestureRecognizer()..onTap = onHighlightedTextTap as GestureTapCallback?,
+        recognizer: TapGestureRecognizer()
+          ..onTap = onHighlightedTextTap as GestureTapCallback?,
       ))
       ..add(TextSpan(text: value.substring(lastIndex, value.length)));
   } else {

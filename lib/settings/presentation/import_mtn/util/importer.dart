@@ -27,7 +27,8 @@ class Importer {
         final id = _getRandomId;
         final length = directories.content.length;
         final isFolder = length > 2 && index < length - 2;
-        final parentId = _getParentId(first: directories, elementsDrc: elementsDrc, currentName: element);
+        final parentId = _getParentId(
+            first: directories, elementsDrc: elementsDrc, currentName: element);
         if (index < length - 1) {
           elementsDrc.add(DirectoryModel(
             isFolder: isFolder,
@@ -58,8 +59,13 @@ class Importer {
     String? parentId;
 
     first.content.forEachIndexed((index, element) {
-      if (currentName == element && element != first.content.first && element != first.content.last) {
-        parentId = elementsDrc.firstWhereOrNull((element) => element.name == currentName && element.isFolder)?.id;
+      if (currentName == element &&
+          element != first.content.first &&
+          element != first.content.last) {
+        parentId = elementsDrc
+            .firstWhereOrNull(
+                (element) => element.name == currentName && element.isFolder)
+            ?.id;
       }
     });
 
@@ -107,8 +113,10 @@ extension on List<String> {
   String _removeNewLine(String source) {
     String updatedText = source;
     if (updatedText.isNotEmpty) {
-      if (updatedText[0] == '\n') updatedText = updatedText.substring(1, updatedText.length - 1);
-      if (updatedText[updatedText.length - 1] == '\n') updatedText = updatedText.substring(0, updatedText.length - 2);
+      if (updatedText[0] == '\n')
+        updatedText = updatedText.substring(1, updatedText.length - 1);
+      if (updatedText[updatedText.length - 1] == '\n')
+        updatedText = updatedText.substring(0, updatedText.length - 2);
     }
 
     return updatedText;

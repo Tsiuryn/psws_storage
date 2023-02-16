@@ -34,9 +34,11 @@ class PathImporter {
                 idHiveObject: -1,
                 content: content,
                 id: _getRandomId,
-                parentId: _getParentId(currentIndexPath: index, path: element.path, drc: drc)));
+                parentId: _getParentId(
+                    currentIndexPath: index, path: element.path, drc: drc)));
           } else {
-            final folder = drc.firstWhereOrNull((element) => element.name == item && element.isFolder);
+            final folder = drc.firstWhereOrNull(
+                (element) => element.name == item && element.isFolder);
             if (folder == null) {
               drc.add(DirectoryModel(
                   isFolder: true,
@@ -45,7 +47,8 @@ class PathImporter {
                   createdDate: DateTime.now(),
                   idHiveObject: -1,
                   id: _getRandomId,
-                  parentId: _getParentId(currentIndexPath: index, path: element.path, drc: drc)));
+                  parentId: _getParentId(
+                      currentIndexPath: index, path: element.path, drc: drc)));
             }
           }
         });
@@ -63,7 +66,8 @@ class PathImporter {
     if (path.isEmpty || path.length == 1 || currentIndexPath == 0) {
       return rootId;
     } else {
-      final folder = drc.firstWhereOrNull((element) => element.name == path[currentIndexPath - 1]);
+      final folder = drc.firstWhereOrNull(
+          (element) => element.name == path[currentIndexPath - 1]);
       if (folder != null) {
         return folder.id;
       } else {

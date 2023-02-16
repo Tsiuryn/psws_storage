@@ -36,14 +36,16 @@ class CustomIconButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     final iconColor = iconTheme?.iconUnselectedColor ?? theme.iconTheme.color;
-    final iconFillColor = iconTheme?.iconUnselectedFillColor ?? (fillColor ?? theme.canvasColor);
+    final iconFillColor =
+        iconTheme?.iconUnselectedFillColor ?? (fillColor ?? theme.canvasColor);
     final rightSize = size * kIconButtonFactor;
 
     return ConstrainedBox(
       constraints: BoxConstraints.tightFor(width: rightSize, height: rightSize),
       child: RawMaterialButton(
         visualDensity: VisualDensity.compact,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius)),
         fillColor: iconFillColor,
         elevation: 0,
         hoverElevation: hoverElevation,

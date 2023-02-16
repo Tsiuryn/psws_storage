@@ -43,7 +43,8 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
     DateTime now = DateTime.now();
     final AppLocalizations l10n = AppLocalizations.of(context)!;
     final PinBloc bloc = context.read<PinBloc>();
-    if (now.difference(state.currentBackPressTime) > const Duration(seconds: 2)) {
+    if (now.difference(state.currentBackPressTime) >
+        const Duration(seconds: 2)) {
       bloc.changeCurrentBackPressTime(now);
       showRequestSnackBar(
         context,
@@ -64,11 +65,14 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
       } else {
         context.router.pop();
       }
-      showRequestSnackBar(context, message: l10n.pin_page__title_snack_psw_correct, isSuccess: true);
+      showRequestSnackBar(context,
+          message: l10n.pin_page__title_snack_psw_correct, isSuccess: true);
       return;
     }
-    if (state.state == PinFlowState.unSuccessCreate || state.state == PinFlowState.unSuccessCheck) {
-      showRequestSnackBar(context, message: l10n.pin_page__title_snack_psw_not_correct);
+    if (state.state == PinFlowState.unSuccessCreate ||
+        state.state == PinFlowState.unSuccessCheck) {
+      showRequestSnackBar(context,
+          message: l10n.pin_page__title_snack_psw_not_correct);
       return;
     }
     if (state.state == PinFlowState.fingerprint) {
@@ -133,7 +137,8 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
                       },
                       confirmCallback: () {
                         if (value.isEmpty) {
-                          showRequestSnackBar(context, message: l10n.pin_page__title_snack_empty_psw);
+                          showRequestSnackBar(context,
+                              message: l10n.pin_page__title_snack_empty_psw);
                         } else {
                           bloc.writePin(value);
                         }
@@ -141,7 +146,9 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
                       onTapBiometrics: state.showAuthBtn
                           ? () async {
                               if (await _authenticateByBiometrics(context)) {
-                                context.read<PinBloc>().changeState(PinFlowState.success);
+                                context
+                                    .read<PinBloc>()
+                                    .changeState(PinFlowState.success);
                               }
                             }
                           : null,
@@ -156,7 +163,8 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
           );
   }
 
-  String _getTitle({required AppLocalizations l10n, required PinFlowState state}) {
+  String _getTitle(
+      {required AppLocalizations l10n, required PinFlowState state}) {
     switch (state) {
       case PinFlowState.firstCreate:
         return l10n.pin_page__title_first_create;

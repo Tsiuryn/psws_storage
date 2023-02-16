@@ -62,12 +62,15 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
       });
       final myJSON = jsonDecode(widget.note.content);
       final document = Document.fromJson(myJSON);
-      _controller = QuillController(document: document, selection: const TextSelection.collapsed(offset: 0));
+      _controller = QuillController(
+          document: document,
+          selection: const TextSelection.collapsed(offset: 0));
       _controller.moveCursorToEnd();
     } catch (e) {
       final doc = Document();
       doc.insert(0, widget.note.content);
-      _controller = QuillController(document: doc, selection: const TextSelection.collapsed(offset: 0));
+      _controller = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
       _controller.moveCursorToEnd();
     }
   }
@@ -108,10 +111,13 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                 Material(
                   elevation: 4,
                   child: Theme(
-                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                    data: Theme.of(context)
+                        .copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
-                      backgroundColor: theme.appColors?.appBarColor ?? Theme.of(context).primaryColor,
-                      collapsedBackgroundColor: theme.appColors?.appBarColor ?? Theme.of(context).primaryColor,
+                      backgroundColor: theme.appColors?.appBarColor ??
+                          Theme.of(context).primaryColor,
+                      collapsedBackgroundColor: theme.appColors?.appBarColor ??
+                          Theme.of(context).primaryColor,
                       childrenPadding: EdgeInsets.zero,
                       tilePadding: const EdgeInsets.all(AppDim.four),
                       leading: IconButton(
@@ -144,7 +150,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             Text(
                               '$pathPrefix ${widget.path}',
                             ),
-                          Text('$subtitle ${dateFormatter.format(widget.note.createdDate)}'),
+                          Text(
+                              '$subtitle ${dateFormatter.format(widget.note.createdDate)}'),
                         ],
                       ),
                       children: [
@@ -160,48 +167,61 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             toolbarIconAlignment: WrapAlignment.start,
                             showInlineCode: false,
                             iconTheme: QuillIconTheme(
-                              iconSelectedFillColor: Theme.of(context).colorScheme.secondary,
+                              iconSelectedFillColor:
+                                  Theme.of(context).colorScheme.secondary,
                               borderRadius: AppDim.four,
                             ),
                             showDividers: false,
                             // embedButtons: FlutterQuillEmbeds.buttons(),
                             embedButtons: [
-                              (controller, toolbarIconSize, iconTheme, dialogTheme) {
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
                                 return CustomIconButton(
                                     iconTheme: iconTheme,
                                     onPressed: () {
-                                      final index = controller.selection.baseOffset;
-                                      final length = controller.selection.extentOffset - index;
+                                      final index =
+                                          controller.selection.baseOffset;
+                                      final length =
+                                          controller.selection.extentOffset -
+                                              index;
                                       context.router
                                           .push(SearchDirectoryRoute(
-                                        directories: widget.state.allNotesWithoutCurrent,
-                                        searchDestination: SearchDestination.move,
+                                        directories:
+                                            widget.state.allNotesWithoutCurrent,
+                                        searchDestination:
+                                            SearchDestination.move,
                                       ))
                                           .then((value) {
                                         if (value is DirectoryModel) {
                                           final block = BlockEmbed.custom(
-                                            NotesBlockEmbed.fromDocument(CustomDirectory(
+                                            NotesBlockEmbed.fromDocument(
+                                                CustomDirectory(
                                               name: value.name,
                                               id: value.id,
                                               hiveId: value.idHiveObject,
                                             )),
                                           );
-                                          controller.replaceText(index, length, block, null);
+                                          controller.replaceText(
+                                              index, length, block, null);
                                         }
                                       });
                                     },
                                     icon: Icons.link_rounded);
                               },
-                              (controller, toolbarIconSize, iconTheme, dialogTheme) {
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
                                 return CustomIconButton(
                                   icon: Icons.access_time_rounded,
                                   iconTheme: iconTheme,
                                   onPressed: () {
-                                    _setTextToCurrentPosition(dateFormatterWithMls.format(DateTime.now()));
+                                    _setTextToCurrentPosition(
+                                        dateFormatterWithMls
+                                            .format(DateTime.now()));
                                   },
                                 );
                               },
-                              (controller, toolbarIconSize, iconTheme, dialogTheme) {
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
                                 return CustomIconButton(
                                   icon: Icons.calculate_outlined,
                                   iconTheme: iconTheme,
@@ -211,8 +231,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                         builder: (context) {
                                           return const CalculatorDialog();
                                         });
-                                    if (result != null && result is CalculatorResult) {
-                                      _setTextToCurrentPosition('${result.userInput} = ${result.answer}');
+                                    if (result != null &&
+                                        result is CalculatorResult) {
+                                      _setTextToCurrentPosition(
+                                          '${result.userInput} = ${result.answer}');
                                     }
                                   },
                                 );
@@ -220,11 +242,17 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             ],
                             customButtons: [
                               QuillCustomButton(
-                                icon: widget.state.readOnly ? Icons.edit : Icons.save,
+                                icon: widget.state.readOnly
+                                    ? Icons.edit
+                                    : Icons.save,
                                 onTap: () {
-                                  context.read<EditNotesBloc>().updateEditMode(!readOnly);
+                                  context
+                                      .read<EditNotesBloc>()
+                                      .updateEditMode(!readOnly);
                                   if (!readOnly) {
-                                    context.read<EditNotesBloc>().saveNote(content);
+                                    context
+                                        .read<EditNotesBloc>()
+                                        .saveNote(content);
                                     _focusNode.unfocus();
                                   }
                                 },
@@ -264,7 +292,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
         ));
   }
 
-  Future<void> _addEditNote(BuildContext context, {CustomDirectory? directory}) async {
+  Future<void> _addEditNote(BuildContext context,
+      {CustomDirectory? directory}) async {
     final note = widget.state.getDirectoryById(directory?.id);
     final path = widget.state.getPath(note);
     if (directory != null && path != null) {
@@ -286,8 +315,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   String get content => jsonEncode(_controller.document.toDelta().toJson());
 
   void showDialog(BuildContext context) {
-    final title = AppLocalizations.of(context)?.edit_notes_page__dialog_title ?? '';
-    final subTitle = AppLocalizations.of(context)?.edit_notes_page__dialog_subTitle ?? '';
+    final title =
+        AppLocalizations.of(context)?.edit_notes_page__dialog_title ?? '';
+    final subTitle =
+        AppLocalizations.of(context)?.edit_notes_page__dialog_subTitle ?? '';
 
     createOkDialog(context, title: title, message: subTitle, tapNo: () {
       context.router.pop();

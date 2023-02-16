@@ -36,19 +36,22 @@ class PswsInputSearch extends StatelessWidget {
           borderSide: BorderSide(
             color: appColors?.textColor ?? Colors.white,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(AppDim.thirtyTwo)),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppDim.thirtyTwo)),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: appColors?.textColor ?? Colors.white,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(AppDim.thirtyTwo)),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppDim.thirtyTwo)),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: appColors?.textColor ?? Colors.white,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(AppDim.thirtyTwo)),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppDim.thirtyTwo)),
         ),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,

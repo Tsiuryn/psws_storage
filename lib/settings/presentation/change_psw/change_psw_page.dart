@@ -87,7 +87,9 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                             _oldPsw = value;
                           },
                           keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return l10n.input_error__empty;
@@ -99,7 +101,8 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                           height: AppDim.sixteen,
                         ),
                         PswsPasswordInput(
-                          placeholder: l10n.import_export_page__input_password_placeholder,
+                          placeholder: l10n
+                              .import_export_page__input_password_placeholder,
                           onChanged: (value) {
                             _psw = value;
                           },
@@ -108,7 +111,8 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(8),
                           ],
-                          hintText: l10n.import_export_page__input_password_hint,
+                          hintText:
+                              l10n.import_export_page__input_password_hint,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return l10n.input_error__empty;
@@ -120,10 +124,13 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                           height: AppDim.sixteen,
                         ),
                         PswsPasswordInput(
-                          placeholder: l10n.import_export_page__input_rpt_psw_placeholder,
+                          placeholder: l10n
+                              .import_export_page__input_rpt_psw_placeholder,
                           hintText: l10n.import_export_page__input_rpt_psw_hint,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return l10n.input_error__empty;
@@ -143,7 +150,8 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                 padding: const EdgeInsets.only(bottom: AppDim.sixteen),
                 child: PswsButton(
                   onPressed: () async {
-                    final bool inputValidate = _formKey.currentState?.validate() ?? false;
+                    final bool inputValidate =
+                        _formKey.currentState?.validate() ?? false;
                     final bloc = context.read<ChangePswBloc>();
 
                     if (inputValidate && _psw != _oldPsw) {

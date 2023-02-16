@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
         create: (context) => getIt.get<AppBloc>(),
         child: BlocBuilder<AppBloc, Environment>(
           builder: (context, settings) {
-            final Locale locale = settings.appLocale == AppLocale.rus ? const Locale('ru') : const Locale('en');
+            final Locale locale = settings.appLocale == AppLocale.rus
+                ? const Locale('ru')
+                : const Locale('en');
             return GlobalLoaderOverlay(
               child: MaterialApp.router(
                 debugShowCheckedModeBanner: false,
@@ -34,7 +36,9 @@ class MyApp extends StatelessWidget {
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                themeMode: settings.themeType == ThemeType.light ? ThemeMode.light : ThemeMode.dark,
+                themeMode: settings.themeType == ThemeType.light
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
                 theme: lightTheme(context),
                 locale: locale,
                 darkTheme: darkTheme(context),

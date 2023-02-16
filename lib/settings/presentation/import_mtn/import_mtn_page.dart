@@ -74,7 +74,8 @@ class _ImportMtnPageState extends State<ImportMtnPage> with PswsSnackBar {
                   preferredSize: Size.fromHeight(1),
                 ),
               ),
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
               floatingActionButton: PswsButton(
                 content: ButtonText(l10n?.import_mtn_btn_title ?? ''),
                 onPressed: () async {
@@ -93,8 +94,10 @@ class _ImportMtnPageState extends State<ImportMtnPage> with PswsSnackBar {
                       autofocus: true,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(borderSide: BorderSide.none),
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-                        errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                        focusedBorder:
+                            OutlineInputBorder(borderSide: BorderSide.none),
+                        errorBorder:
+                            OutlineInputBorder(borderSide: BorderSide.none),
                       ),
                     ),
                     const SizedBox(
@@ -116,14 +119,18 @@ class _ImportMtnPageState extends State<ImportMtnPage> with PswsSnackBar {
               case ImportMtnStateType.error:
                 context.loaderOverlay.hide();
                 context.popRoute();
-                showRequestSnackBar(context, message: l10n?.import_mtn_error_message ?? '', isSuccess: false);
+                showRequestSnackBar(context,
+                    message: l10n?.import_mtn_error_message ?? '',
+                    isSuccess: false);
                 return;
 
               case ImportMtnStateType.importSuccess:
                 context.loaderOverlay.hide();
                 getIt.get<MainBloc>().initBloc();
                 context.popRoute();
-                showRequestSnackBar(context, message: l10n?.import_mtn_success_message ?? '', isSuccess: true);
+                showRequestSnackBar(context,
+                    message: l10n?.import_mtn_success_message ?? '',
+                    isSuccess: true);
                 return;
             }
           },

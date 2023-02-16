@@ -72,7 +72,8 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
         builder: (ctx, setState) => Container(
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16), topRight: Radius.circular(16))),
           width: 200,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -90,7 +91,8 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
                             alignment: Alignment.centerRight,
                             child: Text(
                               userInput,
-                              style: const TextStyle(fontSize: 18, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.black),
                             ),
                           ),
                           Row(
@@ -105,7 +107,9 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
                                       answer,
                                       maxLines: 1,
                                       style: const TextStyle(
-                                          fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
+                                          fontSize: 30,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
@@ -117,7 +121,8 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
                               "Can't divide by zero!",
                               style: TextStyle(color: Colors.red),
                             ),
-                          if (double.tryParse(answer) != null && double.parse(answer) >= 10000000000)
+                          if (double.tryParse(answer) != null &&
+                              double.parse(answer) >= 10000000000)
                             const Text(
                               "Amount must be less than 10,000,000,000!",
                               style: TextStyle(color: Colors.red),
@@ -137,11 +142,13 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
                         onPressed: () async {
                           //handle case of backspace on empty before removal
                           if (userInput.isEmpty) return;
-                          userInput = userInput.substring(0, userInput.length - 1);
+                          userInput =
+                              userInput.substring(0, userInput.length - 1);
                           //handle case of backspace on empty after removal
                           if (userInput.isEmpty) {
                             answer = "";
-                          } else if (!isOperator(userInput[userInput.length - 1])) {
+                          } else if (!isOperator(
+                              userInput[userInput.length - 1])) {
                             await solve();
                           }
                           setState(() {});
@@ -169,15 +176,19 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
                   shrinkWrap: true,
                   itemCount: buttons.length,
                   padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4),
                   itemBuilder: (BuildContext context, int index) => MyButton(
                     onPressed: () async {
                       await calculator(buttons[index]);
                       setState(() {});
                     },
                     buttonText: buttons[index],
-                    color: isOperator(buttons[index]) ? Colors.grey : Colors.white,
-                    textColor: isOperator(buttons[index]) ? Colors.white : Colors.black,
+                    color:
+                        isOperator(buttons[index]) ? Colors.grey : Colors.white,
+                    textColor: isOperator(buttons[index])
+                        ? Colors.white
+                        : Colors.black,
                   ),
                 ),
               ),
@@ -228,7 +239,11 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
   }
 
   bool isOperator(String x) {
-    if (x == RPN.divide || x == RPN.multiply || x == RPN.minus || x == RPN.plus || x == '=') {
+    if (x == RPN.divide ||
+        x == RPN.multiply ||
+        x == RPN.minus ||
+        x == RPN.plus ||
+        x == '=') {
       return true;
     }
     return false;
@@ -237,7 +252,8 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
   Future<void> calculator(String btnText) async {
     divByZero = false;
     //handling of consecutive operator error
-    if (isOperator(btnText) && (userInput == "" || isOperator(userInput[userInput.length - 1]))) {
+    if (isOperator(btnText) &&
+        (userInput == "" || isOperator(userInput[userInput.length - 1]))) {
       return;
     }
     //handling errors related to decimal
