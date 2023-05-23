@@ -84,8 +84,8 @@ mixin PswsDialogs {
           actions: [
             TextButton(
               onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
                 tapNo();
-                Navigator.pop(context);
               },
               child: Text(
                 l10n.common_dialog_no,
@@ -94,8 +94,8 @@ mixin PswsDialogs {
             ),
             TextButton(
                 onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
                   tapOk();
-                  Navigator.pop(context);
                 },
                 child: Text(
                   l10n.common_dialog_yes,
