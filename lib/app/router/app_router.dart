@@ -7,8 +7,6 @@ import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
 import 'package:psws_storage/settings/presentation/change_psw/change_psw_page.dart';
 import 'package:psws_storage/settings/presentation/import_export/import_export_page.dart';
-import 'package:psws_storage/settings/presentation/import_mtn/import_mtn_page.dart';
-import 'package:psws_storage/settings/presentation/import_mtn/info/import_mtn_info_page.dart';
 import 'package:psws_storage/settings/settings_page.dart';
 
 part 'app_router.gr.dart';
@@ -48,16 +46,6 @@ final pages = [
   CustomRoute(
     path: '/import_export',
     page: ImportExportRoute.page,
-    transitionsBuilder: TransitionsBuilders.slideLeft,
-  ),
-  CustomRoute(
-    path: '/mtn_import',
-    page: ImportMtnRoute.page,
-    transitionsBuilder: TransitionsBuilders.slideLeft,
-  ),
-  CustomRoute(
-    path: '/mtn_import_info',
-    page: ImportMtnInfoRoute.page,
     transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
   CustomRoute(

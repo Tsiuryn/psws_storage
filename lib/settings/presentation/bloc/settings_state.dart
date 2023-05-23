@@ -50,24 +50,19 @@ class ShowPermissionDialog extends SettingsState {
 }
 
 class SettingsModel {
-  final bool showMtnImport;
   final bool showBiometrics;
 
   const SettingsModel.empty()
-      : showMtnImport = false,
-        showBiometrics = false;
+      : showBiometrics = false;
 
   const SettingsModel({
-    required this.showMtnImport,
     required this.showBiometrics,
   });
 
   SettingsModel copyWith({
-    bool? showMtnImport,
     bool? showBiometrics,
   }) =>
       SettingsModel(
-        showMtnImport: showMtnImport ?? this.showMtnImport,
         showBiometrics: showBiometrics ?? this.showBiometrics,
       );
 }

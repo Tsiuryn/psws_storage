@@ -25,12 +25,6 @@ class SettingsBloc extends Cubit<SettingsState> {
     }
   }
 
-  Future<void> setShowMtnImport(bool showMtnImport) async {
-    emit(SettingsState.updatePage(state.model.copyWith(
-      showMtnImport: showMtnImport,
-    )));
-  }
-
   Future<void> checkPermission(ImportExportPageType type) async {
     if (state is! UpdatePage) {
       emit(SettingsState.updatePage(state.model));

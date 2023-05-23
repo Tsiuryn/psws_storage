@@ -32,7 +32,6 @@ import 'package:psws_storage/settings/domain/usecase/import_database_usecase.dar
 import 'package:psws_storage/settings/presentation/bloc/settings_bloc.dart';
 import 'package:psws_storage/settings/presentation/change_psw/change_psw_bloc.dart';
 import 'package:psws_storage/settings/presentation/import_export/bloc/import_export_bloc.dart';
-import 'package:psws_storage/settings/presentation/import_mtn/bloc/import_mtn_bloc.dart';
 
 GetIt getIt = GetIt.instance;
 const String databaseName = 'PSWS_Database';
@@ -130,9 +129,6 @@ Future<void> initDi() async {
   );
 
   getIt.registerFactory<SettingsBloc>(() => SettingsBloc());
-  getIt.registerFactory<ImportMtnBloc>(() => ImportMtnBloc(
-        addFileUseCase: getIt.get<AddFileUseCase>(),
-      ));
 
   getIt.registerFactory<ChangePswBloc>(() => ChangePswBloc(
         readRegistrationPin: getIt.get<ReadRegistrationPinUseCase>(),
