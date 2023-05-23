@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/di/di.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
@@ -15,6 +15,7 @@ import 'package:psws_storage/settings/presentation/import_export/bloc/import_exp
 import 'package:psws_storage/settings/presentation/import_export/export/export_form.dart';
 import 'package:psws_storage/settings/presentation/import_export/import/import_form.dart';
 
+@RoutePage()
 class ImportExportPage extends StatefulWidget {
   @QueryParam('page_type')
   final ImportExportPageType type;

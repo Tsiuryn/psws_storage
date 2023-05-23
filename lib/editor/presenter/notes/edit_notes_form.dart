@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/calculator_dialog/calculator_dialog.dart';
 import 'package:psws_storage/app/ui_kit/psws_back_button_listener.dart';
@@ -18,6 +17,7 @@ import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.d
 import 'package:psws_storage/editor/presenter/notes/bloc/edit_notes_bloc.dart';
 import 'package:psws_storage/editor/presenter/notes/widget/custom_icon_button.dart';
 
+import '../../../app/router/app_router.dart';
 import 'widget/notes_embed_builder.dart';
 
 const Map<String, String> fontSize = {

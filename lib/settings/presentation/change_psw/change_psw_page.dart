@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_button.dart';
 import 'package:psws_storage/app/ui_kit/psws_password_input.dart';
@@ -13,6 +13,7 @@ import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 import 'package:psws_storage/settings/presentation/change_psw/change_psw_bloc.dart';
 
+@RoutePage()
 class ChangePswPage extends StatefulWidget {
   const ChangePswPage({Key? key}) : super(key: key);
 

@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_button.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
@@ -15,6 +15,7 @@ import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dar
 import 'package:psws_storage/res/resources.dart';
 import 'package:psws_storage/settings/presentation/import_mtn/bloc/import_mtn_bloc.dart';
 
+@RoutePage()
 class ImportMtnPage extends StatefulWidget {
   const ImportMtnPage({Key? key}) : super(key: key);
 

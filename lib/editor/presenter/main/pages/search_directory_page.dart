@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_input_search.dart';
@@ -10,6 +10,7 @@ import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/item_widget.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 
+@RoutePage()
 class SearchDirectoryPage extends StatefulWidget {
   final List<DirectoryModel> directories;
   final SearchDestination searchDestination;

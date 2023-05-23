@@ -1,10 +1,11 @@
+import 'dart:ui' as ui;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
@@ -14,7 +15,7 @@ import 'package:psws_storage/editor/presenter/main/bloc/main_model.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class MainAppBar extends StatelessWidget
-    with PreferredSizeWidget, PswsSnackBar, PswsDialogs
+    with PswsSnackBar, PswsDialogs
     implements PreferredSizeWidget {
   final MainModelState state;
 
@@ -35,8 +36,8 @@ class MainAppBar extends StatelessWidget
       automaticallyImplyLeading: false,
       titleSpacing: AppDim.zero,
       bottom: const PreferredSize(
-        child: Divider(),
         preferredSize: Size.fromHeight(1),
+        child: Divider(),
       ),
       title: Row(children: [
         const SizedBox(

@@ -10,7 +10,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:psws_storage/app/common/base_page.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.gr.dart';
+import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/pin/presentation/widget/circle.dart';
 import 'package:psws_storage/pin/presentation/widget/passcode_screen.dart';
@@ -18,6 +18,7 @@ import 'package:psws_storage/res/resources.dart';
 
 import 'bloc/pin_bloc.dart';
 
+@RoutePage()
 class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
   final bool isFirstPage;
 
