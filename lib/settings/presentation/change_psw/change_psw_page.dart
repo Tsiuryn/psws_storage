@@ -54,7 +54,7 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            l10n.password_change__title ?? '',
+            l10n.password_change__title,
             style: appTheme.appTextStyles?.titleLarge,
           ),
           leading: IconButton(

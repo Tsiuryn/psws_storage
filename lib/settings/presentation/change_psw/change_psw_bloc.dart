@@ -22,7 +22,6 @@ class ChangePswBloc extends Cubit<ChangePswState> {
 
   Future<void> writeNewPin(String newPin) async {
     final hash = _hashKey(newPin);
-    final df = hash;
     await writeRegistrationPin(hash);
   }
 

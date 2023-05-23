@@ -17,7 +17,6 @@ import 'package:psws_storage/settings/presentation/import_export/import/import_f
 
 @RoutePage()
 class ImportExportPage extends StatefulWidget {
-  @QueryParam('page_type')
   final ImportExportPageType type;
 
   const ImportExportPage({Key? key, required this.type}) : super(key: key);
