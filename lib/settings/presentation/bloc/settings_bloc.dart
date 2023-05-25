@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
@@ -35,7 +34,8 @@ class SettingsBloc extends Cubit<SettingsState> {
       final writeStorageStatus = await _checkPermissionWriteStorage();
       if (writeStorageStatus == AppStoragePermissionStatus.granted) {
         emit(SettingsState.permissionGranted(state.model, type));
-      } else {
+      }
+      else {
         if (writeStorageStatus ==
             AppStoragePermissionStatus.permanentlyDenied) {
           emit(SettingsState.showSettings(state.model));
@@ -47,25 +47,20 @@ class SettingsBloc extends Cubit<SettingsState> {
   }
 
   Future<AppStoragePermissionStatus> _checkPermissionWriteStorage() async {
-    final List<PermissionStatus> statuses = [
-      await Permission.storage.request(),
-      await Permission.accessMediaLocation.request(),
-      await Permission.manageExternalStorage.request(),
-    ];
+    final status = await Permission.storage.request();
 
-    if (statuses.contains(PermissionStatus.permanentlyDenied)) {
+    if (status == PermissionStatus.permanentlyDenied) {
       return AppStoragePermissionStatus.permanentlyDenied;
     }
 
-    if (statuses.firstWhereOrNull((element) => [
-              PermissionStatus.denied,
-              PermissionStatus.limited,
-              PermissionStatus.permanentlyDenied,
-            ].contains(element)) ==
-        null) {
-      return AppStoragePermissionStatus.granted;
-    } else {
+    if ([
+      PermissionStatus.denied,
+      PermissionStatus.limited,
+      PermissionStatus.permanentlyDenied,
+    ].contains(status)) {
       return AppStoragePermissionStatus.denied;
+    } else {
+      return AppStoragePermissionStatus.granted;
     }
   }
 }

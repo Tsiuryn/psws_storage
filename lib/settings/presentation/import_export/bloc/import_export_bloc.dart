@@ -8,6 +8,7 @@ import 'package:psws_storage/settings/domain/entity/export_config.dart';
 import 'package:psws_storage/settings/domain/entity/import_config.dart';
 import 'package:psws_storage/settings/domain/usecase/export_database_usecase.dart';
 import 'package:psws_storage/settings/domain/usecase/import_database_usecase.dart';
+import 'package:share_plus/share_plus.dart';
 
 part 'import_export_state.dart';
 
@@ -31,7 +32,12 @@ class ImportExportBloc extends Cubit<ImportExportState> {
     try {
       emit(state.copyWith(type: ImportExportStateType.loading));
       await exportDatabaseUseCase(exportConfig);
-      emit(state.copyWith(type: ImportExportStateType.exportSuccess));
+      final fullPath = '${state.pathToFileOrFolder}/${exportConfig.fileName}.psws';
+      Share.shareXFiles([XFile(fullPath,)]).then((value) {
+        emit(state.copyWith(
+          type: ImportExportStateType.exportSuccess,
+        ));
+      });
     } catch (e) {
       debugPrint(e.toString());
       emit(state.copyWith(
