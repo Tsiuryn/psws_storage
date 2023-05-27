@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:psws_storage/app/domain/entity/environment.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/domain/usecase/add_file_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/delete_directory_usecase.dart';
@@ -18,6 +19,7 @@ class MainBloc extends Cubit<MainModelState> {
   final DeleteListDirectoriesUseCase _deleteListDirectories;
   final UpdateDirectoryUseCase _updateDirectory;
   final GetDirectoryUseCase _getDirectoryUseCase;
+  final Sort _sort;
 
   MainBloc({
     required AddFileUseCase addFileUseCase,
@@ -26,13 +28,15 @@ class MainBloc extends Cubit<MainModelState> {
     required DeleteListDirectoriesUseCase deleteListDirectories,
     required UpdateDirectoryUseCase updateDirectory,
     required GetDirectoryUseCase getDirectory,
+    required Sort sort,
   })  : _addFileUseCase = addFileUseCase,
         _getListDirectories = getListDirectoriesUseCase,
         _deleteDirectoryUseCase = deleteDirectoryUseCase,
         _deleteListDirectories = deleteListDirectories,
         _updateDirectory = updateDirectory,
         _getDirectoryUseCase = getDirectory,
-        super(MainModelState.empty());
+        _sort = sort,
+        super(MainModelState.empty(sort));
 
   void initBloc() async {
     final directories = await _getListDirectories();
@@ -41,7 +45,7 @@ class MainBloc extends Cubit<MainModelState> {
 
   Future<void> changeToDefaultState() async {
     final directories = await _getListDirectories();
-    final defaultState = MainModelState.empty();
+    final defaultState = MainModelState.empty(_sort);
     emit(
       defaultState.copyWith(directories: directories),
     );
@@ -127,6 +131,12 @@ class MainBloc extends Cubit<MainModelState> {
 
   Future<void> changeCurrentBackPressTime(DateTime currentBackPressTime) async {
     return emit(state.copyWith(currentBackPressTime: currentBackPressTime));
+  }
+
+  Future<void> updatedSortList(Sort sort) async {
+    return emit(state.copyWith(
+      sort: sort,
+    ));
   }
 
   DirectoryModel _getDirectory(

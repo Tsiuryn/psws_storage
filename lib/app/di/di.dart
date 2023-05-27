@@ -110,6 +110,7 @@ Future<void> initDi() async {
       deleteListDirectories: getIt.get<DeleteListDirectoriesUseCase>(),
       updateDirectory: getIt.get<UpdateDirectoryUseCase>(),
       getDirectory: getIt.get<GetDirectoryUseCase>(),
+      sort: getIt.get<AppBloc>().state.sort,
     ),
   );
 

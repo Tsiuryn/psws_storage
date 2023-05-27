@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:psws_storage/app/data/model/sort_bean.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';
 
 part 'environment_bean.g.dart';
@@ -25,11 +26,15 @@ class EnvironmentBean {
   )
   final HideScreenBean hideScreen;
 
+  @JsonKey(name: 'sort')
+  final SortBean? sort;
+
   const EnvironmentBean({
     required this.themeType,
     required this.appLocale,
     required this.localAuth,
     required this.hideScreen,
+    this.sort,
   });
 
   factory EnvironmentBean.fromJson(Map<String, dynamic> json) =>
@@ -77,6 +82,7 @@ extension EnvironmentBeanExt on EnvironmentBean {
             : LocalAuth.fingerprint,
         hideScreen:
             hideScreen == HideScreenBean.yes ? HideScreen.yes : HideScreen.no,
+        sort: sort.fromBean,
       );
 }
 
@@ -93,5 +99,6 @@ extension EnvironmentExt on Environment {
         hideScreen: hideScreen == HideScreen.yes
             ? HideScreenBean.yes
             : HideScreenBean.no,
+        sort: sort.toBean,
       );
 }

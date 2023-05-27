@@ -33,4 +33,10 @@ class AppBloc extends Cubit<Environment> {
     await saveEnvironment(environment);
     emit(environment);
   }
+
+  Future<void> changeSort(Sort sort) async {
+    final environment = state.copyWith(sort: sort);
+    await saveEnvironment(environment);
+    emit(environment);
+  }
 }

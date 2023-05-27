@@ -19,6 +19,7 @@
   "edit_notes_page__dialog_title": "Вы хотите сохранить изменения ?",
   "edit_notes_page__dialog_subTitle": "При нажатии \"Нет\" ваши изменения не сохранятся",
   "common_dialog_cancel": "Отменить",
+  "common_dialog_confirm": "Подтвердить",
   "common_dialog_ok": "OK",
   "common_dialog_no": "Нет",
   "common_dialog_yes": "Да",
@@ -94,5 +95,11 @@
   "password_change__message_info": "На данном экране Вы можете изменить пароль для входа в приложение",
   "password_change__old_psw": "Старый пароль",
   "password_change__message_success": "Пароль успешно изменен!",
-  "password_change__message_error": "Пароли не совпадают!"
+  "password_change__message_error": "Пароли не совпадают!",
+  "sort_dialog__title": "Сортировать:",
+  "sort_dialog__by_name": "По имени",
+  "sort_dialog__by_date": "По дате создания",
+  "sort_dialog__type_asc": "По возрастанию",
+  "sort_dialog__type_desc": "По убыванию",
+  "sort_dialog__include_folder": "Включить сортировку папок"
 }

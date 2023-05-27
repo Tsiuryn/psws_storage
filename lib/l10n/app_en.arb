@@ -19,6 +19,7 @@
   "edit_notes_page__dialog_title": "Do you want to save changes?",
   "edit_notes_page__dialog_subTitle": "Pressing \"NO\" will not save your changes.",
   "common_dialog_cancel": "Cancel",
+  "common_dialog_confirm": "Confirm",
   "common_dialog_ok": "OK",
   "common_dialog_no": "No",
   "common_dialog_yes": "Yes",
@@ -115,5 +116,11 @@
   "password_change__message_info": "On this screen, you can change the password to enter the application",
   "password_change__old_psw": "Old password",
   "password_change__message_success": "Password changed successfully!",
-  "password_change__message_error": "Passwords do not match!"
+  "password_change__message_error": "Passwords do not match!",
+  "sort_dialog__title": "Sort: ",
+  "sort_dialog__by_name": "By name",
+  "sort_dialog__by_date": "By date",
+  "sort_dialog__type_asc": "Ascending",
+  "sort_dialog__type_desc": "Descending",
+  "sort_dialog__include_folder": "Include folder"
 }

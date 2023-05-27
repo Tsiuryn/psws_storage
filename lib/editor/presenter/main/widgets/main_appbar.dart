@@ -1,16 +1,21 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psws_storage/app/app_bloc/app_bloc.dart';
+import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
+import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_model.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/sort_dialog_content.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class MainAppBar extends StatelessWidget
@@ -68,6 +73,15 @@ class MainAppBar extends StatelessWidget
           child: SizedBox(),
         ),
         IconButton(
+            onPressed: () {
+              showSortDialog(context);
+            },
+            icon: Icon(
+              Icons.sort,
+              color: appColors?.textColor,
+              size: AppDim.thirtyTwo,
+            )),
+        IconButton(
           onPressed: () async {
             context.router
                 .push(SearchDirectoryRoute(directories: state.directories))
@@ -111,4 +125,52 @@ class MainAppBar extends StatelessWidget
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
+
+  void showSortDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final appColors = AppTheme(context).appColors;
+    final appTextStyles = AppTheme(context).appTextStyles;
+    final appBloc = getIt.get<AppBloc>();
+    final mainBloc = context.read<MainBloc>();
+    final key = GlobalKey<SortDialogContentState>();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.sort_dialog__title),
+        content: SortDialogContent(
+          key: key,
+          sort: appBloc.state.sort,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              l10n.common_dialog_cancel,
+              style: TextStyle(
+                color: appColors?.textColor,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              final sort = key.currentState?.changedSort;
+              if (sort != null) {
+                appBloc.changeSort(sort);
+                mainBloc.updatedSortList(sort);
+              }
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              l10n.common_dialog_confirm,
+              style: appTextStyles?.titleMedium?.copyWith(
+                color: appColors?.textColor,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
