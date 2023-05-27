@@ -32,8 +32,13 @@ class ImportExportBloc extends Cubit<ImportExportState> {
     try {
       emit(state.copyWith(type: ImportExportStateType.loading));
       await exportDatabaseUseCase(exportConfig);
-      final fullPath = '${state.pathToFileOrFolder}/${exportConfig.fileName}.psws';
-      Share.shareXFiles([XFile(fullPath,)]).then((value) {
+      final fullPath =
+          '${state.pathToFileOrFolder}/${exportConfig.fileName}.psws';
+      Share.shareXFiles([
+        XFile(
+          fullPath,
+        )
+      ]).then((value) {
         emit(state.copyWith(
           type: ImportExportStateType.exportSuccess,
         ));

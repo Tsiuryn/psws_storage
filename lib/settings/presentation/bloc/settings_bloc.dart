@@ -34,8 +34,7 @@ class SettingsBloc extends Cubit<SettingsState> {
       final writeStorageStatus = await _checkPermissionWriteStorage();
       if (writeStorageStatus == AppStoragePermissionStatus.granted) {
         emit(SettingsState.permissionGranted(state.model, type));
-      }
-      else {
+      } else {
         if (writeStorageStatus ==
             AppStoragePermissionStatus.permanentlyDenied) {
           emit(SettingsState.showSettings(state.model));

@@ -52,8 +52,7 @@ class ShowPermissionDialog extends SettingsState {
 class SettingsModel {
   final bool showBiometrics;
 
-  const SettingsModel.empty()
-      : showBiometrics = false;
+  const SettingsModel.empty() : showBiometrics = false;
 
   const SettingsModel({
     required this.showBiometrics,

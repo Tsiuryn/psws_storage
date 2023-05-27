@@ -13,7 +13,6 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends _$AppRouter {
-
   @override
   List<AutoRoute> get routes => pages;
 }

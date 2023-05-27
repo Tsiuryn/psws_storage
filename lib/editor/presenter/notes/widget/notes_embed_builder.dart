@@ -15,11 +15,11 @@ class NotesEmbedBuilder implements EmbedBuilder {
 
   @override
   Widget build(
-      BuildContext context,
-      QuillController controller,
-      Embed node,
-      bool readOnly,
-      bool inline,
+    BuildContext context,
+    QuillController controller,
+    Embed node,
+    bool readOnly,
+    bool inline,
   ) {
     final notes = NotesBlockEmbed(node.value.data).directory;
     final theme = AppTheme(context);
@@ -39,7 +39,6 @@ class NotesEmbedBuilder implements EmbedBuilder {
 
   @override
   WidgetSpan buildWidgetSpan(Widget widget) {
-
     return WidgetSpan(
       child: widget,
     );
