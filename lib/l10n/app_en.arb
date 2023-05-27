@@ -73,6 +73,8 @@
   "settings_page__biometrics_subtitle": "Use biometrics for authorization?",
   "settings_page__biometrics_pin": "PIN",
   "settings_page__biometrics_fingerprint": "Biometrics",
+  "settings_page__hide_screen_title": "Security:",
+  "settings_page__hide_screen_description": "Hide the App screen in the background?",
   "settings_page__psw_change_title": "Password change:",
   "import_export_page__export_appbar_title": "Export",
   "import_export_page__import_appbar_title": "Import",

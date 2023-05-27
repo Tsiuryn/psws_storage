@@ -27,4 +27,10 @@ class AppBloc extends Cubit<Environment> {
     await saveEnvironment(environment);
     emit(environment);
   }
+
+  Future<void> changeHideScreenParams(HideScreen hideScreen) async {
+    final environment = state.copyWith(hideScreen: hideScreen);
+    await saveEnvironment(environment);
+    emit(environment);
+  }
 }

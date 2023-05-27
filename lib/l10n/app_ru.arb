@@ -53,6 +53,8 @@
   "settings_page__biometrics_pin": "ПИН-код",
   "settings_page__biometrics_fingerprint": "Биометрия",
   "settings_page__psw_change_title": "Замена пароля:",
+  "settings_page__hide_screen_title": "Безопасность:",
+  "settings_page__hide_screen_description": "Скрывать экран приложения в фоне?",
   "import_export_page__export_appbar_title": "Экспорт",
   "import_export_page__import_appbar_title": "Импорт",
   "import_export_page__export_btn_choose_folder": "Выбрать папку для сохранения файла",

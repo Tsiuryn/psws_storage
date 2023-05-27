@@ -18,10 +18,18 @@ class EnvironmentBean {
   )
   final LocalAuthBean localAuth;
 
+  @JsonKey(
+    name: 'hideScreen',
+    defaultValue: HideScreenBean.yes,
+    includeIfNull: true,
+  )
+  final HideScreenBean hideScreen;
+
   const EnvironmentBean({
     required this.themeType,
     required this.appLocale,
     required this.localAuth,
+    required this.hideScreen,
   });
 
   factory EnvironmentBean.fromJson(Map<String, dynamic> json) =>
@@ -51,6 +59,13 @@ enum LocalAuthBean {
   fingerprint,
 }
 
+enum HideScreenBean {
+  @JsonValue('YES')
+  yes,
+  @JsonValue('NO')
+  no,
+}
+
 extension EnvironmentBeanExt on EnvironmentBean {
   Environment fromBean() => Environment(
         themeType:
@@ -60,6 +75,8 @@ extension EnvironmentBeanExt on EnvironmentBean {
         localAuth: localAuth == LocalAuthBean.pin
             ? LocalAuth.pin
             : LocalAuth.fingerprint,
+        hideScreen:
+            hideScreen == HideScreenBean.yes ? HideScreen.yes : HideScreen.no,
       );
 }
 
@@ -73,5 +90,8 @@ extension EnvironmentExt on Environment {
         localAuth: localAuth == LocalAuth.pin
             ? LocalAuthBean.pin
             : LocalAuthBean.fingerprint,
+        hideScreen: hideScreen == HideScreen.yes
+            ? HideScreenBean.yes
+            : HideScreenBean.no,
       );
 }

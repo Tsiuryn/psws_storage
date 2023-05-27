@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psws_storage/app/app_bloc/app_bloc.dart';
+import 'package:psws_storage/app/di/di.dart';
+import 'package:psws_storage/app/domain/entity/environment.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/res/resources.dart';
 
@@ -26,11 +29,13 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
 
   @override
   Widget build(BuildContext context) {
+    final environment = getIt.get<AppBloc>().state;
+
     return Stack(
       children: [
         widget.child,
         Visibility(
-          visible: !showApp,
+          visible: !showApp && environment.hideScreen == HideScreen.yes,
           child: Container(
             key: const Key('Close page'),
             width: double.infinity,
@@ -62,6 +67,10 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    final environment = getIt.get<AppBloc>().state;
+    if (environment.hideScreen == HideScreen.no) {
+      return;
+    }
     final String routeName = context.router.current.name;
     if (widget.currentRouteName == routeName) {
       if (state == AppLifecycleState.inactive) {

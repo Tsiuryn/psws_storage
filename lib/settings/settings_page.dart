@@ -29,6 +29,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
     final titleTheme = l10n?.main_appbar_bottom_theme ?? '';
     final titleLocale = l10n?.main_appbar_bottom_locale ?? '';
     final biometrics = l10n?.settings_page__biometrics_title ?? '';
+    final security = l10n?.settings_page__hide_screen_title ?? '';
     final appTheme = AppTheme(context);
     final mainBloc = getIt.get<AppBloc>();
     final environment = mainBloc.state;
@@ -56,8 +57,8 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                   onPressed: context.popRoute,
                 ),
                 bottom: const PreferredSize(
-                  child: Divider(),
                   preferredSize: Size.fromHeight(1),
+                  child: Divider(),
                 ),
               ),
               body: SingleChildScrollView(
@@ -156,6 +157,30 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                      SettingsItem(
+                        title: security,
+                        subtitle:
+                            l10n?.settings_page__hide_screen_description ?? '',
+                        child: Row(
+                          children: [
+                            const Expanded(child: SizedBox()),
+                            CupertinoSlidingSegmentedControl<HideScreen>(
+                              children: HideScreenExt.toMap(context),
+                              groupValue:
+                                  environment.hideScreen == HideScreen.yes
+                                      ? HideScreen.yes
+                                      : HideScreen.no,
+                              onValueChanged: (newValue) {
+                                if (newValue != null) {
+                                  context
+                                      .read<AppBloc>()
+                                      .changeHideScreenParams(newValue);
+                                }
+                              },
+                            ),
+                          ],
                         ),
                       ),
                       SettingsItem(
@@ -304,6 +329,30 @@ extension AppLocaleExt on AppLocale {
         height: 24,
         child: Text(
           e.name.toUpperCase(),
+          style:
+              TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
+        ),
+      );
+    }
+
+    return map;
+  }
+}
+
+extension HideScreenExt on HideScreen {
+  static Map<HideScreen, Widget> toMap(BuildContext context) {
+    Map<HideScreen, Widget> map = {};
+    final l10n = AppLocalizations.of(context);
+
+    for (var e in HideScreen.values) {
+      final title = e == HideScreen.yes
+          ? l10n?.common_dialog_yes ?? ''
+          : l10n?.common_dialog_no ?? '';
+
+      map[e] = SizedBox(
+        height: 24,
+        child: Text(
+          title,
           style:
               TextStyle(color: Theme.of(context).primaryColorDark, height: 1.5),
         ),
