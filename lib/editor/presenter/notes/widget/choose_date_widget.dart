@@ -25,7 +25,10 @@ class _ChooseDateWidgetState extends State<ChooseDateWidget> {
   static const _formatters = [
     _format,
     'dd-MM-yyyy',
+    'dd.MM.yyyy',
     'dd MMM yyyy',
+    'MM.yyyy',
+    'MM.yy',
     'MMM yyyy',
     'HH:mm:ss',
     'HH:mm',
@@ -82,23 +85,28 @@ class _ChooseDateWidgetState extends State<ChooseDateWidget> {
           const SizedBox(
             height: AppDim.sixteen,
           ),
-          ..._formatters.map((format) {
-            final textDate =
+          Expanded(
+            child: SingleChildScrollView(child: Column(children: [
+              ..._formatters.map((format) {
+                final textDate =
                 DateFormat(format, _dateLocale).format(_currentDate);
-            return ListTile(
-              visualDensity: const VisualDensity(
-                vertical: VisualDensity.minimumDensity,
-              ),
-              title: Text(
-                textDate,
-                textAlign: TextAlign.center,
-              ),
-              onTap: () {
-                widget.onSelectedDate(textDate);
-                Navigator.pop(context);
-              },
-            );
-          })
+                return ListTile(
+                  visualDensity: const VisualDensity(
+                    vertical: VisualDensity.minimumDensity,
+                  ),
+                  title: Text(
+                    textDate,
+                    textAlign: TextAlign.center,
+                  ),
+                  onTap: () {
+                    widget.onSelectedDate(textDate);
+                    Navigator.pop(context);
+                  },
+                );
+              })
+            ],),),
+          )
+
         ],
       ),
     );

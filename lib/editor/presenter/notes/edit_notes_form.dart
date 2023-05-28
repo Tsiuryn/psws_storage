@@ -170,9 +170,15 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             toolbarIconAlignment: WrapAlignment.start,
                             showInlineCode: false,
                             iconTheme: QuillIconTheme(
-                              iconSelectedFillColor:
-                                  Theme.of(context).colorScheme.secondary,
+                              // iconSelectedFillColor:
+                              //     Theme.of(context).colorScheme.secondary,
+                              // Colors.blue,
                               borderRadius: AppDim.four,
+                              iconSelectedColor: Colors.amberAccent,
+                              iconSelectedFillColor: AppTheme(context)
+                                  .appColors
+                                  ?.bodyColor
+                                  ?.withOpacity(.5),
                             ),
                             showDividers: false,
                             // embedButtons: FlutterQuillEmbeds.buttons(),
@@ -271,6 +277,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                 ),
                 Expanded(
                     child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDim.sixteen,
+                    vertical: AppDim.four,
+                  ),
                   child: QuillEditor(
                     controller: _controller,
                     scrollController: ScrollController(),
@@ -280,14 +290,19 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     readOnly: readOnly,
                     expands: false,
                     padding: EdgeInsets.zero,
+                    customStyles: DefaultStyles(
+                      lists: DefaultListBlockStyle(
+                        AppTheme(context).appTextStyles!.titleMedium!,
+                        const VerticalSpacing(0, 0),
+                        const VerticalSpacing(0, 0),
+                        const BoxDecoration(),
+                        _CheckBox(),
+                      ),
+                    ),
                     embedBuilders: [
                       NotesEmbedBuilder(addEditNote: _addEditNote),
                     ],
                     keyboardAppearance: Brightness.light,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDim.sixteen,
-                    vertical: AppDim.four,
                   ),
                 )),
               ],
@@ -348,5 +363,22 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
       context.read<EditNotesBloc>().saveNote(content);
       context.router.pop();
     });
+  }
+}
+
+class _CheckBox implements QuillCheckboxBuilder {
+  @override
+  Widget build(
+      {required BuildContext context,
+      required bool isChecked,
+      required ValueChanged<bool> onChanged}) {
+    return GestureDetector(
+        onTap: () {
+          onChanged(!isChecked);
+        },
+        child: Icon(
+          isChecked ? Icons.check_box : Icons.check_box_outline_blank,
+          size: AppDim.twentyFour,
+        ));
   }
 }
