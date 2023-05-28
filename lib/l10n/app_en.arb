@@ -122,5 +122,7 @@
   "sort_dialog__by_date": "By date",
   "sort_dialog__type_asc": "Ascending",
   "sort_dialog__type_desc": "Descending",
-  "sort_dialog__include_folder": "Include folder"
+  "sort_dialog__include_folder": "Include folder",
+  "choose_date_widget__current_date_time": "Current date and time:",
+  "choose_date_widget__choose_date_title": "Select date format:"
 }

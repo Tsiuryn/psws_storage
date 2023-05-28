@@ -2,7 +2,7 @@
   "app_snack_exit": "Для выхода из приложения нажмите кнопку \"Назад\" еще раз",
   "main_appbar_dialog_folder": "Введите название папки",
   "main_appbar_dialog_note": "Введите название файла",
-  "main_appbar_bottom_theme": "Цветовую схему: ",
+  "main_appbar_bottom_theme": "Цветовая схема: ",
   "main_appbar_bottom_theme_title_dark": "Ночь",
   "main_appbar_bottom_theme_title_light": "День",
   "main_appbar_bottom_locale": "Язык:",
@@ -101,5 +101,7 @@
   "sort_dialog__by_date": "По дате создания",
   "sort_dialog__type_asc": "По возрастанию",
   "sort_dialog__type_desc": "По убыванию",
-  "sort_dialog__include_folder": "Включить сортировку папок"
+  "sort_dialog__include_folder": "Включить сортировку папок",
+  "choose_date_widget__current_date_time": "Текущая дата и время:",
+  "choose_date_widget__choose_date_title": "Выберите формат даты:"
 }

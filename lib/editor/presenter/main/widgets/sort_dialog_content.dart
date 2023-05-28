@@ -79,8 +79,14 @@ class SortDialogContentState extends State<SortDialogContent> {
             Expanded(
               child: CupertinoSlidingSegmentedControl<SortType>(
                   children: {
-                    SortType.desc: Text(l10n.sort_dialog__type_desc, textAlign: TextAlign.center,),
-                    SortType.asc: Text(l10n.sort_dialog__type_asc, textAlign: TextAlign.center,),
+                    SortType.desc: Text(
+                      l10n.sort_dialog__type_desc,
+                      textAlign: TextAlign.center,
+                    ),
+                    SortType.asc: Text(
+                      l10n.sort_dialog__type_asc,
+                      textAlign: TextAlign.center,
+                    ),
                   },
                   groupValue: _sortType,
                   onValueChanged: (value) {

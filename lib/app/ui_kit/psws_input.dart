@@ -8,6 +8,7 @@ class PswsInput extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final bool autofocus;
   final String? initialValue;
+  final Widget? suffixIcon;
 
   const PswsInput(
       {Key? key,
@@ -17,6 +18,7 @@ class PswsInput extends StatelessWidget {
       this.hintText,
       this.controller,
       this.validator,
+      this.suffixIcon,
       this.autofocus = true})
       : super(key: key);
 
@@ -24,6 +26,7 @@ class PswsInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       initialValue: initialValue,
+      controller: controller,
       autofocus: autofocus,
       onChanged: onChanged,
       validator: validator,
@@ -33,6 +36,7 @@ class PswsInput extends StatelessWidget {
         isDense: true,
         labelText: placeholder,
         hintText: hintText,
+        suffixIcon: suffixIcon,
       ),
     );
   }

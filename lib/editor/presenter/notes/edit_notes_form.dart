@@ -15,6 +15,7 @@ import 'package:psws_storage/app/utils/constants.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/notes/bloc/edit_notes_bloc.dart';
+import 'package:psws_storage/editor/presenter/notes/widget/choose_date_widget.dart';
 import 'package:psws_storage/editor/presenter/notes/widget/custom_icon_button.dart';
 
 import '../../../app/router/app_router.dart';
@@ -162,6 +163,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             showLink: false,
                             toolbarSectionSpacing: 4,
                             showHeaderStyle: false,
+                            showSubscript: false,
+                            showSuperscript: false,
                             showBackgroundColorButton: true,
                             showAlignmentButtons: true,
                             toolbarIconAlignment: WrapAlignment.start,
@@ -214,9 +217,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                   icon: Icons.access_time_rounded,
                                   iconTheme: iconTheme,
                                   onPressed: () {
-                                    _setTextToCurrentPosition(
-                                        dateFormatterWithMls
-                                            .format(DateTime.now()));
+                                    _showBottomSheet(context);
+                                    // _setTextToCurrentPosition(
+                                    //     dateFormatterWithMls
+                                    //         .format(DateTime.now()));
                                   },
                                 );
                               },
@@ -303,6 +307,24 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
         directories: widget.state.directories,
       ));
     }
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(AppDim.sixteen),
+          topRight: Radius.circular(AppDim.sixteen),
+        ),
+      ),
+      builder: (context) {
+        return ChooseDateWidget(
+          onSelectedDate: _setTextToCurrentPosition,
+        );
+      },
+      showDragHandle: false,
+    );
   }
 
   void _setTextToCurrentPosition(String text) {
