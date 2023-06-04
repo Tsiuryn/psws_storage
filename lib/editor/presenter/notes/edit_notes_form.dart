@@ -198,7 +198,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                         directories:
                                             widget.state.allNotesWithoutCurrent,
                                         searchDestination:
-                                            SearchDestination.move,
+                                            SearchDestination.getPath,
                                       ))
                                           .then((value) {
                                         if (value is DirectoryModel) {
@@ -224,9 +224,6 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                   iconTheme: iconTheme,
                                   onPressed: () {
                                     _showBottomSheet(context);
-                                    // _setTextToCurrentPosition(
-                                    //     dateFormatterWithMls
-                                    //         .format(DateTime.now()));
                                   },
                                 );
                               },

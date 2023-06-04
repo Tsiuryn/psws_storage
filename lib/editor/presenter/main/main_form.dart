@@ -79,8 +79,20 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
     final bloc = context.read<MainBloc>();
     final l10n = AppLocalizations.of(context)!;
 
-    return ListView.builder(
+    return ListView.separated(
       itemCount: listDirectories.length + 1,
+      separatorBuilder: (context, index) {
+        if (state.parentId == rootDirectoryId && index == 0) {
+          return const SizedBox();
+        }
+
+        return const Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppDim.sixteen,
+          ),
+          child: Divider(),
+        );
+      },
       itemBuilder: (context, index) {
         if (index == 0) {
           return UpFolder(
@@ -219,7 +231,6 @@ class UpFolder extends StatelessWidget {
                   ],
                 ),
               ),
-              const Divider(),
             ],
           ),
         ),

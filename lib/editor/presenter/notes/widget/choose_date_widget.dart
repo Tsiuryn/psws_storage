@@ -86,27 +86,30 @@ class _ChooseDateWidgetState extends State<ChooseDateWidget> {
             height: AppDim.sixteen,
           ),
           Expanded(
-            child: SingleChildScrollView(child: Column(children: [
-              ..._formatters.map((format) {
-                final textDate =
-                DateFormat(format, _dateLocale).format(_currentDate);
-                return ListTile(
-                  visualDensity: const VisualDensity(
-                    vertical: VisualDensity.minimumDensity,
-                  ),
-                  title: Text(
-                    textDate,
-                    textAlign: TextAlign.center,
-                  ),
-                  onTap: () {
-                    widget.onSelectedDate(textDate);
-                    Navigator.pop(context);
-                  },
-                );
-              })
-            ],),),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ..._formatters.map((format) {
+                    final textDate =
+                        DateFormat(format, _dateLocale).format(_currentDate);
+                    return ListTile(
+                      visualDensity: const VisualDensity(
+                        vertical: VisualDensity.minimumDensity,
+                      ),
+                      title: Text(
+                        textDate,
+                        textAlign: TextAlign.center,
+                      ),
+                      onTap: () {
+                        widget.onSelectedDate(textDate);
+                        Navigator.pop(context);
+                      },
+                    );
+                  })
+                ],
+              ),
+            ),
           )
-
         ],
       ),
     );

@@ -6,9 +6,12 @@ import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
+import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
 import 'package:psws_storage/app/utils/constants.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/res/resources.dart';
+
+typedef PathBuilder = String Function();
 
 class ItemWidget extends StatelessWidget {
   final DirectoryModel model;
@@ -19,12 +22,14 @@ class ItemWidget extends StatelessWidget {
   final Function()? onEdit;
   final Function()? onMove;
   final Function() onTap;
+  final PathBuilder? pathBuilder;
 
   const ItemWidget({
     Key? key,
     required this.model,
     required this.onTap,
     required this.id,
+    this.pathBuilder,
     this.canSwipe = true,
     this.searchValue = '',
     this.onDelete,
@@ -99,60 +104,53 @@ class ItemWidget extends StatelessWidget {
           key: ValueKey(id),
           leadingActions: canSwipe ? leadingActions : [],
           trailingActions: canSwipe ? trailingActions : [],
-          child: InkWell(
+          child: ListTile(
             onTap: onTap,
-            child: SizedBox(
-              height: AppDim.thirtyTwo * 2,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: AppDim.sixteen,
-                            ),
-                            model.isFolder ? folderIcon : fileIcon,
-                            const SizedBox(
-                              width: AppDim.thirtyTwo,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                    text: highlightText(
-                                        context: context,
-                                        value: model.name,
-                                        searchQuery: searchValue,
-                                        textStyle: textStyle,
-                                        textHighLightStyle: textHighLightStyle),
-                                  ),
-                                  Text(
-                                    l10n.item_widget__created(dateFormatter
-                                        .format(model.createdDate)),
-                                    style: appTextStyles?.subtitle,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                ],
-              ),
+            visualDensity: const VisualDensity(
+              vertical: VisualDensity.minimumDensity,
             ),
+            title: RichText(
+              text: highlightText(
+                  context: context,
+                  value: model.name,
+                  searchQuery: searchValue,
+                  textStyle: textStyle,
+                  textHighLightStyle: textHighLightStyle),
+            ),
+            subtitle: Text(
+              l10n.item_widget__created(
+                  dateFormatter.format(model.createdDate)),
+              style: appTextStyles?.subtitle,
+              overflow: TextOverflow.ellipsis,
+            ),
+            leading: model.isFolder ? folderIcon : fileIcon,
+            trailing: canSwipe
+                ? null
+                : IconButton(
+                    icon: Icon(
+                      Icons.more_vert_rounded,
+                      color: appColors?.textColor,
+                    ),
+                    onPressed: () {
+                      final path = pathBuilder?.call();
+                      if (path != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              path,
+                              style: appTextStyles?.subtitle,
+                            ),
+                            backgroundColor: appColors?.appBarColor,
+                            duration: Duration(
+                              seconds: AppDim.two.toInt(),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
           ),
         ),
-        // Divider(
-        //   color: Theme.of(context).dividerColor,
-        // ),
       ],
     );
   }
