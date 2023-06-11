@@ -78,9 +78,11 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
       return;
     }
     if (state.state == PinFlowState.fingerprint) {
-      if (await _authenticateByBiometrics(context)) {
-        context.read<PinBloc>().changeState(PinFlowState.success);
-      }
+      _authenticateByBiometrics(context).then((didAuthenticate) {
+        if (didAuthenticate) {
+          context.read<PinBloc>().changeState(PinFlowState.success);
+        }
+      });
     }
   }
 

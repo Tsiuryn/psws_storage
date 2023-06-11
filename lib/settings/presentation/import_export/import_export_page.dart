@@ -31,7 +31,6 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
   @override
   Widget build(BuildContext context) {
     return LifeCycleWidget(
-      router: context.router,
       currentRouteName: ImportExportRoute.name,
       child: BlocProvider<ImportExportBloc>(
         create: (context) => getIt.get<ImportExportBloc>(),

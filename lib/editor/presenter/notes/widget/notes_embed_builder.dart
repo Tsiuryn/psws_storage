@@ -15,12 +15,12 @@ class NotesEmbedBuilder implements EmbedBuilder {
 
   @override
   Widget build(
-      BuildContext context,
-      QuillController controller,
-      Embed node,
-      bool readOnly,
-      bool inline,
-      TextStyle textStyle,
+    BuildContext context,
+    QuillController controller,
+    Embed node,
+    bool readOnly,
+    bool inline,
+    TextStyle textStyle,
   ) {
     final notes = NotesBlockEmbed(node.value.data).directory;
     final theme = AppTheme(context);

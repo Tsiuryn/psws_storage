@@ -8,13 +8,11 @@ import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class LifeCycleWidget extends StatefulWidget {
-  final StackRouter router;
   final String currentRouteName;
   final Widget child;
 
   const LifeCycleWidget({
     Key? key,
-    required this.router,
     required this.currentRouteName,
     required this.child,
   }) : super(key: key);
@@ -29,13 +27,11 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
 
   @override
   Widget build(BuildContext context) {
-    final environment = getIt.get<AppBloc>().state;
-
     return Stack(
       children: [
         widget.child,
         Visibility(
-          visible: !showApp && environment.hideScreen == HideScreen.yes,
+          visible: !showApp,
           child: Container(
             key: const Key('Close page'),
             width: double.infinity,
@@ -81,7 +77,7 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
       if (state == AppLifecycleState.resumed) {
         if (PinRoute.name != routeName) {
           if (!showApp) {
-            widget.router.push(PinRoute(isFirstPage: false));
+            context.router.push(PinRoute(isFirstPage: false));
           }
         }
         setState(() {

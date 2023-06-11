@@ -74,7 +74,6 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
     );
 
     return LifeCycleWidget(
-      router: context.router,
       currentRouteName: SearchDirectoryRoute.name,
       child: SafeArea(
         child: Scaffold(

@@ -36,7 +36,6 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
   @override
   Widget build(BuildContext context) {
     return LifeCycleWidget(
-      router: context.router,
       currentRouteName: ChangePswRoute.name,
       child: BlocProvider<ChangePswBloc>(
         create: (context) => getIt.get<ChangePswBloc>(),

@@ -32,7 +32,6 @@ class EditNotesPage extends StatelessBasePage<EditNotesBloc, EditNotesModel> {
     final DirectoryModel? note = state.note;
 
     return LifeCycleWidget(
-        router: context.router,
         currentRouteName: EditNotesRoute.name,
         child: note == null
             ? const Center(

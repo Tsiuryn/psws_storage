@@ -10,10 +10,9 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LifeCycleWidget(
-      router: context.router,
+    return const LifeCycleWidget(
       currentRouteName: MainRoute.name,
-      child: const MainForm(),
+      child: MainForm(),
     );
   }
 }
