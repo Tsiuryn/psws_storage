@@ -19,6 +19,5 @@ package: res
 groups:
   - paths:
       - assets/icons
-      - assets/import_mtn
     class_name: AppIcons
     types: [ .png, .jpg, .jpeg, .webp, .webm, .bmp, .svg ]
