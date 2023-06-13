@@ -35,7 +35,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
     final environment = mainBloc.state;
 
     return LifeCycleWidget(
-      currentRouteName: SettingsRoute.name,
+      routeData: context.routeData,
       child: BlocProvider<SettingsBloc>(
         create: (BuildContext context) {
           return getIt.get<SettingsBloc>();

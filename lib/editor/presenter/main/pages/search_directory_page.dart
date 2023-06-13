@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
-import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_input_search.dart';
@@ -74,7 +73,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
     );
 
     return LifeCycleWidget(
-      currentRouteName: SearchDirectoryRoute.name,
+      routeData: context.routeData,
       child: SafeArea(
         child: Scaffold(
           appBar: widget.searchDestination != SearchDestination.move

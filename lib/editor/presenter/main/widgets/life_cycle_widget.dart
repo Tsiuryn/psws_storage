@@ -8,12 +8,12 @@ import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class LifeCycleWidget extends StatefulWidget {
-  final String currentRouteName;
+  final RouteData routeData;
   final Widget child;
 
   const LifeCycleWidget({
     Key? key,
-    required this.currentRouteName,
+    required this.routeData,
     required this.child,
   }) : super(key: key);
 
@@ -67,15 +67,15 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
     if (environment.hideScreen == HideScreen.no) {
       return;
     }
-    final String routeName = context.router.current.name;
-    if (widget.currentRouteName == routeName) {
+    final  routeData = context.router.current;
+    if (widget.routeData.hashCode == routeData.hashCode) {
       if (state == AppLifecycleState.inactive) {
         setState(() {
           showApp = false;
         });
       }
       if (state == AppLifecycleState.resumed) {
-        if (PinRoute.name != routeName) {
+        if (PinRoute.name != routeData.name) {
           if (!showApp) {
             context.router.push(PinRoute(isFirstPage: false));
           }

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/di/di.dart';
-import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
 import 'package:psws_storage/app/ui_kit/snack_bar.dart';
@@ -31,7 +30,7 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
   @override
   Widget build(BuildContext context) {
     return LifeCycleWidget(
-      currentRouteName: ImportExportRoute.name,
+      routeData: context.routeData,
       child: BlocProvider<ImportExportBloc>(
         create: (context) => getIt.get<ImportExportBloc>(),
         child: BlocConsumer<ImportExportBloc, ImportExportState>(
