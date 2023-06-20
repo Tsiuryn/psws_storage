@@ -14,8 +14,6 @@ abstract class SettingsState {
           SettingsModel model, ImportExportPageType type) =
       StoragePermissionGranted;
 
-  factory SettingsState.showSettings(SettingsModel model) = ShowSettings;
-
   factory SettingsState.showPermissionDialog(
     SettingsModel model,
     ImportExportPageType type,
@@ -34,10 +32,6 @@ class StoragePermissionGranted extends SettingsState {
 
 class UpdatePage extends SettingsState {
   UpdatePage(SettingsModel model) : super(model);
-}
-
-class ShowSettings extends SettingsState {
-  ShowSettings(SettingsModel model) : super(model);
 }
 
 class ShowPermissionDialog extends SettingsState {

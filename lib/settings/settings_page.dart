@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
@@ -273,12 +272,6 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
       state.model;
       _showOkDialog(context, tapOk: () {
         bloc.checkPermission(state.type);
-      });
-    }
-    if (state is ShowSettings) {
-      _showOkDialog(context, tapOk: () {
-        openAppSettings();
-        context.popRoute();
       });
     }
     if (state is StoragePermissionGranted) {

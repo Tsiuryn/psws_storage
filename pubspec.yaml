@@ -49,7 +49,6 @@ dependencies:
 
 
   #export files:
-  permission_handler: ^10.2.0
   path_provider: ^2.0.11
   collection: ^1.16.0
 
