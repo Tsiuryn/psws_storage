@@ -28,13 +28,15 @@ dependencies:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
 
-  flutter_quill: ^7.1.19
+  flutter_quill: 7.1.19
 
   # secure_storage:
   flutter_secure_storage: ^8.0.0
 
   # Back button interceptor:
   back_button_interceptor: ^6.0.0
+
+  privacy_screen: ^0.0.6
 
   # uuid
   uuid_type: ^2.0.0

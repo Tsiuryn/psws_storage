@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:privacy_screen/privacy_screen.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';

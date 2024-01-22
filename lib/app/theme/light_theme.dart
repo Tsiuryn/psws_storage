@@ -5,7 +5,7 @@ import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
 
 ThemeData lightTheme(BuildContext context) {
-  return ThemeData.light().copyWith(
+  return ThemeData.light(useMaterial3: false).copyWith(
     extensions: <ThemeExtension<dynamic>>[
       const AppColorsExt(
         textColor: Color(0xFF000000),

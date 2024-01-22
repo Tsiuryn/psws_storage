@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:privacy_screen/privacy_screen.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
@@ -170,11 +171,18 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                   environment.hideScreen == HideScreen.yes
                                       ? HideScreen.yes
                                       : HideScreen.no,
-                              onValueChanged: (newValue) {
+                              onValueChanged: (newValue) async {
                                 if (newValue != null) {
                                   context
                                       .read<AppBloc>()
                                       .changeHideScreenParams(newValue);
+                                  final isHideScreen = newValue == HideScreen.yes;
+                                  if(isHideScreen){
+                                    await PrivacyScreen.instance.enable();
+                                  }else {
+                                    await PrivacyScreen.instance.disable();
+                                  }
+
                                 }
                               },
                             ),
