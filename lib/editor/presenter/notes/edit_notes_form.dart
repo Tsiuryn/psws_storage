@@ -89,200 +89,228 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
     final l10n = AppLocalizations.of(context);
     final pathPrefix = l10n?.import_export_page__path ?? '';
     final theme = AppTheme(context);
+    const selectedButtonData = IconButtonData(
+        color: Colors.yellow,
+        visualDensity: VisualDensity(
+          horizontal: VisualDensity.minimumDensity,
+          vertical: VisualDensity.minimumDensity,
+        ));
+    const unSelectedButtonData = IconButtonData(
+        visualDensity: VisualDensity(
+      horizontal: VisualDensity.minimumDensity,
+      vertical: VisualDensity.minimumDensity,
+    ));
 
-    return PswsBackButtonListener(context, backPressed: () {
-      if (readOnly) {
-        context.router.pop();
-      } else {
-        showDialog(context);
-      }
-      return true;
-    },
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 0,
-              title: const SizedBox(),
-            ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Material(
-                  elevation: 4,
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(dividerColor: Colors.transparent),
-                    child: ExpansionTile(
-                      backgroundColor: theme.appColors?.appBarColor ??
-                          Theme.of(context).primaryColor,
-                      collapsedBackgroundColor: theme.appColors?.appBarColor ??
-                          Theme.of(context).primaryColor,
-                      childrenPadding: EdgeInsets.zero,
-                      tilePadding: const EdgeInsets.all(AppDim.four),
-                      leading: IconButton(
-                          onPressed: () {
-                            if (readOnly) {
-                              context.router.pop();
-                            } else {
-                              showDialog(context);
-                            }
-                          },
-                          icon: const Icon(Icons.arrow_back)),
-                      title: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              widget.note.name,
-                              style: theme.appTextStyles?.titleMedium,
-                            ),
-                          ),
-                        ],
-                      ),
-                      iconColor: Theme.of(context).primaryColorDark,
-                      collapsedIconColor: Theme.of(context).primaryColorDark,
-                      textColor: Theme.of(context).primaryColorDark,
-                      collapsedTextColor: Theme.of(context).primaryColorDark,
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.path.isNotEmpty)
-                            Text(
-                              '$pathPrefix ${widget.path}',
-                            ),
-                          Text(
-                              '$subtitle ${dateFormatter.format(widget.note.createdDate)}'),
-                        ],
-                      ),
+    return PswsBackButtonListener(
+      context,
+      backPressed: () {
+        if (readOnly) {
+          context.router.pop();
+        } else {
+          showDialog(context);
+        }
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 0,
+            title: const SizedBox(),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Material(
+                elevation: 4,
+                child: Theme(
+                  data: Theme.of(context)
+                      .copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    backgroundColor: theme.appColors?.appBarColor ??
+                        Theme.of(context).primaryColor,
+                    collapsedBackgroundColor: theme.appColors?.appBarColor ??
+                        Theme.of(context).primaryColor,
+                    childrenPadding: EdgeInsets.zero,
+                    tilePadding: const EdgeInsets.all(AppDim.four),
+                    leading: IconButton(
+                        onPressed: () {
+                          if (readOnly) {
+                            context.router.pop();
+                          } else {
+                            showDialog(context);
+                          }
+                        },
+                        icon: const Icon(Icons.arrow_back)),
+                    title: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(AppDim.eight),
-                          child: QuillToolbar.basic(
-                            controller: _controller,
-                            showLink: false,
-                            toolbarSectionSpacing: 4,
-                            showHeaderStyle: false,
-                            showSubscript: false,
-                            showSuperscript: false,
-                            showBackgroundColorButton: true,
-                            showAlignmentButtons: true,
-                            toolbarIconAlignment: WrapAlignment.start,
-                            showInlineCode: false,
-                            iconTheme: QuillIconTheme(
-                              // iconSelectedFillColor:
-                              //     Theme.of(context).colorScheme.secondary,
-                              // Colors.blue,
-                              borderRadius: AppDim.four,
-                              iconSelectedColor: Colors.amberAccent,
-                              iconSelectedFillColor: AppTheme(context)
-                                  .appColors
-                                  ?.bodyColor
-                                  ?.withOpacity(.5),
-                            ),
-                            showDividers: false,
-                            // embedButtons: FlutterQuillEmbeds.buttons(),
-                            embedButtons: [
-                              (controller, toolbarIconSize, iconTheme,
-                                  dialogTheme) {
-                                return CustomIconButton(
-                                    iconTheme: iconTheme,
-                                    onPressed: () {
-                                      final index =
-                                          controller.selection.baseOffset;
-                                      final length =
-                                          controller.selection.extentOffset -
-                                              index;
-                                      context.router
-                                          .push(SearchDirectoryRoute(
-                                        directories:
-                                            widget.state.allNotesWithoutCurrent,
-                                        searchDestination:
-                                            SearchDestination.getPath,
-                                      ))
-                                          .then((value) {
-                                        if (value is DirectoryModel) {
-                                          final block = BlockEmbed.custom(
-                                            NotesBlockEmbed.fromDocument(
-                                                CustomDirectory(
-                                              name: value.name,
-                                              id: value.id,
-                                              hiveId: value.idHiveObject,
-                                            )),
-                                          );
-                                          controller.replaceText(
-                                              index, length, block, null);
-                                        }
-                                      });
-                                    },
-                                    icon: Icons.link_rounded);
-                              },
-                              (controller, toolbarIconSize, iconTheme,
-                                  dialogTheme) {
-                                return CustomIconButton(
-                                  icon: Icons.access_time_rounded,
-                                  iconTheme: iconTheme,
-                                  onPressed: () {
-                                    _showBottomSheet(context);
-                                  },
-                                );
-                              },
-                              (controller, toolbarIconSize, iconTheme,
-                                  dialogTheme) {
-                                return CustomIconButton(
-                                  icon: Icons.calculate_outlined,
-                                  iconTheme: iconTheme,
-                                  onPressed: () async {
-                                    final result = await material.showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return const CalculatorDialog();
-                                        });
-                                    if (result != null &&
-                                        result is CalculatorResult) {
-                                      _setTextToCurrentPosition(
-                                          '${result.userInput} = ${result.answer}');
-                                    }
-                                  },
-                                );
-                              },
-                            ],
-                            customButtons: [
-                              QuillCustomButton(
-                                icon: widget.state.readOnly
-                                    ? Icons.edit
-                                    : Icons.save,
-                                onTap: () {
-                                  context
-                                      .read<EditNotesBloc>()
-                                      .updateEditMode(!readOnly);
-                                  if (!readOnly) {
-                                    context
-                                        .read<EditNotesBloc>()
-                                        .saveNote(content);
-                                    _focusNode.unfocus();
-                                  }
-                                },
-                              ),
-                            ],
-                            fontSizeValues: fontSize,
+                        Expanded(
+                          child: Text(
+                            widget.note.name,
+                            style: theme.appTextStyles?.titleMedium,
                           ),
                         ),
                       ],
                     ),
+                    iconColor: Theme.of(context).primaryColorDark,
+                    collapsedIconColor: Theme.of(context).primaryColorDark,
+                    textColor: Theme.of(context).primaryColorDark,
+                    collapsedTextColor: Theme.of(context).primaryColorDark,
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.path.isNotEmpty)
+                          Text(
+                            '$pathPrefix ${widget.path}',
+                          ),
+                        Text(
+                            '$subtitle ${dateFormatter.format(widget.note.createdDate)}'),
+                      ],
+                    ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(AppDim.eight),
+                        child: QuillToolbar.simple(
+                            configurations: QuillSimpleToolbarConfigurations(
+                          controller: _controller,
+                          toolbarSectionSpacing: 0.0,
+                          showLink: false,
+                          showFontSize: true,
+                          fontSizesValues: const {
+                            '14': '14.0',
+                            '16': '16.0',
+                            '18': '18.0',
+                            '20': '20.0',
+                            '22': '22.0',
+                            '24': '24.0',
+                            '26': '26.0',
+                            '28': '28.0',
+                            '30': '30.0',
+                            '35': '35.0',
+                            '40': '40.0'
+                          },
+                          showHeaderStyle: false,
+                          showSubscript: false,
+                          showSuperscript: false,
+                          showBackgroundColorButton: true,
+                          showFontFamily: false,
+                          showAlignmentButtons: true,
+                          toolbarIconAlignment: WrapAlignment.start,
+                          showInlineCode: false,
+                          showDividers: false,
+                          buttonOptions: const QuillSimpleToolbarButtonOptions(
+                            base: QuillToolbarBaseButtonOptions(
+                              iconTheme: QuillIconTheme(
+                                iconButtonSelectedData: selectedButtonData,
+                                iconButtonUnselectedData: unSelectedButtonData,
+                                // iconButtonSelectedStyle: selectedButton,
+                                // iconButtonUnselectedStyle: selectedButton,
+                              ),
+                            ),
+                          ),
+                          embedButtons: [
+                            (controller, toolbarIconSize, iconTheme,
+                                dialogTheme) {
+                              return CustomIconButton(
+                                  iconTheme: iconTheme,
+                                  onPressed: () {
+                                    final index =
+                                        controller.selection.baseOffset;
+                                    final length =
+                                        controller.selection.extentOffset -
+                                            index;
+                                    context.router
+                                        .push(SearchDirectoryRoute(
+                                      directories:
+                                          widget.state.allNotesWithoutCurrent,
+                                      searchDestination:
+                                          SearchDestination.getPath,
+                                    ))
+                                        .then((value) {
+                                      if (value is DirectoryModel) {
+                                        final block = BlockEmbed.custom(
+                                          NotesBlockEmbed.fromDocument(
+                                              CustomDirectory(
+                                            name: value.name,
+                                            id: value.id,
+                                            hiveId: value.idHiveObject,
+                                          )),
+                                        );
+                                        controller.replaceText(
+                                            index, length, block, null);
+                                      }
+                                    });
+                                  },
+                                  icon: Icons.link_rounded);
+                            },
+                            (controller, toolbarIconSize, iconTheme,
+                                dialogTheme) {
+                              return CustomIconButton(
+                                icon: Icons.access_time_rounded,
+                                iconTheme: iconTheme,
+                                onPressed: () {
+                                  _showBottomSheet(context);
+                                },
+                              );
+                            },
+                            (controller, toolbarIconSize, iconTheme,
+                                dialogTheme) {
+                              return CustomIconButton(
+                                icon: Icons.calculate_outlined,
+                                iconTheme: iconTheme,
+                                onPressed: () async {
+                                  final result = await material.showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const CalculatorDialog();
+                                      });
+                                  if (result != null &&
+                                      result is CalculatorResult) {
+                                    _setTextToCurrentPosition(
+                                        '${result.userInput} = ${result.answer}');
+                                  }
+                                },
+                              );
+                            },
+                          ],
+                          customButtons: [
+                            QuillToolbarCustomButtonOptions(
+                              icon: widget.state.readOnly
+                                  ? const Icon(Icons.edit)
+                                  : const Icon(Icons.save),
+                              onPressed: () {
+                                context
+                                    .read<EditNotesBloc>()
+                                    .updateEditMode(!readOnly);
+                                if (!readOnly) {
+                                  context
+                                      .read<EditNotesBloc>()
+                                      .saveNote(content);
+                                  _focusNode.unfocus();
+                                }
+                              },
+                            ),
+                          ],
+                          // fontSizeValues: fontSize,
+                        )),
+                      ),
+                    ],
                   ),
                 ),
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDim.sixteen,
-                    vertical: AppDim.four,
-                  ),
-                  child: QuillEditor(
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppDim.sixteen,
+                  vertical: AppDim.four,
+                ),
+                child: QuillEditor(
+                  scrollController: ScrollController(),
+                  focusNode: _focusNode,
+                  configurations: QuillEditorConfigurations(
                     controller: _controller,
-                    scrollController: ScrollController(),
                     scrollable: true,
-                    focusNode: _focusNode,
                     autoFocus: !readOnly,
                     readOnly: readOnly,
                     expands: false,
@@ -301,11 +329,13 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     ],
                     keyboardAppearance: Brightness.light,
                   ),
-                )),
-              ],
-            ),
+                ),
+              )),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Future<void> _addEditNote(BuildContext context,

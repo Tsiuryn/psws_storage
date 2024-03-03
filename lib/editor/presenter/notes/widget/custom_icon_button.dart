@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-// The default size of the icon of a button.
-const double kDefaultIconSize = 18;
+/// The default size of the icon of a button.
+const double kDefaultIconSize = 15;
+
+/// The default size for the toolbar (width, height)
+const double kDefaultToolbarSize = kDefaultIconSize * 2;
 
 // The factor of how much larger the button is in relation to the icon.
 const double kIconButtonFactor = 1.77;
@@ -12,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.afterPressed,
-    this.size = kDefaultIconSize,
+    this.size = kDefaultToolbarSize,
     this.fillColor,
     this.hoverElevation = 1,
     this.highlightElevation = 1,
@@ -35,9 +38,7 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final iconColor = iconTheme?.iconUnselectedColor ?? theme.iconTheme.color;
-    final iconFillColor =
-        iconTheme?.iconUnselectedFillColor ?? (fillColor ?? theme.canvasColor);
+    final iconColor = iconTheme?.iconButtonUnselectedData?.color ?? theme.iconTheme.color;
     final rightSize = size * kIconButtonFactor;
 
     return ConstrainedBox(
@@ -46,7 +47,6 @@ class CustomIconButton extends StatelessWidget {
         visualDensity: VisualDensity.compact,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius)),
-        fillColor: iconFillColor,
         elevation: 0,
         hoverElevation: hoverElevation,
         highlightElevation: hoverElevation,

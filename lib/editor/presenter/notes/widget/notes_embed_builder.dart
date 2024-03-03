@@ -20,6 +20,7 @@ class NotesEmbedBuilder implements EmbedBuilder {
     Embed node,
     bool readOnly,
     bool inline,
+    TextStyle textStyle,
   ) {
     final notes = NotesBlockEmbed(node.value.data).directory;
     final theme = AppTheme(context);
@@ -46,6 +47,11 @@ class NotesEmbedBuilder implements EmbedBuilder {
 
   @override
   bool get expanded => false;
+
+  @override
+  String toPlainText(Embed node) {
+    throw UnimplementedError();
+  }
 }
 
 class NotesBlockEmbed extends CustomBlockEmbed {
