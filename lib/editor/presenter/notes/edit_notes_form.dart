@@ -177,19 +177,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           toolbarSectionSpacing: 0.0,
                           showLink: false,
                           showFontSize: true,
-                          fontSizesValues: const {
-                            '14': '14.0',
-                            '16': '16.0',
-                            '18': '18.0',
-                            '20': '20.0',
-                            '22': '22.0',
-                            '24': '24.0',
-                            '26': '26.0',
-                            '28': '28.0',
-                            '30': '30.0',
-                            '35': '35.0',
-                            '40': '40.0'
-                          },
+                          fontSizesValues: fontSize,
                           showHeaderStyle: false,
                           showSubscript: false,
                           showSuperscript: false,
@@ -300,37 +288,47 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                 ),
               ),
               Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDim.sixteen,
-                  vertical: AppDim.four,
-                ),
-                child: QuillEditor(
-                  scrollController: ScrollController(),
-                  focusNode: _focusNode,
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
-                    scrollable: true,
-                    autoFocus: !readOnly,
-                    readOnly: readOnly,
-                    expands: false,
-                    padding: EdgeInsets.zero,
-                    customStyles: DefaultStyles(
-                      lists: DefaultListBlockStyle(
-                        AppTheme(context).appTextStyles!.titleMedium!,
-                        const VerticalSpacing(0, 0),
-                        const VerticalSpacing(0, 0),
-                        const BoxDecoration(),
-                        _CheckBox(),
+                child: GestureDetector(
+                  onTap: () {
+                    if (readOnly) {
+                      FocusScope.of(context).requestFocus(_focusNode);
+                    }
+                  },
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppDim.sixteen,
+                        vertical: AppDim.four,
+                      ),
+                      child: QuillEditor(
+                        scrollController: ScrollController(),
+                        focusNode: _focusNode,
+                        configurations: QuillEditorConfigurations(
+                          controller: _controller,
+                          scrollable: false,
+                          autoFocus: !readOnly,
+                          readOnly: readOnly,
+                          expands: false,
+                          padding: EdgeInsets.zero,
+                          customStyles: DefaultStyles(
+                            lists: DefaultListBlockStyle(
+                              AppTheme(context).appTextStyles!.titleMedium!,
+                              const VerticalSpacing(0, 0),
+                              const VerticalSpacing(0, 0),
+                              const BoxDecoration(),
+                              _CheckBox(),
+                            ),
+                          ),
+                          embedBuilders: [
+                            NotesEmbedBuilder(addEditNote: _addEditNote),
+                          ],
+                          keyboardAppearance: Brightness.light,
+                        ),
                       ),
                     ),
-                    embedBuilders: [
-                      NotesEmbedBuilder(addEditNote: _addEditNote),
-                    ],
-                    keyboardAppearance: Brightness.light,
                   ),
                 ),
-              )),
+              ),
             ],
           ),
         ),
