@@ -113,7 +113,9 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
                   idHive: currentDir.idHiveObject,
                   path: path,
                   directories: state.directories,
-                ));
+                )).then((value) {
+                  context.read<MainBloc>().updateDirectoryAfterChanging(currentDir.idHiveObject);
+                });
               }
             },
             onEdit: () {

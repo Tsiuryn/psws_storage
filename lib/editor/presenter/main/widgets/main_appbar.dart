@@ -92,11 +92,16 @@ class MainAppBar extends StatelessWidget
                 } else {
                   final path = state.convertListToPathText(
                       state.getPathByParentId(directory));
-                  context.pushRoute(EditNotesRoute(
-                    idHive: directory.idHiveObject,
-                    path: path,
-                    directories: state.directories,
-                  ));
+                  context
+                      .pushRoute(EditNotesRoute(
+                        idHive: directory.idHiveObject,
+                        path: path,
+                        directories: state.directories,
+                      ))
+                      .then((value) => context
+                          .read<MainBloc>()
+                          .updateDirectoryAfterChanging(
+                              directory.idHiveObject));
                 }
               }
             });

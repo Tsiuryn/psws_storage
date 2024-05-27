@@ -65,13 +65,16 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
       final document = Document.fromJson(myJSON);
       _controller = QuillController(
           document: document,
+          // readOnly: widget.state.readOnly,
           selection: const TextSelection.collapsed(offset: 0));
       _controller.moveCursorToEnd();
     } catch (e) {
       final doc = Document();
       doc.insert(0, widget.note.content);
       _controller = QuillController(
-          document: doc, selection: const TextSelection.collapsed(offset: 0));
+          document: doc,
+          // readOnly: widget.state.readOnly,
+          selection: const TextSelection.collapsed(offset: 0));
       _controller.moveCursorToEnd();
     }
   }
@@ -307,7 +310,6 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           controller: _controller,
                           scrollable: false,
                           autoFocus: !readOnly,
-                          readOnly: readOnly,
                           expands: false,
                           padding: EdgeInsets.zero,
                           customStyles: DefaultStyles(

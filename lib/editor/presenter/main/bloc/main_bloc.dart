@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:psws_storage/app/domain/entity/environment.dart';
@@ -137,6 +139,22 @@ class MainBloc extends Cubit<MainModelState> {
     return emit(state.copyWith(
       sort: sort,
     ));
+  }
+
+  Future<void> updateDirectoryAfterChanging(int hiveId) async {
+    final directory = await _getDirectoryUseCase(hiveId);
+
+    if(directory != null){
+      final dir = List<DirectoryModel>.from(state.directories);
+      final index = state.directories.indexOf(directory);
+
+      if(index != -1){
+        dir[index] = directory;
+
+        emit(state.copyWith(directories: dir));
+      }
+
+    }
   }
 
   DirectoryModel _getDirectory(

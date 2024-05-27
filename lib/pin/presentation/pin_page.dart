@@ -129,7 +129,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
                       title: Text(
                         _getTitle(l10n: l10n, state: state.state).toUpperCase(),
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       passcodeLength: AppDim.eight.toInt(),
                       confirmButton: SvgPicture.asset(

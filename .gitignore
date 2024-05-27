@@ -62,6 +62,7 @@ app.*.map.json
 lib/generated/
 **/*.gr.dart
 
-.fvm/*
 !.fvm/fvm_config.json
-.fvm/flutter_sdk
+
+# FVM Version Cache
+.fvm/

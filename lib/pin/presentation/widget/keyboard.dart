@@ -135,7 +135,7 @@ class Keyboard extends StatelessWidget {
           child: Text(
             text,
             style:
-                Theme.of(context).textTheme.headline6?.copyWith(fontSize: 30),
+                Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),
             semanticsLabel: text,
           ),
         ),

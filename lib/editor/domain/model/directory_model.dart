@@ -38,6 +38,17 @@ class DirectoryModel {
         idHiveObject: idHiveObject ?? this.idHiveObject,
       );
 
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DirectoryModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   @override
   String toString() {
     return 'DirectoryModel{isFolder: $isFolder, id: $id, parentId: $parentId, createdDate: $createdDate, name: $name, content: $content, idHiveObject: $idHiveObject}';

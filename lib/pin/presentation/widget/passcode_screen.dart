@@ -88,7 +88,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
             child: widget.title ??
                 Text(
                   'PIN',
-                  style: theme.textTheme.bodyText1
+                  style: theme.textTheme.bodyLarge
                       ?.copyWith(color: theme.colorScheme.onPrimary),
                 ),
           ),
