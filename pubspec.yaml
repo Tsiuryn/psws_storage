@@ -58,7 +58,8 @@ dependencies:
 
   #crypto and encrypt
   crypto: ^3.0.2
-  encrypt: ^5.0.1
+  # upgrade version after checking import db
+  encrypt: 5.0.1
 
   loader_overlay: ^2.1.0
   share_plus: ^7.0.1
