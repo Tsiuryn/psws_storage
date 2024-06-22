@@ -91,21 +91,27 @@ class MainBloc extends Cubit<MainModelState> {
     }
   }
 
-  void addFolder(String folderName) async {
-    final directories = await _addFileUseCase(_getDirectory(name: folderName));
+  Future<(List<DirectoryModel>, DirectoryModel)> addFolder(String folderName) async {
+    final folder = _getDirectory(name: folderName);
+    final directories = await _addFileUseCase(folder);
 
     emit(state.copyWith(
       directories: directories,
     ));
+
+    return (directories, directories.firstWhere((dir) => dir.id == folder.id));
   }
 
-  void addFile(String fileName) async {
-    final directories =
-        await _addFileUseCase(_getDirectory(name: fileName, isFolder: false));
+  Future<(List<DirectoryModel>, DirectoryModel)> addFile(
+      String fileName) async {
+    final file = _getDirectory(name: fileName, isFolder: false);
+    final directories = await _addFileUseCase(file);
 
     emit(state.copyWith(
       directories: directories,
     ));
+
+    return (directories, directories.firstWhere((dir) => dir.id == file.id));
   }
 
   void deleteFile(DirectoryModel model) async {
@@ -144,16 +150,15 @@ class MainBloc extends Cubit<MainModelState> {
   Future<void> updateDirectoryAfterChanging(int hiveId) async {
     final directory = await _getDirectoryUseCase(hiveId);
 
-    if(directory != null){
+    if (directory != null) {
       final dir = List<DirectoryModel>.from(state.directories);
       final index = state.directories.indexOf(directory);
 
-      if(index != -1){
+      if (index != -1) {
         dir[index] = directory;
 
         emit(state.copyWith(directories: dir));
       }
-
     }
   }
 

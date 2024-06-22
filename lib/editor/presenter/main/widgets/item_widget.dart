@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
+import 'package:psws_storage/app/common/path_bottom_sheet.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
@@ -134,18 +135,7 @@ class ItemWidget extends StatelessWidget {
                     onPressed: () {
                       final path = pathBuilder?.call();
                       if (path != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              path,
-                              style: appTextStyles?.subtitle,
-                            ),
-                            backgroundColor: appColors?.appBarColor,
-                            duration: Duration(
-                              seconds: AppDim.two.toInt(),
-                            ),
-                          ),
-                        );
+                        showPathBottomSheet(context, path: path);
                       }
                     },
                   ),

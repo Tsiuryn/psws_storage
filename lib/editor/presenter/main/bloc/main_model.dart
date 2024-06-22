@@ -140,7 +140,7 @@ class MainModelState {
   }
 
   List<DirectoryModel> getListAttachedFiles(String parentId) {
-    List<DirectoryModel> _getSubFolders(List<DirectoryModel> input) {
+    List<DirectoryModel> getSubFolders(List<DirectoryModel> input) {
       final List<DirectoryModel> subFolders = [];
       for (final element in input) {
         final listChildren = _getChildren(element.id);
@@ -148,7 +148,7 @@ class MainModelState {
           subFolders.add(element);
         } else {
           subFolders.add(element);
-          subFolders.addAll(_getSubFolders(listChildren));
+          subFolders.addAll(getSubFolders(listChildren));
         }
       }
 
@@ -157,7 +157,7 @@ class MainModelState {
 
     final List<DirectoryModel> childrenFolders = _getChildren(parentId);
 
-    return _getSubFolders(childrenFolders);
+    return getSubFolders(childrenFolders);
   }
 
   bool isChild(String sourceId, String targetId) {

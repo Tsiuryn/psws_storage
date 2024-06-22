@@ -24,7 +24,7 @@ class SettingsBloc extends Cubit<SettingsState> {
     if (state is! UpdatePage) {
       emit(SettingsState.updatePage(state.model));
     }
-      emit(SettingsState.permissionGranted(state.model, type));
+    emit(SettingsState.permissionGranted(state.model, type));
   }
 }
 

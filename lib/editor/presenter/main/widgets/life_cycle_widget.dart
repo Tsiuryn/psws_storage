@@ -68,7 +68,7 @@ class _LifeCycleWidgetState extends State<LifeCycleWidget>
     if (environment.hideScreen == HideScreen.no) {
       return;
     }
-    final  routeData = context.router.current;
+    final routeData = context.router.current;
     if (widget.routeData.hashCode == routeData.hashCode) {
       if (state == AppLifecycleState.inactive) {
         setState(() {

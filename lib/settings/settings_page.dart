@@ -176,13 +176,13 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                   context
                                       .read<AppBloc>()
                                       .changeHideScreenParams(newValue);
-                                  final isHideScreen = newValue == HideScreen.yes;
-                                  if(isHideScreen){
+                                  final isHideScreen =
+                                      newValue == HideScreen.yes;
+                                  if (isHideScreen) {
                                     await PrivacyScreen.instance.enable();
-                                  }else {
+                                  } else {
                                     await PrivacyScreen.instance.disable();
                                   }
-
                                 }
                               },
                             ),

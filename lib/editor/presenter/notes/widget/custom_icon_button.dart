@@ -38,7 +38,8 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final iconColor = iconTheme?.iconButtonUnselectedData?.color ?? theme.iconTheme.color;
+    final iconColor =
+        iconTheme?.iconButtonUnselectedData?.color ?? theme.iconTheme.color;
     final rightSize = size * kIconButtonFactor;
 
     return ConstrainedBox(

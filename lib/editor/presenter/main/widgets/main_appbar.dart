@@ -50,8 +50,15 @@ class MainAppBar extends StatelessWidget
         IconButton(
             onPressed: () {
               createFileDialog(context, title: fileName, isFolder: false,
-                  value: (value) {
-                bloc.addFile(value);
+                  value: (fileName) {
+                bloc.addFile(fileName).then((value) {
+                  if (value.$2.idHiveObject != -1) {
+                    context.pushRoute(EditNotesRoute(
+                        idHive: value.$2.idHiveObject,
+                        path: state.getPathString(),
+                        directories: value.$1));
+                  }
+                });
               });
             },
             icon: SvgPicture.asset(
@@ -60,8 +67,10 @@ class MainAppBar extends StatelessWidget
             )),
         IconButton(
           onPressed: () {
-            createFileDialog(context, title: folderName, value: (value) {
-              bloc.addFolder(value);
+            createFileDialog(context, title: folderName, value: (folderName) {
+              bloc.addFolder(folderName).then((value){
+                bloc.openFolder(value.$2);
+              });
             });
           },
           icon: SvgPicture.asset(

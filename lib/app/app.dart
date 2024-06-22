@@ -56,7 +56,6 @@ class MyApp extends StatelessWidget {
         ));
   }
 
-
   Future<void> privacyScreenEnable(bool enablePrivacy) async {
     await PrivacyScreen.instance.enable(
       iosOptions: PrivacyIosOptions(

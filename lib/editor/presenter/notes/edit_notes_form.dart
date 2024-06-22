@@ -6,6 +6,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:psws_storage/app/common/path_bottom_sheet.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/calculator_dialog/calculator_dialog.dart';
@@ -89,8 +90,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   Widget build(BuildContext context) {
     final subtitle = AppLocalizations.of(context)?.edit_notes_page__subtitle;
     final bool readOnly = widget.state.readOnly;
-    final l10n = AppLocalizations.of(context);
-    final pathPrefix = l10n?.import_export_page__path ?? '';
+
     final theme = AppTheme(context);
     const selectedButtonData = IconButtonData(
         color: Colors.yellow,
@@ -119,7 +119,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 0,
-            title: const SizedBox(),
+            // title: const SizedBox(),
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +136,9 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     collapsedBackgroundColor: theme.appColors?.appBarColor ??
                         Theme.of(context).primaryColor,
                     childrenPadding: EdgeInsets.zero,
-                    tilePadding: const EdgeInsets.all(AppDim.four),
+                    tilePadding: const EdgeInsets.fromLTRB(
+                        AppDim.four, AppDim.four, AppDim.sixteen, AppDim.four),
+                    dense: false,
                     leading: IconButton(
                         onPressed: () {
                           if (readOnly) {
@@ -163,10 +165,6 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (widget.path.isNotEmpty)
-                          Text(
-                            '$pathPrefix ${widget.path}',
-                          ),
                         Text(
                             '$subtitle ${dateFormatter.format(widget.note.createdDate)}'),
                       ],
@@ -178,7 +176,11 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             configurations: QuillSimpleToolbarConfigurations(
                           controller: _controller,
                           toolbarSectionSpacing: 0.0,
+                          showClipboardCut: false,
+                          showClipboardCopy: false,
+                          showClipboardPaste: false,
                           showLink: false,
+                          showSearchButton: false,
                           showFontSize: true,
                           fontSizesValues: fontSize,
                           showHeaderStyle: false,
@@ -261,6 +263,17 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                     _setTextToCurrentPosition(
                                         '${result.userInput} = ${result.answer}');
                                   }
+                                },
+                              );
+                            },
+                            (controller, toolbarIconSize, iconTheme,
+                                dialogTheme) {
+                              return CustomIconButton(
+                                icon: Icons.info_outline_rounded,
+                                iconTheme: iconTheme,
+                                onPressed: () async {
+                                  showPathBottomSheet(context,
+                                      path: widget.path);
                                 },
                               );
                             },

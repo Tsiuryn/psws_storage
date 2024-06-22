@@ -109,12 +109,16 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
               } else {
                 final path = state
                     .convertListToPathText(state.getPathByParentId(currentDir));
-                context.router.push(EditNotesRoute(
+                context.router
+                    .push(EditNotesRoute(
                   idHive: currentDir.idHiveObject,
                   path: path,
                   directories: state.directories,
-                )).then((value) {
-                  context.read<MainBloc>().updateDirectoryAfterChanging(currentDir.idHiveObject);
+                ))
+                    .then((value) {
+                  context
+                      .read<MainBloc>()
+                      .updateDirectoryAfterChanging(currentDir.idHiveObject);
                 });
               }
             },
@@ -210,7 +214,17 @@ class UpFolder extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(state.getPathString()),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      state.getPathString(),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

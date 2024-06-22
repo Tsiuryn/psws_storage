@@ -38,7 +38,6 @@ class DirectoryModel {
         idHiveObject: idHiveObject ?? this.idHiveObject,
       );
 
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
