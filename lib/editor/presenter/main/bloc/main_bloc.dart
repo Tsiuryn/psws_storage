@@ -91,7 +91,8 @@ class MainBloc extends Cubit<MainModelState> {
     }
   }
 
-  Future<(List<DirectoryModel>, DirectoryModel)> addFolder(String folderName) async {
+  Future<(List<DirectoryModel>, DirectoryModel)> addFolder(
+      String folderName) async {
     final folder = _getDirectory(name: folderName);
     final directories = await _addFileUseCase(folder);
 

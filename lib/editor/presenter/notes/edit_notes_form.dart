@@ -356,11 +356,19 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
     final note = widget.state.getDirectoryById(directory?.id);
     final path = widget.state.getPath(note);
     if (directory != null && path != null) {
-      context.router.push(EditNotesRoute(
+      final readOnly = widget.state.readOnly;
+      context.router
+          .push(EditNotesRoute(
         idHive: note?.idHiveObject ?? directory.hiveId,
         path: path,
         directories: widget.state.directories,
-      ));
+      ))
+          .then((value) {
+        if (readOnly) {
+          _focusNode.unfocus();
+          context.read<EditNotesBloc>().updateEditMode(true);
+        }
+      });
     }
   }
 

@@ -113,11 +113,13 @@ class MainAppBar extends StatelessWidget
                             .updateDirectoryAfterChanging(
                                 directory.idHiveObject),
                       );
-                  Future.delayed(const Duration(seconds: 1)).then( (value) {
-                    final parentFolder = state.directories
-                        .firstWhereOrNull((dir) => dir.id == directory.parentId);
-                    if(parentFolder != null){
-                      context.read<MainBloc>().openFolderFromSearch(parentFolder);
+                  Future.delayed(const Duration(seconds: 1)).then((value) {
+                    final parentFolder = state.directories.firstWhereOrNull(
+                        (dir) => dir.id == directory.parentId);
+                    if (parentFolder != null) {
+                      context
+                          .read<MainBloc>()
+                          .openFolderFromSearch(parentFolder);
                     }
                   });
                 }
