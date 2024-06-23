@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -68,7 +68,7 @@ class MainAppBar extends StatelessWidget
         IconButton(
           onPressed: () {
             createFileDialog(context, title: folderName, value: (folderName) {
-              bloc.addFolder(folderName).then((value){
+              bloc.addFolder(folderName).then((value) {
                 bloc.openFolder(value.$2);
               });
             });
@@ -107,10 +107,19 @@ class MainAppBar extends StatelessWidget
                         path: path,
                         directories: state.directories,
                       ))
-                      .then((value) => context
-                          .read<MainBloc>()
-                          .updateDirectoryAfterChanging(
-                              directory.idHiveObject));
+                      .then(
+                        (value) => context
+                            .read<MainBloc>()
+                            .updateDirectoryAfterChanging(
+                                directory.idHiveObject),
+                      );
+                  Future.delayed(const Duration(seconds: 1)).then( (value) {
+                    final parentFolder = state.directories
+                        .firstWhereOrNull((dir) => dir.id == directory.parentId);
+                    if(parentFolder != null){
+                      context.read<MainBloc>().openFolderFromSearch(parentFolder);
+                    }
+                  });
                 }
               }
             });
