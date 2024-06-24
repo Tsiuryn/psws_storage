@@ -30,6 +30,7 @@
   "main_page__dialog_rename_folder_title": "Rename folder",
   "main_page__dialog_delete_folder_title": "Delete folder",
   "main_page__dialog_delete_file_title": "Delete file",
+  "main_page__not_found_directory": "Directory not found. Delete the current link and create a new one.",
   "main_page__dialog_delete_folder_description": "Are you sure you want to permanently delete the folder \"{dirName}\"? ",
   "@main_page__dialog_delete_folder_description": {
     "placeholders": {

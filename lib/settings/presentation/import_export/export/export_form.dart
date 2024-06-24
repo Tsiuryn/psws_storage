@@ -37,7 +37,7 @@ class _ExportFormState extends State<ExportForm> with PswsSnackBar {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     _fileName = DateFormat('ddMMyyyy_HHmmss').format(DateTime.now());
 
     return widget.state.type == ImportExportStateType.loading

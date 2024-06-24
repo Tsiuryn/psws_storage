@@ -32,6 +32,9 @@ class MainModelState {
         .toList();
   }
 
+  List<DirectoryModel> get directoriesWithoutLink =>
+      directories.where((element) => element.destinationId == null).toList();
+
   String getPathString() {
     return convertListToPathText(path);
   }
@@ -119,7 +122,9 @@ class MainModelState {
       return directories;
     }
 
-    return directories.where((element) => element.isFolder).toList();
+    return directories
+        .where((element) => element.isFolder && element.destinationId == null)
+        .toList();
   }
 
   List<String> getPathByParentId(DirectoryModel choosingDirectory) {

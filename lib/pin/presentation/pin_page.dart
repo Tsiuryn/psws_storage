@@ -43,7 +43,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
 
   void onWillPop(BuildContext context, {required PinState state}) {
     DateTime now = DateTime.now();
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context);
     final PinBloc bloc = context.read<PinBloc>();
     if (now.difference(state.currentBackPressTime) >
         const Duration(seconds: 2)) {
@@ -59,7 +59,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
 
   @override
   void onListener(BuildContext context, PinState state) async {
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     if (state.state == PinFlowState.success) {
       if (isFirstPage) {
@@ -110,7 +110,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
   Widget buildBody(BuildContext context, PinState state) {
     String value = '';
     final bloc = context.read<PinBloc>();
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return state.state == PinFlowState.loading
         ? const Center(

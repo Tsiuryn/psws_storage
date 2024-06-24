@@ -26,6 +26,9 @@ class DirectoryBean extends HiveObject {
   @HiveField(6)
   final int? idHiveObject;
 
+  @HiveField(7)
+  final String? destinationId;
+
   DirectoryBean({
     required this.isFolder,
     required this.id,
@@ -34,6 +37,7 @@ class DirectoryBean extends HiveObject {
     required this.name,
     required this.content,
     this.idHiveObject,
+    this.destinationId,
   });
 }
 
@@ -46,6 +50,7 @@ extension DirectoryBeanExt on DirectoryBean {
         name: name,
         content: content,
         idHiveObject: idHiveObject ?? -1,
+        destinationId: destinationId,
       );
 }
 
@@ -58,5 +63,6 @@ extension DirectoryModelExt on DirectoryModel {
         name: name,
         content: content,
         idHiveObject: idHiveObject,
+        destinationId: destinationId,
       );
 }

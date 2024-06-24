@@ -46,7 +46,7 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
   }
 
   Widget _pageStateBuilder(BuildContext context, ChangePswState state) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final appTheme = AppTheme(context);
 
     return Scaffold(

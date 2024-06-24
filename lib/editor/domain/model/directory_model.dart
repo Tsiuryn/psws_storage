@@ -8,6 +8,7 @@ class DirectoryModel {
   final String name;
   final String content;
   final int idHiveObject;
+  final String? destinationId;
 
   DirectoryModel({
     required this.isFolder,
@@ -17,17 +18,18 @@ class DirectoryModel {
     required this.name,
     required this.content,
     required this.idHiveObject,
+    this.destinationId,
   });
 
-  DirectoryModel copyWith({
-    bool? isFolder,
-    String? id,
-    String? parentId,
-    DateTime? createdDate,
-    String? name,
-    String? content,
-    int? idHiveObject,
-  }) =>
+  DirectoryModel copyWith(
+          {bool? isFolder,
+          String? id,
+          String? parentId,
+          DateTime? createdDate,
+          String? name,
+          String? content,
+          int? idHiveObject,
+          String? destinationId}) =>
       DirectoryModel(
         isFolder: isFolder ?? this.isFolder,
         id: id ?? this.id,
@@ -36,6 +38,7 @@ class DirectoryModel {
         name: name ?? this.name,
         content: content ?? this.content,
         idHiveObject: idHiveObject ?? this.idHiveObject,
+        destinationId: destinationId ?? this.destinationId,
       );
 
   @override

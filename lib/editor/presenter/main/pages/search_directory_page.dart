@@ -81,8 +81,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
               : AppBar(
                   title: FittedBox(
                     child: Text(
-                      AppLocalizations.of(context)?.search_directory__title ??
-                          '',
+                      AppLocalizations.of(context).search_directory__title,
                       style: textStyles?.titleLarge,
                     ),
                   ),

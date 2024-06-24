@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,7 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
 
   void onWillPop(BuildContext context, {required MainModelState state}) {
     DateTime now = DateTime.now();
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context);
     final MainBloc bloc = context.read<MainBloc>();
     if (now.difference(state.currentBackPressTime) >
         const Duration(seconds: 2)) {
@@ -77,7 +78,7 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
   Widget buildBody(BuildContext context, MainModelState state) {
     final listDirectories = state.sortedList;
     final bloc = context.read<MainBloc>();
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return ListView.separated(
       itemCount: listDirectories.length + 1,
@@ -104,22 +105,13 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
             id: index,
             model: currentDir,
             onTap: () {
-              if (currentDir.isFolder) {
+              if (currentDir.destinationId != null) {
+                onTapLink(context, currentDir: currentDir, state: state);
+                return;
+              } else if (currentDir.isFolder) {
                 bloc.openFolder(currentDir);
               } else {
-                final path = state
-                    .convertListToPathText(state.getPathByParentId(currentDir));
-                context.router
-                    .push(EditNotesRoute(
-                  idHive: currentDir.idHiveObject,
-                  path: path,
-                  directories: state.directories,
-                ))
-                    .then((value) {
-                  context
-                      .read<MainBloc>()
-                      .updateDirectoryAfterChanging(currentDir.idHiveObject);
-                });
+                openFile(context, dir: currentDir, state: state);
               }
             },
             onEdit: () {
@@ -191,6 +183,48 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
         }
       },
     );
+  }
+
+  void onTapLink(
+    BuildContext context, {
+    required DirectoryModel currentDir,
+    required MainModelState state,
+  }) {
+    final bloc = context.read<MainBloc>();
+    final l10n = AppLocalizations.of(context);
+    final destDirectory = state.directories
+        .firstWhereOrNull((element) => element.id == currentDir.destinationId);
+    if (destDirectory == null) {
+      showRequestSnackBar(
+        context,
+        message: l10n.main_page__not_found_directory,
+      );
+    } else if (destDirectory.isFolder) {
+      bloc.openFolderFromSearch(destDirectory);
+    } else {
+      openFile(
+        context,
+        dir: destDirectory,
+        state: state,
+      );
+    }
+  }
+
+  void openFile(
+    BuildContext context, {
+    required DirectoryModel dir,
+    required MainModelState state,
+  }) {
+    final path = state.convertListToPathText(state.getPathByParentId(dir));
+    context.router
+        .push(EditNotesRoute(
+      idHive: dir.idHiveObject,
+      path: path,
+      directories: state.directories,
+    ))
+        .then((value) {
+      context.read<MainBloc>().updateDirectoryAfterChanging(dir.idHiveObject);
+    });
   }
 }
 

@@ -48,23 +48,24 @@ class MainAppBar extends StatelessWidget
           width: AppDim.eight,
         ),
         IconButton(
-            onPressed: () {
-              createFileDialog(context, title: fileName, isFolder: false,
-                  value: (fileName) {
-                bloc.addFile(fileName).then((value) {
-                  if (value.$2.idHiveObject != -1) {
-                    context.pushRoute(EditNotesRoute(
-                        idHive: value.$2.idHiveObject,
-                        path: state.getPathString(),
-                        directories: value.$1));
-                  }
-                });
+          onPressed: () {
+            createFileDialog(context, title: fileName, isFolder: false,
+                value: (fileName) {
+              bloc.addFile(fileName).then((value) {
+                if (value.$2.idHiveObject != -1) {
+                  context.pushRoute(EditNotesRoute(
+                      idHive: value.$2.idHiveObject,
+                      path: state.getPathString(),
+                      directories: value.$1));
+                }
               });
-            },
-            icon: SvgPicture.asset(
-              AppIcons.icFile,
-              color: appColors?.textColor,
-            )),
+            });
+          },
+          icon: SvgPicture.asset(
+            AppIcons.icFile,
+            color: appColors?.textColor,
+          ),
+        ),
         IconButton(
           onPressed: () {
             createFileDialog(context, title: folderName, value: (folderName) {
@@ -76,6 +77,24 @@ class MainAppBar extends StatelessWidget
           icon: SvgPicture.asset(
             AppIcons.icFolder,
             color: appColors?.textColor,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            context
+                .pushRoute(SearchDirectoryRoute(
+                    directories: state.directoriesWithoutLink))
+                .then((value) {
+              final dir = value;
+              if (dir is DirectoryModel) {
+                context.read<MainBloc>().addLink('${dir.name}.link', dir.id);
+              }
+            });
+          },
+          icon: Icon(
+            Icons.add_link,
+            color: appColors?.textColor,
+            size: AppDim.thirtyTwo,
           ),
         ),
         const Expanded(
@@ -93,7 +112,8 @@ class MainAppBar extends StatelessWidget
         IconButton(
           onPressed: () async {
             context.router
-                .push(SearchDirectoryRoute(directories: state.directories))
+                .push(SearchDirectoryRoute(
+                    directories: state.directoriesWithoutLink))
                 .then((directory) {
               if (directory != null && directory is DirectoryModel) {
                 if (directory.isFolder) {
@@ -152,7 +172,7 @@ class MainAppBar extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(60);
 
   void showSortDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final appColors = AppTheme(context).appColors;
     final appTextStyles = AppTheme(context).appTextStyles;
     final appBloc = getIt.get<AppBloc>();

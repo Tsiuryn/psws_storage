@@ -115,6 +115,16 @@ class MainBloc extends Cubit<MainModelState> {
     return (directories, directories.firstWhere((dir) => dir.id == file.id));
   }
 
+  Future<void> addLink(String fileName, String destinationId) async {
+    final file = _getDirectory(name: fileName, isFolder: false)
+        .copyWith(destinationId: destinationId);
+    final directories = await _addFileUseCase(file);
+
+    emit(state.copyWith(
+      directories: directories,
+    ));
+  }
+
   void deleteFile(DirectoryModel model) async {
     if (model.isFolder) {
       final List<int> keys = state

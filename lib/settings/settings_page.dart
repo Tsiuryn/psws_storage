@@ -288,7 +288,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
   }
 
   void _showOkDialog(BuildContext context, {required VoidCallback tapOk}) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     createOkDialog(context,
         title: l10n.settings_page__ok_dialog_title,
         message: l10n.settings_page__ok_dialog_description,
@@ -305,10 +305,10 @@ extension ThemeTypeExt on ThemeType {
         height: 24,
         child: Text(
           e == ThemeType.dark
-              ? AppLocalizations.of(context)!
+              ? AppLocalizations.of(context)
                   .main_appbar_bottom_theme_title_dark
                   .toUpperCase()
-              : AppLocalizations.of(context)!
+              : AppLocalizations.of(context)
                   .main_appbar_bottom_theme_title_light
                   .toUpperCase(),
           style:

@@ -37,7 +37,7 @@ class _ImportFormState extends State<ImportForm> with PswsSnackBar {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final appTheme = AppTheme(context);
 
     return widget.state.type == ImportExportStateType.loading

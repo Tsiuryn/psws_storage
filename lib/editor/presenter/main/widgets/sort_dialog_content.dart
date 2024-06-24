@@ -36,7 +36,7 @@ class SortDialogContentState extends State<SortDialogContent> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return Column(
       mainAxisSize: MainAxisSize.min,

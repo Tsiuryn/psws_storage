@@ -13,7 +13,7 @@ mixin PswsDialogs {
     String? initialTextValue,
     required Function(String) value,
   }) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     showDialog<String>(
       context: context,
@@ -37,7 +37,7 @@ mixin PswsDialogs {
                   controller: controller,
                   validator: (String? value) {
                     if ((value ?? '').isEmpty) {
-                      return AppLocalizations.of(context)!.common_dialog_error;
+                      return AppLocalizations.of(context).common_dialog_error;
                     }
                     return null;
                   },
@@ -121,7 +121,7 @@ mixin PswsDialogs {
     required VoidCallback tapNo,
     bool barrierDismissible = false,
   }) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     showDialog<String>(
       context: context,

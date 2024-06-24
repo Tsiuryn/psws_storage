@@ -58,7 +58,7 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
   }
 
   Widget _pageStateBuilder(BuildContext context, ImportExportState state) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final appTheme = AppTheme(context);
 
     return Scaffold(

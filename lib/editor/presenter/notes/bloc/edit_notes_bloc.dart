@@ -70,7 +70,10 @@ class EditNotesModel {
       return directories;
     }
 
-    return directories.where((element) => element.id != note?.id).toList();
+    return directories
+        .where((element) =>
+            element.id != note?.id && element.destinationId == null)
+        .toList();
   }
 
   List<String>? _getPathByParentId(DirectoryModel? choosingDirectory) {

@@ -30,6 +30,7 @@
   "main_page__dialog_rename_folder_title": "Переименовать папку",
   "main_page__dialog_delete_folder_title": "Удалить папку",
   "main_page__dialog_delete_file_title": "Удалить файл",
+  "main_page__not_found_directory": "Директория не найдена. Удалите текущую ссылку и создайте новую.",
   "main_page__dialog_delete_folder_description": "Вы действительно хотите удалить папку \"{dirName}\" без возможности восстановления?",
   "main_page__dialog_delete_file_description": "Вы действительно хотите удалить файл \"{dirName}\" без возможности восстановления?",
   "item_widget__rename": "ПЕРЕИМЕНОВАТЬ",

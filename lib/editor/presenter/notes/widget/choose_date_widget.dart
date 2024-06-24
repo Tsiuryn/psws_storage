@@ -46,7 +46,7 @@ class _ChooseDateWidgetState extends State<ChooseDateWidget> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme(context);
     final colors = appTheme.appColors;
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.all(AppDim.sixteen),

@@ -7,7 +7,6 @@ import 'package:psws_storage/app/common/path_bottom_sheet.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
-import 'package:psws_storage/app/ui_kit/icon_with_tooltip.dart';
 import 'package:psws_storage/app/utils/constants.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/res/resources.dart';
@@ -51,7 +50,12 @@ class ItemWidget extends StatelessWidget {
       AppIcons.icFile,
       color: appColors?.textColor,
     );
-    final l10n = AppLocalizations.of(context)!;
+    final linkIcon = Icon(
+      Icons.link_rounded,
+      size: AppDim.thirtyTwo,
+      color: appColors?.textColor,
+    );
+    final l10n = AppLocalizations.of(context);
     final leadingActions = [
       SwipeAction(
         icon: _buildIcon(
@@ -124,7 +128,11 @@ class ItemWidget extends StatelessWidget {
               style: appTextStyles?.subtitle,
               overflow: TextOverflow.ellipsis,
             ),
-            leading: model.isFolder ? folderIcon : fileIcon,
+            leading: model.destinationId == null
+                ? model.isFolder
+                    ? folderIcon
+                    : fileIcon
+                : linkIcon,
             trailing: canSwipe
                 ? null
                 : IconButton(
