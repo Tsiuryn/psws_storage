@@ -88,7 +88,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
 
   @override
   Widget build(BuildContext context) {
-    final subtitle = AppLocalizations.of(context)?.edit_notes_page__subtitle;
+    final subtitle = AppLocalizations.of(context).edit_notes_page__subtitle;
     final bool readOnly = widget.state.readOnly;
 
     final theme = AppTheme(context);
@@ -137,7 +137,11 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                         Theme.of(context).primaryColor,
                     childrenPadding: EdgeInsets.zero,
                     tilePadding: const EdgeInsets.fromLTRB(
-                        AppDim.four, AppDim.four, AppDim.sixteen, AppDim.four),
+                      AppDim.four,
+                      AppDim.four,
+                      AppDim.sixteen,
+                      AppDim.four,
+                    ),
                     dense: false,
                     leading: IconButton(
                         onPressed: () {
@@ -206,21 +210,20 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                             (controller, toolbarIconSize, iconTheme,
                                 dialogTheme) {
                               return CustomIconButton(
-                                  iconTheme: iconTheme,
-                                  onPressed: () {
-                                    final index =
-                                        controller.selection.baseOffset;
-                                    final length =
-                                        controller.selection.extentOffset -
-                                            index;
-                                    context.router
-                                        .push(SearchDirectoryRoute(
-                                      directories:
-                                          widget.state.allNotesWithoutCurrent,
-                                      searchDestination:
-                                          SearchDestination.getPath,
-                                    ))
-                                        .then((value) {
+                                iconTheme: iconTheme,
+                                onPressed: () {
+                                  final index = controller.selection.baseOffset;
+                                  final length =
+                                      controller.selection.extentOffset - index;
+                                  context.router
+                                      .push(SearchDirectoryRoute(
+                                    directories:
+                                        widget.state.allNotesWithoutCurrent,
+                                    searchDestination:
+                                        SearchDestination.getPath,
+                                  ))
+                                      .then(
+                                    (value) {
                                       if (value is DirectoryModel) {
                                         final block = BlockEmbed.custom(
                                           NotesBlockEmbed.fromDocument(
@@ -233,9 +236,11 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                         controller.replaceText(
                                             index, length, block, null);
                                       }
-                                    });
-                                  },
-                                  icon: Icons.link_rounded);
+                                    },
+                                  );
+                                },
+                                icon: Icons.add_link_rounded,
+                              );
                             },
                             (controller, toolbarIconSize, iconTheme,
                                 dialogTheme) {
