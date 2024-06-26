@@ -26,6 +26,9 @@ class DirectoryJson {
   @JsonKey(name: 'idHiveObject')
   final int? idHiveObject;
 
+  @JsonKey(name: 'destinationId')
+  final String? destinationId;
+
   const DirectoryJson({
     required this.isFolder,
     required this.id,
@@ -33,7 +36,8 @@ class DirectoryJson {
     required this.createdDate,
     required this.name,
     required this.content,
-    this.idHiveObject,
+    required this.idHiveObject,
+    required this.destinationId,
   });
 
   DirectoryJson updateIdHiveObject(int idHiveObject) => DirectoryJson(
@@ -44,6 +48,7 @@ class DirectoryJson {
         name: name,
         content: content,
         idHiveObject: idHiveObject,
+        destinationId: destinationId,
       );
 
   factory DirectoryJson.fromJson(
@@ -63,6 +68,7 @@ extension DirectoryJsonExt on DirectoryJson {
         name: name,
         content: content,
         idHiveObject: isRewrite ? idHiveObject : null,
+        destinationId: destinationId,
       );
 }
 
@@ -75,5 +81,6 @@ extension DirectoryBeanExt on DirectoryBean {
         name: name,
         content: content,
         idHiveObject: idHiveObject,
+        destinationId: destinationId,
       );
 }
