@@ -8,6 +8,7 @@ import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_text_style_ext.dart';
 import 'package:psws_storage/app/utils/constants.dart';
+import 'package:psws_storage/app/utils/text_extensions.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/res/resources.dart';
 
@@ -18,6 +19,7 @@ class ItemWidget extends StatelessWidget {
   final String searchValue;
   final int id;
   final bool canSwipe;
+  final bool showPopUpMenuButton;
   final Function()? onDelete;
   final Function()? onEdit;
   final Function()? onMove;
@@ -31,6 +33,7 @@ class ItemWidget extends StatelessWidget {
     required this.id,
     this.pathBuilder,
     this.canSwipe = true,
+    this.showPopUpMenuButton = false,
     this.searchValue = '',
     this.onDelete,
     this.onEdit,
@@ -133,25 +136,35 @@ class ItemWidget extends StatelessWidget {
                     ? folderIcon
                     : fileIcon
                 : linkIcon,
-            trailing: canSwipe
-                ? null
-                : IconButton(
-                    icon: Icon(
-                      Icons.more_vert_rounded,
-                      color: appColors?.textColor,
-                    ),
-                    onPressed: () {
-                      final path = pathBuilder?.call();
-                      if (path != null) {
-                        showPathBottomSheet(context, path: path);
-                      }
-                    },
-                  ),
+            trailing: showPopUpMenuButton
+                ? _ItemPopUpWidget(
+                    onTap: _onTapMenuButton,
+                  )
+                : canSwipe
+                    ? null
+                    : IconButton(
+                        icon: Icon(
+                          Icons.more_vert_rounded,
+                          color: appColors?.textColor,
+                        ),
+                        onPressed: () {
+                          final path = pathBuilder?.call();
+                          if (path != null) {
+                            showPathBottomSheet(context, path: path);
+                          }
+                        },
+                      ),
           ),
         ),
       ],
     );
   }
+
+  void _onTapMenuButton(Menu menu) => switch (menu) {
+        Menu.move => onMove?.call(),
+        Menu.rename => onEdit?.call(),
+        Menu.delete => onDelete?.call(),
+      };
 
   Widget _buildIcon(IconData icon) {
     return Padding(
@@ -209,4 +222,104 @@ TextSpan highlightText({
   }
 
   return TextSpan(style: defStyle, children: children);
+}
+
+enum Menu { move, rename, delete }
+
+class _ItemPopUpWidget extends StatelessWidget {
+  const _ItemPopUpWidget({
+    super.key,
+    required this.onTap,
+  });
+
+  final ValueChanged<Menu> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppColorsExt? appColors = Theme.of(context).extension<AppColorsExt>();
+    final AppTextStyleExt? appTextStyles =
+        Theme.of(context).extension<AppTextStyleExt>();
+    final l10n = AppLocalizations.of(context);
+    return Material(
+      color: Colors.transparent,
+      child: PopupMenuButton<Menu>(
+        color: appColors?.bodyColor,
+        padding: EdgeInsets.zero,
+        shape: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(Radius.circular(AppDim.eight))),
+        icon: const Icon(Icons.more_vert),
+        onSelected: (Menu item) {},
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+          PopupMenuItem<Menu>(
+            value: Menu.move,
+            onTap: () => onTap(Menu.move),
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              visualDensity: const VisualDensity(
+                vertical: VisualDensity.minimumDensity,
+                horizontal: VisualDensity.minimumDensity,
+              ),
+              leading: Icon(
+                Icons.open_with_rounded,
+                color: appColors?.positiveActionColor,
+                size: AppDim.twentyFour,
+              ),
+              title: Text(
+                l10n.item_widget__move.capitalized,
+                style: appTextStyles?.subtitle?.copyWith(
+                  color: appColors?.positiveActionColor,
+                ),
+              ),
+            ),
+          ),
+          PopupMenuItem<Menu>(
+            value: Menu.rename,
+            onTap: () => onTap(Menu.rename),
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              visualDensity: const VisualDensity(
+                vertical: VisualDensity.minimumDensity,
+                horizontal: VisualDensity.minimumDensity,
+              ),
+              leading: Icon(
+                Icons.edit,
+                color: appColors?.positiveActionColor,
+                size: AppDim.twentyFour,
+              ),
+              title: Text(
+                l10n.item_widget__rename.capitalized,
+                style: appTextStyles?.subtitle?.copyWith(
+                  color: appColors?.positiveActionColor,
+                ),
+              ),
+            ),
+          ),
+          const PopupMenuDivider(),
+          PopupMenuItem<Menu>(
+            value: Menu.delete,
+            onTap: () => onTap(Menu.delete),
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              visualDensity: const VisualDensity(
+                vertical: VisualDensity.minimumDensity,
+                horizontal: VisualDensity.minimumDensity,
+              ),
+              leading: Icon(
+                Icons.delete,
+                color: appColors?.negativeActionColor,
+                size: AppDim.twentyFour,
+              ),
+              title: Text(
+                l10n.item_widget__delete.capitalized,
+                style: appTextStyles?.subtitle?.copyWith(
+                  color: appColors?.negativeActionColor,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

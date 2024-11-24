@@ -104,6 +104,8 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
           return ItemWidget(
             id: index,
             model: currentDir,
+            canSwipe: false,
+            showPopUpMenuButton: true,
             onTap: () {
               if (currentDir.destinationId != null) {
                 onTapLink(context, currentDir: currentDir, state: state);

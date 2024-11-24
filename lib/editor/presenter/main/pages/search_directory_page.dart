@@ -130,8 +130,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                   visible: widget.searchDestination == SearchDestination.move,
                   child: TextButton(
                       child: Text(
-                        AppLocalizations.of(context)
-                                .search_directory__text_btn,
+                        AppLocalizations.of(context).search_directory__text_btn,
                         style: textStyles?.titleMedium,
                       ),
                       onPressed: () {
@@ -147,7 +146,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                       searchValue: _searchValue,
                       id: index,
                       onTap: () {
-                        context.popRoute(searchDirectories[index]);
+                        context.maybePop(searchDirectories[index]);
                       },
                       pathBuilder: () {
                         return _convertListToPathText(

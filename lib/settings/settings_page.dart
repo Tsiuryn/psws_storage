@@ -126,14 +126,14 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           visible: state.model.showBiometrics,
                           child: SettingsItem(
                             title: biometrics,
-                            subtitle:
-                                l10n.settings_page__biometrics_subtitle,
+                            subtitle: l10n.settings_page__biometrics_subtitle,
                             child: Row(
                               children: [
                                 Text(
                                     environment.localAuth == LocalAuth.pin
                                         ? l10n.settings_page__biometrics_pin
-                                        : l10n.settings_page__biometrics_fingerprint,
+                                        : l10n
+                                            .settings_page__biometrics_fingerprint,
                                     style: appTheme.appTextStyles?.subtitle),
                                 const Expanded(child: SizedBox()),
                                 CupertinoSlidingSegmentedControl<LocalAuth>(
@@ -157,8 +157,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                       ),
                       SettingsItem(
                         title: security,
-                        subtitle:
-                            l10n.settings_page__hide_screen_description,
+                        subtitle: l10n.settings_page__hide_screen_description,
                         child: Row(
                           children: [
                             const Expanded(child: SizedBox()),
@@ -206,8 +205,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           )),
                       SettingsItem(
                         title: l10n.settings_page__export,
-                        informationMessage:
-                            l10n.settings_page__export_tooltip,
+                        informationMessage: l10n.settings_page__export_tooltip,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -233,8 +231,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                       ),
                       SettingsItem(
                         title: l10n.settings_page__import,
-                        informationMessage:
-                            l10n.settings_page__import_tooltip,
+                        informationMessage: l10n.settings_page__import_tooltip,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -341,9 +338,8 @@ extension HideScreenExt on HideScreen {
     final l10n = AppLocalizations.of(context);
 
     for (var e in HideScreen.values) {
-      final title = e == HideScreen.yes
-          ? l10n.common_dialog_yes
-          : l10n.common_dialog_no;
+      final title =
+          e == HideScreen.yes ? l10n.common_dialog_yes : l10n.common_dialog_no;
 
       map[e] = SizedBox(
         height: 24,
@@ -365,9 +361,8 @@ extension LocalAuthExt on LocalAuth {
     final l10n = AppLocalizations.of(context);
 
     for (var e in LocalAuth.values) {
-      final title = e == LocalAuth.pin
-          ? l10n.common_dialog_no
-          : l10n.common_dialog_yes;
+      final title =
+          e == LocalAuth.pin ? l10n.common_dialog_no : l10n.common_dialog_yes;
 
       map[e] = SizedBox(
         height: 24,

@@ -405,8 +405,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
   String get content => jsonEncode(_controller.document.toDelta().toJson());
 
   void showDialog(BuildContext context) {
-    final title =
-        AppLocalizations.of(context).edit_notes_page__dialog_title;
+    final title = AppLocalizations.of(context).edit_notes_page__dialog_title;
     final subTitle =
         AppLocalizations.of(context).edit_notes_page__dialog_subTitle;
 
