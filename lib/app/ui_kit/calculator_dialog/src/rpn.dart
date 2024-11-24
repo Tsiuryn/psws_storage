@@ -136,12 +136,12 @@ class RPN {
     for (var element in tokenizer) {
       curr = element;
       if (curr == space) continue;
-      if (_isFunction(curr))
+      if (_isFunction(curr)) {
         stack.push(curr);
-      else if (_isDelimiter(curr)) {
-        if (curr == bracketOpen)
+      } else if (_isDelimiter(curr)) {
+        if (curr == bracketOpen) {
           stack.push(curr);
-        else if (curr == bracketClose) {
+        } else if (curr == bracketClose) {
           while (stack.peek() != bracketOpen) {
             postfix.add(stack.pop());
           }
@@ -223,28 +223,29 @@ class RPN {
 
 extension ListStack on List {
   void push<T>(T char) {
-    this.insert(0, char);
+    insert(0, char);
   }
 
   void put(String char) {
     if (char.isNotEmpty) {
-      this.add(char);
+      add(char);
     }
   }
 
   T pop<T>() {
     var symbol = this[0];
-    if (this.length > 0) {
-      this.removeAt(0);
+    if (isNotEmpty) {
+      removeAt(0);
     }
     return symbol;
   }
 
   String peek() {
-    if (this.length > 0) {
+    if (isNotEmpty) {
       return this[0];
-    } else
+    } else {
       return '';
+    }
   }
 }
 
@@ -266,20 +267,20 @@ class Tokenizer {
   }
 
   Iterable<String> tokenize(String chunk) sync* {
-    String _sequence = '';
+    String sequence = '';
 
     for (int i = 0; i < chunk.length; i++) {
       final char = chunk[i];
 
       if (delimiters.contains(char)) {
-        if (_sequence.length > 0) yield _sequence;
+        if (sequence.isNotEmpty) yield sequence;
         yield char;
-        _sequence = '';
+        sequence = '';
       } else {
-        _sequence += char;
+        sequence += char;
       }
     }
 
-    if (_sequence.length > 0) yield _sequence;
+    if (sequence.isNotEmpty) yield sequence;
   }
 }

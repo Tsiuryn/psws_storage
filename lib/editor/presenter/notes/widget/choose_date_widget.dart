@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +33,7 @@ class _ChooseDateWidgetState extends State<ChooseDateWidget> {
     'HH:mm',
   ];
 
-  String get _dateLocale => AppLocalizations.of(context)?.localeName ?? '';
+  String get _dateLocale => AppLocalizations.of(context).localeName;
 
   @override
   void initState() {

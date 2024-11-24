@@ -91,13 +91,13 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
       final l10n = AppLocalizations.of(context);
       final LocalAuthentication auth = LocalAuthentication();
       final bool didAuthenticate = await auth.authenticate(
-          localizedReason: l10n?.pin_page__biometrics_auth_description ?? '',
+          localizedReason: l10n.pin_page__biometrics_auth_description,
           options: const AuthenticationOptions(biometricOnly: true),
           authMessages: [
             AndroidAuthMessages(
-              signInTitle: l10n?.pin_page__biometrics_auth_title ?? '',
+              signInTitle: l10n.pin_page__biometrics_auth_title,
               biometricHint: '',
-              cancelButton: l10n?.common_dialog_cancel,
+              cancelButton: l10n.common_dialog_cancel,
             )
           ]);
       return didAuthenticate;

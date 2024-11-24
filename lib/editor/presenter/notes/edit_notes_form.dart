@@ -406,9 +406,9 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
 
   void showDialog(BuildContext context) {
     final title =
-        AppLocalizations.of(context)?.edit_notes_page__dialog_title ?? '';
+        AppLocalizations.of(context).edit_notes_page__dialog_title;
     final subTitle =
-        AppLocalizations.of(context)?.edit_notes_page__dialog_subTitle ?? '';
+        AppLocalizations.of(context).edit_notes_page__dialog_subTitle;
 
     createOkDialog(context, title: title, message: subTitle, tapNo: () {
       context.router.pop();

@@ -32,8 +32,8 @@ class MainAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     final bloc = context.read<MainBloc>();
     final l10n = AppLocalizations.of(context);
-    final folderName = l10n?.main_appbar_dialog_folder ?? '';
-    final fileName = l10n?.main_appbar_dialog_note ?? '';
+    final folderName = l10n.main_appbar_dialog_folder;
+    final fileName = l10n.main_appbar_dialog_note;
     final AppColorsExt? appColors = Theme.of(context).extension<AppColorsExt>();
 
     return AppBar(

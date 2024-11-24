@@ -63,8 +63,8 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
             onPressed: context.popRoute,
           ),
           bottom: const PreferredSize(
-            child: Divider(),
             preferredSize: Size.fromHeight(1),
+            child: Divider(),
           ),
         ),
         body: GestureDetector(
@@ -157,7 +157,7 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                       final equalPin = await bloc.equalPin(_oldPsw);
                       if (equalPin) {
                         await bloc.writeNewPin(_psw);
-                        context.popRoute();
+                        context.maybePop();
                         showRequestSnackBar(
                           context,
                           message: l10n.password_change__message_success,

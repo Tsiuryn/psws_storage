@@ -26,10 +26,10 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final titleTheme = l10n?.main_appbar_bottom_theme ?? '';
-    final titleLocale = l10n?.main_appbar_bottom_locale ?? '';
-    final biometrics = l10n?.settings_page__biometrics_title ?? '';
-    final security = l10n?.settings_page__hide_screen_title ?? '';
+    final titleTheme = l10n.main_appbar_bottom_theme;
+    final titleLocale = l10n.main_appbar_bottom_locale;
+    final biometrics = l10n.settings_page__biometrics_title;
+    final security = l10n.settings_page__hide_screen_title;
     final appTheme = AppTheme(context);
     final mainBloc = getIt.get<AppBloc>();
     final environment = mainBloc.state;
@@ -45,7 +45,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
             return Scaffold(
               appBar: AppBar(
                 title: Text(
-                  l10n?.settings_page__title ?? '',
+                  l10n.settings_page__title,
                   style: appTheme.appTextStyles?.titleLarge,
                 ),
                 leading: IconButton(
@@ -53,7 +53,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                     Icons.arrow_back_rounded,
                     color: appTheme.appColors?.textColor,
                   ),
-                  onPressed: context.popRoute,
+                  onPressed: context.maybePop,
                 ),
                 bottom: const PreferredSize(
                   preferredSize: Size.fromHeight(1),
@@ -72,9 +72,8 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           children: [
                             Text(
                               environment.themeType == ThemeType.dark
-                                  ? l10n?.settings_page__color_scheme_night ??
-                                      ''
-                                  : l10n?.settings_page__color_scheme_day ?? '',
+                                  ? l10n.settings_page__color_scheme_night
+                                  : l10n.settings_page__color_scheme_day,
                               style: appTheme.appTextStyles?.subtitle,
                             ),
                             const Expanded(child: SizedBox()),
@@ -99,8 +98,8 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           children: [
                             Text(
                                 environment.appLocale == AppLocale.rus
-                                    ? l10n?.settings_page__language_rus ?? ''
-                                    : l10n?.settings_page__language_eng ?? '',
+                                    ? l10n.settings_page__language_rus
+                                    : l10n.settings_page__language_eng,
                                 style: appTheme.appTextStyles?.subtitle),
                             const Expanded(child: SizedBox()),
                             CupertinoSlidingSegmentedControl<AppLocale>(
@@ -128,15 +127,13 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                           child: SettingsItem(
                             title: biometrics,
                             subtitle:
-                                l10n?.settings_page__biometrics_subtitle ?? '',
+                                l10n.settings_page__biometrics_subtitle,
                             child: Row(
                               children: [
                                 Text(
                                     environment.localAuth == LocalAuth.pin
-                                        ? l10n?.settings_page__biometrics_pin ??
-                                            ''
-                                        : l10n?.settings_page__biometrics_fingerprint ??
-                                            '',
+                                        ? l10n.settings_page__biometrics_pin
+                                        : l10n.settings_page__biometrics_fingerprint,
                                     style: appTheme.appTextStyles?.subtitle),
                                 const Expanded(child: SizedBox()),
                                 CupertinoSlidingSegmentedControl<LocalAuth>(
@@ -161,7 +158,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                       SettingsItem(
                         title: security,
                         subtitle:
-                            l10n?.settings_page__hide_screen_description ?? '',
+                            l10n.settings_page__hide_screen_description,
                         child: Row(
                           children: [
                             const Expanded(child: SizedBox()),
@@ -190,9 +187,9 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                         ),
                       ),
                       SettingsItem(
-                          title: l10n?.settings_page__psw_change_title ?? '',
+                          title: l10n.settings_page__psw_change_title,
                           informationMessage:
-                              l10n?.password_change__message_info ?? '',
+                              l10n.password_change__message_info,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -201,17 +198,16 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                   context.pushRoute(const ChangePswRoute());
                                 },
                                 child: Text(
-                                  l10n?.password_change__btn_settings_title ??
-                                      '',
+                                  l10n.password_change__btn_settings_title,
                                   style: appTheme.appTextStyles?.subtitle,
                                 ),
                               ),
                             ],
                           )),
                       SettingsItem(
-                        title: l10n?.settings_page__export ?? '',
+                        title: l10n.settings_page__export,
                         informationMessage:
-                            l10n?.settings_page__export_tooltip ?? '',
+                            l10n.settings_page__export_tooltip,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -223,7 +219,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                 child: Row(
                                   children: [
                                     Text(
-                                      l10n?.settings_page__export_btn ?? '',
+                                      l10n.settings_page__export_btn,
                                       style: appTheme.appTextStyles?.subtitle,
                                     ),
                                     SvgPicture.asset(
@@ -236,9 +232,9 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                         ),
                       ),
                       SettingsItem(
-                        title: l10n?.settings_page__import ?? '',
+                        title: l10n.settings_page__import,
                         informationMessage:
-                            l10n?.settings_page__import_tooltip ?? '',
+                            l10n.settings_page__import_tooltip,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -250,7 +246,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                 child: Row(
                                   children: [
                                     Text(
-                                      l10n?.settings_page__import_btn ?? '',
+                                      l10n.settings_page__import_btn,
                                       style: appTheme.appTextStyles?.subtitle,
                                     ),
                                     SvgPicture.asset(
@@ -346,8 +342,8 @@ extension HideScreenExt on HideScreen {
 
     for (var e in HideScreen.values) {
       final title = e == HideScreen.yes
-          ? l10n?.common_dialog_yes ?? ''
-          : l10n?.common_dialog_no ?? '';
+          ? l10n.common_dialog_yes
+          : l10n.common_dialog_no;
 
       map[e] = SizedBox(
         height: 24,
@@ -370,8 +366,8 @@ extension LocalAuthExt on LocalAuth {
 
     for (var e in LocalAuth.values) {
       final title = e == LocalAuth.pin
-          ? l10n?.common_dialog_no ?? ''
-          : l10n?.common_dialog_yes ?? '';
+          ? l10n.common_dialog_no
+          : l10n.common_dialog_yes;
 
       map[e] = SizedBox(
         height: 24,

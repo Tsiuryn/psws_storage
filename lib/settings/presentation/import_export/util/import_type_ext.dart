@@ -7,9 +7,9 @@ extension ImportTypeExt on ImportType {
     final l10n = AppLocalizations.of(context);
     switch (this) {
       case ImportType.rewrite:
-        return l10n?.import_form__type_rewrite ?? '';
+        return l10n.import_form__type_rewrite;
       case ImportType.add:
-        return l10n?.import_form__type_add ?? '';
+        return l10n.import_form__type_add;
     }
   }
 }

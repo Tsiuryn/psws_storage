@@ -52,7 +52,7 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
     if (state.type == ImportExportStateType.importSuccess) {
       getIt.get<MainBloc>().changeToDefaultState();
       showRequestSnackBar(context,
-          message: l10n?.import_form__import_success ?? '', isSuccess: true);
+          message: l10n.import_form__import_success, isSuccess: true);
       context.popRoute();
     }
   }

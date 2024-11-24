@@ -25,7 +25,6 @@ class PswsButton extends StatelessWidget {
 
     return OutlinedButton(
       onPressed: enabled ? onPressed : null,
-      child: content,
       style: TextButton.styleFrom(
           backgroundColor: _getBackGroundColor(appTheme),
           elevation: enabled ? AppDim.four : 0,
@@ -33,6 +32,7 @@ class PswsButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDim.sixteen),
           )),
+      child: content,
     );
   }
 

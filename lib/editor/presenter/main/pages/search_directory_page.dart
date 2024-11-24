@@ -131,8 +131,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                   child: TextButton(
                       child: Text(
                         AppLocalizations.of(context)
-                                ?.search_directory__text_btn ??
-                            '',
+                                .search_directory__text_btn,
                         style: textStyles?.titleMedium,
                       ),
                       onPressed: () {
