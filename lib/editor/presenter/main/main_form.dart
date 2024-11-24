@@ -80,110 +80,113 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
     final bloc = context.read<MainBloc>();
     final l10n = AppLocalizations.of(context);
 
-    return ListView.separated(
-      itemCount: listDirectories.length + 1,
-      separatorBuilder: (context, index) {
-        if (state.parentId == rootDirectoryId && index == 0) {
-          return const SizedBox();
-        }
+    return PopScope(
+      canPop: false,
+      child: ListView.separated(
+        itemCount: listDirectories.length + 1,
+        separatorBuilder: (context, index) {
+          if (state.parentId == rootDirectoryId && index == 0) {
+            return const SizedBox();
+          }
 
-        return const Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppDim.sixteen,
-          ),
-          child: Divider(),
-        );
-      },
-      itemBuilder: (context, index) {
-        if (index == 0) {
-          return UpFolder(
-            state: state,
+          return const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppDim.sixteen,
+            ),
+            child: Divider(),
           );
-        } else {
-          final DirectoryModel currentDir = listDirectories[index - 1];
-          return ItemWidget(
-            id: index,
-            model: currentDir,
-            canSwipe: false,
-            showPopUpMenuButton: true,
-            onTap: () {
-              if (currentDir.destinationId != null) {
-                onTapLink(context, currentDir: currentDir, state: state);
-                return;
-              } else if (currentDir.isFolder) {
-                bloc.openFolder(currentDir);
-              } else {
-                openFile(context, dir: currentDir, state: state);
-              }
-            },
-            onEdit: () {
-              createFileDialog(
-                context,
-                initialTextValue: currentDir.name,
-                title: currentDir.isFolder
-                    ? l10n.main_page__dialog_rename_folder_title
-                    : l10n.main_page__dialog_rename_file_title,
-                isFolder: currentDir.isFolder,
-                value: (value) {
-                  context.read<MainBloc>().updateName(
-                        model: currentDir,
-                        newName: value,
-                      );
-                },
-              );
-            },
-            onDelete: () {
-              createOkDialog(
-                context,
-                title: currentDir.isFolder
-                    ? l10n.main_page__dialog_delete_folder_title
-                    : l10n.main_page__dialog_delete_file_title,
-                message: currentDir.isFolder
-                    ? l10n.main_page__dialog_delete_folder_description(
-                        currentDir.name)
-                    : l10n.main_page__dialog_delete_file_description(
-                        currentDir.name),
-                tapOk: () {
-                  bloc.deleteFile(currentDir);
-                },
-                tapNo: () {},
-              );
-            },
-            onMove: () {
-              final folders = state.allFolders;
-              if (folders.isNotEmpty) {
-                context.router
-                    .push(SearchDirectoryRoute(
-                  directories: state.allFolders,
-                  searchDestination: SearchDestination.move,
-                ))
-                    .then((destinationDirectory) {
-                  if (destinationDirectory != null &&
-                      destinationDirectory is DirectoryModel) {
-                    final isChildDestinationFolder =
-                        state.isChild(currentDir.id, destinationDirectory.id);
-                    if (!isChildDestinationFolder &&
-                        destinationDirectory.id != currentDir.id &&
-                        destinationDirectory.parentId != currentDir.id) {
-                      context.read<MainBloc>().changeParentId(
-                            directory: currentDir,
-                            destinationId: destinationDirectory.id,
-                          );
-                    } else {
-                      showRequestSnackBar(context,
-                          message: l10n
-                              .search_directory__cant_be_destination_folder_message);
+        },
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return UpFolder(
+              state: state,
+            );
+          } else {
+            final DirectoryModel currentDir = listDirectories[index - 1];
+            return ItemWidget(
+              id: index,
+              model: currentDir,
+              canSwipe: false,
+              showPopUpMenuButton: true,
+              onTap: () {
+                if (currentDir.destinationId != null) {
+                  onTapLink(context, currentDir: currentDir, state: state);
+                  return;
+                } else if (currentDir.isFolder) {
+                  bloc.openFolder(currentDir);
+                } else {
+                  openFile(context, dir: currentDir, state: state);
+                }
+              },
+              onEdit: () {
+                createFileDialog(
+                  context,
+                  initialTextValue: currentDir.name,
+                  title: currentDir.isFolder
+                      ? l10n.main_page__dialog_rename_folder_title
+                      : l10n.main_page__dialog_rename_file_title,
+                  isFolder: currentDir.isFolder,
+                  value: (value) {
+                    context.read<MainBloc>().updateName(
+                          model: currentDir,
+                          newName: value,
+                        );
+                  },
+                );
+              },
+              onDelete: () {
+                createOkDialog(
+                  context,
+                  title: currentDir.isFolder
+                      ? l10n.main_page__dialog_delete_folder_title
+                      : l10n.main_page__dialog_delete_file_title,
+                  message: currentDir.isFolder
+                      ? l10n.main_page__dialog_delete_folder_description(
+                          currentDir.name)
+                      : l10n.main_page__dialog_delete_file_description(
+                          currentDir.name),
+                  tapOk: () {
+                    bloc.deleteFile(currentDir);
+                  },
+                  tapNo: () {},
+                );
+              },
+              onMove: () {
+                final folders = state.allFolders;
+                if (folders.isNotEmpty) {
+                  context.router
+                      .push(SearchDirectoryRoute(
+                    directories: state.allFolders,
+                    searchDestination: SearchDestination.move,
+                  ))
+                      .then((destinationDirectory) {
+                    if (destinationDirectory != null &&
+                        destinationDirectory is DirectoryModel) {
+                      final isChildDestinationFolder =
+                          state.isChild(currentDir.id, destinationDirectory.id);
+                      if (!isChildDestinationFolder &&
+                          destinationDirectory.id != currentDir.id &&
+                          destinationDirectory.parentId != currentDir.id) {
+                        context.read<MainBloc>().changeParentId(
+                              directory: currentDir,
+                              destinationId: destinationDirectory.id,
+                            );
+                      } else {
+                        showRequestSnackBar(context,
+                            message: l10n
+                                .search_directory__cant_be_destination_folder_message);
+                      }
                     }
-                  }
-                });
-              } else {
-                showRequestSnackBar(context,
-                    message: l10n.search_directory__no_folders_message);
-              }
-            },
-          );
-        }
-      },
+                  });
+                } else {
+                  showRequestSnackBar(context,
+                      message: l10n.search_directory__no_folders_message);
+                }
+              },
+            );
+          }
+        },
+      ),
     );
   }
 
