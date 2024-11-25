@@ -75,7 +75,7 @@ class PinCodeWidgetState extends State<PinCodeWidget>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    List<Widget> circles = _buildCircles(widget.passcodeLength);
+    List<Widget> circles = _buildCircles();
     const double spacing = 8;
     final width = (widget.circleUIConfig.circleSize + spacing) * 8;
 
@@ -134,11 +134,11 @@ class PinCodeWidgetState extends State<PinCodeWidget>
         bottomRightKey: _buildBackspaceKey(context),
       );
 
-  List<Widget> _buildCircles(int length) {
+  List<Widget> _buildCircles() {
     var list = <Widget>[];
     var config = widget.circleUIConfig;
     var extraSize = animation.value;
-    for (var i = 0; i < length; i++) {
+    for (var i = 0; i < enteredPasscode.length; i++) {
       list.add(
         Circle(
           filled: i < enteredPasscode.length,

@@ -126,12 +126,18 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: PinCodeWidget(
-                      title: Text(
-                        _getTitle(l10n: l10n, state: state.state).toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge,
+                      title: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDim.sixteen,
+                        ),
+                        child: Text(
+                          _getTitle(l10n: l10n, state: state.state)
+                              .toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
                       ),
-                      passcodeLength: AppDim.eight.toInt(),
+                      passcodeLength: AppDim.twentyFour.toInt(),
                       confirmButton: SvgPicture.asset(
                         AppIcons.icCheck,
                         color: Theme.of(context).unselectedWidgetColor,
