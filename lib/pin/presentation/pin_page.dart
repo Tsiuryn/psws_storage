@@ -65,7 +65,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
       if (isFirstPage) {
         _nextPage(context);
       } else {
-        context.router.pop();
+        context.router.maybePop();
       }
       showRequestSnackBar(context,
           message: l10n.pin_page__title_snack_psw_correct, isSuccess: true);
@@ -116,63 +116,59 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : PopScope(
-            canPop: false,
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: PinCodeWidget(
-                        title: Text(
-                          _getTitle(l10n: l10n, state: state.state)
-                              .toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        passcodeLength: AppDim.eight.toInt(),
-                        confirmButton: SvgPicture.asset(
-                          AppIcons.icCheck,
-                          color: Theme.of(context).unselectedWidgetColor,
-                          fit: BoxFit.scaleDown,
-                        ),
-                        circleUIConfig: CircleUIConfig(
-                          circleSize: AppDim.twelve,
-                          filledColor: Theme.of(context).colorScheme.secondary,
-                          borderColor: Theme.of(context).primaryColorDark,
-                        ),
-                        passwordEnteredCallback: (pinCode) {
-                          value = pinCode;
-                        },
-                        confirmCallback: () {
-                          if (value.isEmpty) {
-                            showRequestSnackBar(context,
-                                message: l10n.pin_page__title_snack_empty_psw);
-                          } else {
-                            bloc.writePin(value);
-                          }
-                        },
-                        onTapBiometrics: state.showAuthBtn
-                            ? () async {
-                                if (await _authenticateByBiometrics(context)) {
-                                  context
-                                      .read<PinBloc>()
-                                      .changeState(PinFlowState.success);
-                                }
-                              }
-                            : null,
+        : Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: PinCodeWidget(
+                      title: Text(
+                        _getTitle(l10n: l10n, state: state.state).toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
+                      passcodeLength: AppDim.eight.toInt(),
+                      confirmButton: SvgPicture.asset(
+                        AppIcons.icCheck,
+                        color: Theme.of(context).unselectedWidgetColor,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      circleUIConfig: CircleUIConfig(
+                        circleSize: AppDim.twelve,
+                        filledColor: Theme.of(context).colorScheme.secondary,
+                        borderColor: Theme.of(context).primaryColorDark,
+                      ),
+                      passwordEnteredCallback: (pinCode) {
+                        value = pinCode;
+                      },
+                      confirmCallback: () {
+                        if (value.isEmpty) {
+                          showRequestSnackBar(context,
+                              message: l10n.pin_page__title_snack_empty_psw);
+                        } else {
+                          bloc.writePin(value);
+                        }
+                      },
+                      onTapBiometrics: state.showAuthBtn
+                          ? () async {
+                              if (await _authenticateByBiometrics(context)) {
+                                context
+                                    .read<PinBloc>()
+                                    .changeState(PinFlowState.success);
+                              }
+                            }
+                          : null,
                     ),
                   ),
-                  const SizedBox(
-                    height: AppDim.sixteen,
-                  )
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: AppDim.sixteen,
+                )
+              ],
             ),
           );
   }
