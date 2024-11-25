@@ -262,13 +262,13 @@ class _ItemPopUpWidget extends StatelessWidget {
               ),
               leading: Icon(
                 Icons.open_with_rounded,
-                color: appColors?.positiveActionColor,
+                color: appColors?.textColor,
                 size: AppDim.twentyFour,
               ),
               title: Text(
                 l10n.item_widget__move.capitalized,
                 style: appTextStyles?.subtitle?.copyWith(
-                  color: appColors?.positiveActionColor,
+                  color: appColors?.textColor,
                 ),
               ),
             ),
@@ -284,13 +284,13 @@ class _ItemPopUpWidget extends StatelessWidget {
               ),
               leading: Icon(
                 Icons.edit,
-                color: appColors?.positiveActionColor,
+                color: appColors?.textColor,
                 size: AppDim.twentyFour,
               ),
               title: Text(
                 l10n.item_widget__rename.capitalized,
                 style: appTextStyles?.subtitle?.copyWith(
-                  color: appColors?.positiveActionColor,
+                  color: appColors?.textColor,
                 ),
               ),
             ),
