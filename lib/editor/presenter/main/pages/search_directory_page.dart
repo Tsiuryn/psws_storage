@@ -103,7 +103,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                   controller: _controller,
                   prefixIcon: widget.searchDestination != SearchDestination.move
                       ? IconButton(
-                          onPressed: context.popRoute,
+                          onPressed: context.maybePop,
                           icon: Icon(
                             Icons.arrow_back_rounded,
                             color: appColors?.textColor,
@@ -134,7 +134,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                         style: textStyles?.titleMedium,
                       ),
                       onPressed: () {
-                        context.popRoute(DirectoryModel.buildRootDirectory());
+                        context.maybePop(DirectoryModel.buildRootDirectory());
                       })),
               Expanded(
                 child: ListView.separated(

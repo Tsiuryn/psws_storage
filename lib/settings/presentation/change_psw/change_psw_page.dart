@@ -60,7 +60,7 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
               Icons.arrow_back_rounded,
               color: appTheme.appColors?.textColor,
             ),
-            onPressed: context.popRoute,
+            onPressed: context.maybePop,
           ),
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(1),

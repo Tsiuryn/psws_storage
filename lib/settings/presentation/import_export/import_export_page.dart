@@ -47,13 +47,13 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
       showRequestSnackBar(context, message: state.error ?? '');
     }
     if (state.type == ImportExportStateType.exportSuccess) {
-      context.popRoute();
+      context.maybePop();
     }
     if (state.type == ImportExportStateType.importSuccess) {
       getIt.get<MainBloc>().changeToDefaultState();
       showRequestSnackBar(context,
           message: l10n.import_form__import_success, isSuccess: true);
-      context.popRoute();
+      context.maybePop();
     }
   }
 
@@ -74,7 +74,7 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
             Icons.arrow_back_rounded,
             color: appTheme.appColors?.textColor,
           ),
-          onPressed: context.popRoute,
+          onPressed: context.maybePop,
         ),
         actions: [
           IconWithTooltip(

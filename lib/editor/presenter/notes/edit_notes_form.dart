@@ -108,7 +108,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
       context,
       backPressed: () {
         if (readOnly) {
-          context.router.pop();
+          context.router.maybePop();
         } else {
           showDialog(context);
         }
@@ -146,7 +146,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     leading: IconButton(
                         onPressed: () {
                           if (readOnly) {
-                            context.router.pop();
+                            context.router.maybePop();
                           } else {
                             showDialog(context);
                           }
@@ -333,6 +333,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           customStyles: DefaultStyles(
                             lists: DefaultListBlockStyle(
                               AppTheme(context).appTextStyles!.titleMedium!,
+                              const HorizontalSpacing(0, 0),
                               const VerticalSpacing(0, 0),
                               const VerticalSpacing(0, 0),
                               const BoxDecoration(),
@@ -410,10 +411,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
         AppLocalizations.of(context).edit_notes_page__dialog_subTitle;
 
     createOkDialog(context, title: title, message: subTitle, tapNo: () {
-      context.router.pop();
+      context.router.maybePop();
     }, tapOk: () {
       context.read<EditNotesBloc>().saveNote(content);
-      context.router.pop();
+      context.router.maybePop();
     });
   }
 }
