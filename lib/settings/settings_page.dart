@@ -48,13 +48,7 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                   l10n.settings_page__title,
                   style: appTheme.appTextStyles?.titleLarge,
                 ),
-                leading: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_rounded,
-                    color: appTheme.appColors?.textColor,
-                  ),
-                  onPressed: context.maybePop,
-                ),
+                automaticallyImplyLeading: false,
                 bottom: const PreferredSize(
                   preferredSize: Size.fromHeight(1),
                   child: Divider(),

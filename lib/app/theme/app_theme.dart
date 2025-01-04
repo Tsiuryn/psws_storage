@@ -12,3 +12,10 @@ class AppTheme {
   AppTextStyleExt? get appTextStyles =>
       Theme.of(context).extension<AppTextStyleExt>();
 }
+
+extension BuildContextExtension on BuildContext {
+  AppColorsExt get appColors => Theme.of(this).extension<AppColorsExt>()!;
+
+  AppTextStyleExt get appTextStyles =>
+      Theme.of(this).extension<AppTextStyleExt>()!;
+}

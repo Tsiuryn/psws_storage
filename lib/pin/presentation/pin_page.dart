@@ -201,6 +201,6 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
   }
 
   void _nextPage(BuildContext context) {
-    context.router.replace(const MainRoute());
+    context.router.replace(const HomeRoute());
   }
 }

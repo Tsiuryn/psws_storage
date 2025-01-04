@@ -152,18 +152,6 @@ class MainAppBar extends StatelessWidget
             size: AppDim.thirtyTwo,
           ),
         ),
-        IconButton(
-          onPressed: () {
-            context.router.push(const SettingsRoute());
-          },
-          icon: SvgPicture.asset(
-            AppIcons.icSettings,
-            color: appColors?.textColor,
-          ),
-        ),
-        const SizedBox(
-          width: AppDim.eight,
-        )
       ]),
     );
   }
