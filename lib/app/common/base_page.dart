@@ -4,7 +4,7 @@ import 'package:psws_storage/app/ui_kit/psws_back_button_listener.dart';
 
 abstract class StatelessBasePage<B extends BlocBase<S>, S>
     extends StatelessWidget {
-  const StatelessBasePage({Key? key}) : super(key: key);
+  const StatelessBasePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,9 @@ abstract class StatelessBasePage<B extends BlocBase<S>, S>
             },
             child: SafeArea(
               child: Scaffold(
-                appBar: buildAppBar.call(context, state),
-                body: buildBody.call(context, state),
+                appBar: buildAppBar(context, state),
+                body: buildBody(context, state),
+                floatingActionButton: buildFloatingAction(context, state),
               ),
             ),
           );
@@ -66,4 +67,6 @@ abstract class StatelessBasePage<B extends BlocBase<S>, S>
   PreferredSizeWidget? buildAppBar(BuildContext context, S state) => null;
 
   Widget buildBody(BuildContext context, S state);
+
+  Widget? buildFloatingAction(BuildContext context, S state) => null;
 }

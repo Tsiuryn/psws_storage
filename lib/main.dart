@@ -4,6 +4,8 @@ import 'package:psws_storage/app/app.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/editor/data/bean/directory_bean.dart';
+import 'package:psws_storage/habit/data/bean/daily_habits.dart';
+import 'package:psws_storage/habit/data/bean/habit_bean.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +19,12 @@ Future<void> _initHive() async {
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(DirectoryBeanAdapter());
+  }
+  if (!Hive.isAdapterRegistered(1)) {
+    Hive.registerAdapter(HabitBeanAdapter());
+  }
+  if (!Hive.isAdapterRegistered(2)) {
+    Hive.registerAdapter(DailyHabitsAdapter());
   }
 }
 

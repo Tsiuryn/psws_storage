@@ -5,6 +5,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -28,36 +29,35 @@ class HomePage extends StatelessWidget {
       ),
     ];
 
-    return AutoTabsRouter(
-        routes: const [
-          MainRoute(),
-          HabitTrackerRoute(),
-          SettingsRoute(),
-        ],
-        transitionBuilder: (context, child, animation) => SizeTransition(
-              sizeFactor: animation,
-              child: child,
-            ),
-        builder: (context, child) {
-          final tabsRouter = AutoTabsRouter.of(context);
+    return LifeCycleWidget(
+      routeData: context.routeData,
+      child: AutoTabsRouter(
+          routes: const [
+            MainRoute(),
+            HabitTrackerRoute(),
+            SettingsRoute(),
+          ],
+          builder: (context, child) {
+            final tabsRouter = AutoTabsRouter.of(context);
 
-          return Scaffold(
-            backgroundColor: context.appColors.bodyColor,
-            body: child,
-            bottomNavigationBar: GNav(
-              tabs: items,
-              padding: EdgeInsets.all(AppDim.fourteen),
-              backgroundColor: context.appColors.appBarColor!,
-              selectedIndex: tabsRouter.activeIndex,
-              onTabChange: tabsRouter.setActiveIndex,
-              duration: Duration(milliseconds: 500),
-              activeColor: context.appColors.negativeActionColor,
-              color: context.appColors.textColor,
-              gap: 8,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              curve: Curves.easeInCubic,
-            ),
-          );
-        });
+            return Scaffold(
+              backgroundColor: context.appColors.bodyColor,
+              body: child,
+              bottomNavigationBar: GNav(
+                tabs: items,
+                padding: EdgeInsets.all(AppDim.fourteen),
+                backgroundColor: context.appColors.appBarColor!,
+                selectedIndex: tabsRouter.activeIndex,
+                onTabChange: tabsRouter.setActiveIndex,
+                duration: Duration(milliseconds: 500),
+                activeColor: context.appColors.negativeActionColor,
+                color: context.appColors.textColor,
+                gap: 8,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                curve: Curves.easeInCubic,
+              ),
+            );
+          }),
+    );
   }
 }

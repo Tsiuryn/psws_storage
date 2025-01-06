@@ -5,7 +5,7 @@ import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/main_page.dart';
 import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
-import 'package:psws_storage/habit/habit_tracker_page.dart';
+import 'package:psws_storage/habit/presenter/habit_tracker_page.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
 import 'package:psws_storage/settings/presentation/change_psw/change_psw_page.dart';
 import 'package:psws_storage/settings/presentation/import_export/import_export_page.dart';
