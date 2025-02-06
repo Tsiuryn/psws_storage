@@ -1,6 +1,6 @@
 # PSWS Storage
 
-[<img src="https://github.com/Tsiuryn/psws_storage/blob/master/assets/src/google_play.png">](https://play.google.com/store/apps/details?id=com.tsiuryn.psws_storage)
+[<img src="https://github.com/Tsiuryn/psws_storage/blob/master/assets/src/google_play.jpg">](https://play.google.com/store/apps/details?id=com.tsiuryn.psws_storage)
 
 - [Release app](https://docs.flutter.dev/deployment/android)
 
