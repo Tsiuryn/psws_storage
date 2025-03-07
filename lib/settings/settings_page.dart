@@ -115,12 +115,10 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                 ],
                               ),
                             ),
-                            AnimatedSize(
-                              duration: const Duration(
-                                milliseconds: 300,
-                              ),
-                              child: Visibility(
-                                visible: state.model.showBiometrics,
+                            Opacity(
+                              opacity: state.model.showBiometrics ? 1 : .2,
+                              child: IgnorePointer(
+                                ignoring: !state.model.showBiometrics,
                                 child: SettingsItem(
                                   title: biometrics,
                                   subtitle: l10n.settings_page__biometrics_subtitle,

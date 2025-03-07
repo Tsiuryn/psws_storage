@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:psws_storage/app/common/path_bottom_sheet.dart';
@@ -183,7 +184,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           showClipboardCut: false,
                           showClipboardCopy: false,
                           showClipboardPaste: false,
-                          showLink: false,
+                          showLink: true,
                           showSearchButton: false,
                           showFontSize: true,
                           fontSizesValues: fontSize,
@@ -285,6 +286,20 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           ],
                           customButtons: [
                             QuillToolbarCustomButtonOptions(
+                              icon: Icon(Icons.calendar_month_rounded),
+                              onPressed: () {
+                                _setTextToCurrentPosition(
+                                    DateFormat.yMd('ru').format(DateTime.now()));
+                              },
+                            ),
+                            QuillToolbarCustomButtonOptions(
+                              icon: Icon(Icons.access_time_filled_rounded),
+                              onPressed: () {
+                                _setTextToCurrentPosition(
+                                    DateFormat.Hms('ru').format(DateTime.now()));
+                              },
+                            ),
+                            QuillToolbarCustomButtonOptions(
                               icon: widget.state.readOnly
                                   ? const Icon(Icons.edit)
                                   : const Icon(Icons.save),
@@ -300,6 +315,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                                 }
                               },
                             ),
+
                           ],
                           // fontSizeValues: fontSize,
                         )),
