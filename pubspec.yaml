@@ -37,7 +37,10 @@ dependencies:
   back_button_interceptor: ^8.0.3
 
   #privacy_screen
-#  privacy_screen: ^0.0.6
+  privacy_screen:
+    git:
+      url: git@github.com:Tsiuryn/privacy_screen.git
+      ref: update-android
 
   # uuid
   uuid_type: ^2.0.0

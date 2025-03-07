@@ -922,6 +922,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  privacy_screen:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: update-android
+      resolved-ref: "260176f056b4399c1bc53f78a818f040ed2b2c46"
+      url: "git@github.com:Tsiuryn/privacy_screen.git"
+    source: git
+    version: "0.0.6"
   provider:
     dependency: transitive
     description:
