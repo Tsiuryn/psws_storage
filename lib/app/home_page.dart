@@ -20,10 +20,6 @@ class HomePage extends StatelessWidget {
         text: l10n.home_page_tab__notes,
       ),
       GButton(
-        icon: Icons.checklist_rounded,
-        text: l10n.home_page_tab__habits,
-      ),
-      GButton(
         icon: Icons.settings_rounded,
         text: l10n.home_page_tab__settings,
       ),
@@ -34,7 +30,6 @@ class HomePage extends StatelessWidget {
       child: AutoTabsRouter(
           routes: const [
             MainRoute(),
-            HabitTrackerRoute(),
             SettingsRoute(),
           ],
           builder: (context, child) {

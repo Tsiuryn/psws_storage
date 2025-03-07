@@ -20,12 +20,6 @@ import 'package:psws_storage/editor/domain/usecase/get_list_directories_usecase.
 import 'package:psws_storage/editor/domain/usecase/update_directory_usecase.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
 import 'package:psws_storage/editor/presenter/notes/bloc/edit_notes_bloc.dart';
-import 'package:psws_storage/habit/data/bean/daily_habits.dart';
-import 'package:psws_storage/habit/data/bean/habit_bean.dart';
-import 'package:psws_storage/habit/data/repo_impl/habit_repository_impl.dart';
-import 'package:psws_storage/habit/data/repo_impl/statistics_repository_impl.dart';
-import 'package:psws_storage/habit/domain/repo/habit_repository.dart';
-import 'package:psws_storage/habit/domain/repo/statistics_repository.dart';
 import 'package:psws_storage/pin/data/pin_repo_impl.dart';
 import 'package:psws_storage/pin/domain/pin_repo.dart';
 import 'package:psws_storage/pin/domain/usecase/read_registration_pin_usecase.dart';
@@ -64,19 +58,6 @@ Future<void> initDi() async {
 
   // Repository
   getIt.registerSingleton<DirectoriesRepo>(DirectoriesRepoImpl());
-
-  getIt.registerSingleton<HabitRepository>(
-    HabitRepositoryImpl(
-      sourceHabitsDB: getIt.get(instanceName: habitDatabaseName),
-    ),
-  );
-
-  getIt.registerSingleton<StatisticsRepository>(
-    StatisticsRepositoryImpl(
-      sourceHabitsDB: getIt.get(instanceName: habitDatabaseName),
-      statisticsDB: getIt.get(instanceName: statisticsDatabaseName),
-    ),
-  );
 
   getIt.registerSingleton<PinRepo>(PinRepoImpl(
     secureStorage:
@@ -191,22 +172,6 @@ Future<void> _initDB(FlutterSecureStorage secureStorage) async {
       () async => await Hive.openBox(_idDatabase,
           encryptionCipher: HiveAesCipher(encryptionKey)),
       instanceName: databaseName,
-    );
-
-    final habitsDataBase = await Hive.openBox<HabitBean>(_idHabitDatabase,
-        encryptionCipher: HiveAesCipher(encryptionKey));
-
-    final dailyHabitsDB = await Hive.openBox<DailyHabits>(_idStatisticsDatabase,
-        encryptionCipher: HiveAesCipher(encryptionKey));
-
-    getIt.registerFactory<Box<HabitBean>>(
-      () => habitsDataBase,
-      instanceName: habitDatabaseName,
-    );
-
-    getIt.registerFactory<Box<DailyHabits>>(
-      () => dailyHabitsDB,
-      instanceName: statisticsDatabaseName,
     );
   }
 }
