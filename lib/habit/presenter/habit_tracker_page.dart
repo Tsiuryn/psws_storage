@@ -11,7 +11,7 @@ import 'package:psws_storage/habit/domain/repo/statistics_repository.dart';
 import 'package:psws_storage/habit/presenter/bloc/habit_tracker_bloc.dart';
 import 'package:psws_storage/habit/presenter/widgets/habit_tile.dart';
 import 'package:psws_storage/habit/presenter/widgets/month_summary.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:psws_storage/habit/presenter/widgets/my_result_box.dart';
 
 @RoutePage()

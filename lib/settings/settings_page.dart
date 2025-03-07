@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:privacy_screen/privacy_screen.dart';
+// import 'package:privacy_screen/privacy_screen.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
@@ -169,9 +169,9 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
                                   final isHideScreen =
                                       newValue == HideScreen.yes;
                                   if (isHideScreen) {
-                                    await PrivacyScreen.instance.enable();
+                                    // await PrivacyScreen.instance.enable();
                                   } else {
-                                    await PrivacyScreen.instance.disable();
+                                    // await PrivacyScreen.instance.disable();
                                   }
                                 }
                               },

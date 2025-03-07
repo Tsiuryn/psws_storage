@@ -1,6 +1,5 @@
 package com.tsiuryn.psws_storage
 
-import io.flutter.embedding.android.FlutterFragmentActivity
+import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity : FlutterFragmentActivity() {
-}
+class MainActivity : FlutterActivity()

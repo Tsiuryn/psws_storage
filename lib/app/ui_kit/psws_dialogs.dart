@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:psws_storage/app/ui_kit/psws_input.dart';
 import 'package:psws_storage/editor/presenter/notes/widget/choose_date_widget.dart';
 
