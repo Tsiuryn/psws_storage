@@ -101,7 +101,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
             )
           ]);
       return didAuthenticate;
-    } on PlatformException catch(_) {
+    } on PlatformException catch (_) {
       return false;
     }
   }

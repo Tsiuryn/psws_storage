@@ -17,29 +17,31 @@ void showPathBottomSheet(BuildContext context, {required String path}) {
       backgroundColor: AppTheme(context).appColors?.appBarColor,
       context: context,
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text: pathPrefix,
-                    style: AppTheme(context).appTextStyles?.titleMedium,
-                  ),
-                  TextSpan(
-                    text: ' $path',
-                    style: AppTheme(context).appTextStyles?.subtitle,
-                  )
-                ]),
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: pathPrefix,
+                      style: AppTheme(context).appTextStyles?.titleMedium,
+                    ),
+                    TextSpan(
+                      text: ' $path',
+                      style: AppTheme(context).appTextStyles?.subtitle,
+                    )
+                  ]),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: AppDim.eight,
-            ),
-          ],
+              const SizedBox(
+                height: AppDim.eight,
+              ),
+            ],
+          ),
         );
       });
 }

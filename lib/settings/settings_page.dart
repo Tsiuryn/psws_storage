@@ -32,236 +32,247 @@ class SettingsPage extends StatelessWidget with PswsDialogs {
     final security = l10n.settings_page__hide_screen_title;
     final appTheme = AppTheme(context);
 
-
     return BlocProvider.value(
       value: BlocProvider.of<AppBloc>(context),
-      child: BlocBuilder<AppBloc, Environment>(
-          builder: (context, environment) {
-          return LifeCycleWidget(
-            routeData: context.routeData,
-            child: BlocProvider<SettingsBloc>(
-              create: (BuildContext context) {
-                return getIt.get<SettingsBloc>();
-              },
-              child: BlocConsumer<SettingsBloc, SettingsState>(
-                builder: (context, state) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: Text(
-                        l10n.settings_page__title,
-                        style: appTheme.appTextStyles?.titleLarge,
-                      ),
-                      automaticallyImplyLeading: false,
-                      bottom: const PreferredSize(
-                        preferredSize: Size.fromHeight(1),
-                        child: Divider(),
-                      ),
+      child: BlocBuilder<AppBloc, Environment>(builder: (context, environment) {
+        return LifeCycleWidget(
+          routeData: context.routeData,
+          child: BlocProvider<SettingsBloc>(
+            create: (BuildContext context) {
+              return getIt.get<SettingsBloc>();
+            },
+            child: BlocConsumer<SettingsBloc, SettingsState>(
+              builder: (context, state) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text(
+                      l10n.settings_page__title,
+                      style: appTheme.appTextStyles?.titleLarge,
                     ),
-                    body: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppDim.sixteen),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SettingsItem(
-                              title: titleTheme,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    environment.themeType == ThemeType.dark
-                                        ? l10n.settings_page__color_scheme_night
-                                        : l10n.settings_page__color_scheme_day,
-                                    style: appTheme.appTextStyles?.subtitle,
-                                  ),
-                                  const Expanded(child: SizedBox()),
-                                  CupertinoSlidingSegmentedControl<ThemeType>(
-                                    children: ThemeTypeExt.toMap(context),
-                                    groupValue:
-                                        environment.themeType == ThemeType.dark
-                                            ? ThemeType.dark
-                                            : ThemeType.light,
-                                    onValueChanged: (newValue) {
-                                      if (newValue != null) {
-                                        context.read<AppBloc>().changeTheme(newValue);
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                    automaticallyImplyLeading: false,
+                    bottom: const PreferredSize(
+                      preferredSize: Size.fromHeight(1),
+                      child: Divider(),
+                    ),
+                  ),
+                  body: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppDim.sixteen),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SettingsItem(
+                            title: titleTheme,
+                            child: Row(
+                              children: [
+                                Text(
+                                  environment.themeType == ThemeType.dark
+                                      ? l10n.settings_page__color_scheme_night
+                                      : l10n.settings_page__color_scheme_day,
+                                  style: appTheme.appTextStyles?.subtitle,
+                                ),
+                                const Expanded(child: SizedBox()),
+                                CupertinoSlidingSegmentedControl<ThemeType>(
+                                  children: ThemeTypeExt.toMap(context),
+                                  groupValue:
+                                      environment.themeType == ThemeType.dark
+                                          ? ThemeType.dark
+                                          : ThemeType.light,
+                                  onValueChanged: (newValue) {
+                                    if (newValue != null) {
+                                      context
+                                          .read<AppBloc>()
+                                          .changeTheme(newValue);
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
-                            SettingsItem(
-                              title: titleLocale,
-                              child: Row(
-                                children: [
-                                  Text(
+                          ),
+                          SettingsItem(
+                            title: titleLocale,
+                            child: Row(
+                              children: [
+                                Text(
+                                    environment.appLocale == AppLocale.rus
+                                        ? l10n.settings_page__language_rus
+                                        : l10n.settings_page__language_eng,
+                                    style: appTheme.appTextStyles?.subtitle),
+                                const Expanded(child: SizedBox()),
+                                CupertinoSlidingSegmentedControl<AppLocale>(
+                                  children: AppLocaleExt.toMap(context),
+                                  groupValue:
                                       environment.appLocale == AppLocale.rus
-                                          ? l10n.settings_page__language_rus
-                                          : l10n.settings_page__language_eng,
-                                      style: appTheme.appTextStyles?.subtitle),
-                                  const Expanded(child: SizedBox()),
-                                  CupertinoSlidingSegmentedControl<AppLocale>(
-                                    children: AppLocaleExt.toMap(context),
-                                    groupValue: environment.appLocale == AppLocale.rus
-                                        ? AppLocale.rus
-                                        : AppLocale.eng,
-                                    onValueChanged: (newValue) {
-                                      if (newValue != null) {
-                                        context
-                                            .read<AppBloc>()
-                                            .changeLocale(newValue);
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                                          ? AppLocale.rus
+                                          : AppLocale.eng,
+                                  onValueChanged: (newValue) {
+                                    if (newValue != null) {
+                                      context
+                                          .read<AppBloc>()
+                                          .changeLocale(newValue);
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
-                            Opacity(
-                              opacity: state.model.showBiometrics ? 1 : .2,
-                              child: IgnorePointer(
-                                ignoring: !state.model.showBiometrics,
-                                child: SettingsItem(
-                                  title: biometrics,
-                                  subtitle: l10n.settings_page__biometrics_subtitle,
-                                  child: Row(
-                                    children: [
-                                      Text(
+                          ),
+                          Opacity(
+                            opacity: state.model.showBiometrics ? 1 : .2,
+                            child: IgnorePointer(
+                              ignoring: !state.model.showBiometrics,
+                              child: SettingsItem(
+                                title: biometrics,
+                                subtitle:
+                                    l10n.settings_page__biometrics_subtitle,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        environment.localAuth == LocalAuth.pin
+                                            ? l10n.settings_page__biometrics_pin
+                                            : l10n
+                                                .settings_page__biometrics_fingerprint,
+                                        style:
+                                            appTheme.appTextStyles?.subtitle),
+                                    const Expanded(child: SizedBox()),
+                                    CupertinoSlidingSegmentedControl<LocalAuth>(
+                                      children: LocalAuthExt.toMap(context),
+                                      groupValue:
                                           environment.localAuth == LocalAuth.pin
-                                              ? l10n.settings_page__biometrics_pin
-                                              : l10n
-                                                  .settings_page__biometrics_fingerprint,
-                                          style: appTheme.appTextStyles?.subtitle),
-                                      const Expanded(child: SizedBox()),
-                                      CupertinoSlidingSegmentedControl<LocalAuth>(
-                                        children: LocalAuthExt.toMap(context),
-                                        groupValue:
-                                            environment.localAuth == LocalAuth.pin
-                                                ? LocalAuth.pin
-                                                : LocalAuth.fingerprint,
-                                        onValueChanged: (newValue) {
-                                          if (newValue != null) {
-                                            context
-                                                .read<AppBloc>()
-                                                .changeBiometrics(newValue);
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                              ? LocalAuth.pin
+                                              : LocalAuth.fingerprint,
+                                      onValueChanged: (newValue) {
+                                        if (newValue != null) {
+                                          context
+                                              .read<AppBloc>()
+                                              .changeBiometrics(newValue);
+                                        }
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            SettingsItem(
-                              title: security,
-                              subtitle: l10n.settings_page__hide_screen_description,
-                              child: Row(
-                                children: [
-                                  const Expanded(child: SizedBox()),
-                                  CupertinoSlidingSegmentedControl<HideScreen>(
-                                    children: HideScreenExt.toMap(context),
-                                    groupValue:
-                                        environment.hideScreen == HideScreen.yes
-                                            ? HideScreen.yes
-                                            : HideScreen.no,
-                                    onValueChanged: (newValue) async {
-                                      if (newValue != null) {
-                                        context
-                                            .read<AppBloc>()
-                                            .changeHideScreenParams(newValue);
-                                        final isHideScreen =
-                                            newValue == HideScreen.yes;
-                                        if (isHideScreen) {
-                                          PrivacyScreen.instance.enable();
-                                        } else {
-                                          PrivacyScreen.instance.disable();
-                                        }
+                          ),
+                          SettingsItem(
+                            title: security,
+                            subtitle:
+                                l10n.settings_page__hide_screen_description,
+                            child: Row(
+                              children: [
+                                const Expanded(child: SizedBox()),
+                                CupertinoSlidingSegmentedControl<HideScreen>(
+                                  children: HideScreenExt.toMap(context),
+                                  groupValue:
+                                      environment.hideScreen == HideScreen.yes
+                                          ? HideScreen.yes
+                                          : HideScreen.no,
+                                  onValueChanged: (newValue) async {
+                                    if (newValue != null) {
+                                      context
+                                          .read<AppBloc>()
+                                          .changeHideScreenParams(newValue);
+                                      final isHideScreen =
+                                          newValue == HideScreen.yes;
+                                      if (isHideScreen) {
+                                        PrivacyScreen.instance.enable();
+                                      } else {
+                                        PrivacyScreen.instance.disable();
                                       }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SettingsItem(
+                              title: l10n.settings_page__psw_change_title,
+                              informationMessage:
+                                  l10n.password_change__message_info,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      context.pushRoute(const ChangePswRoute());
                                     },
+                                    child: Text(
+                                      l10n.password_change__btn_settings_title,
+                                      style: appTheme.appTextStyles?.subtitle,
+                                    ),
                                   ),
                                 ],
-                              ),
+                              )),
+                          SettingsItem(
+                            title: l10n.settings_page__export,
+                            informationMessage:
+                                l10n.settings_page__export_tooltip,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      context
+                                          .read<SettingsBloc>()
+                                          .checkPermission(
+                                              ImportExportPageType.export);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          l10n.settings_page__export_btn,
+                                          style:
+                                              appTheme.appTextStyles?.subtitle,
+                                        ),
+                                        SvgPicture.asset(
+                                          AppIcons.icExport,
+                                          color: appTheme.appColors?.textColor,
+                                        )
+                                      ],
+                                    ))
+                              ],
                             ),
-                            SettingsItem(
-                                title: l10n.settings_page__psw_change_title,
-                                informationMessage:
-                                    l10n.password_change__message_info,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        context.pushRoute(const ChangePswRoute());
-                                      },
-                                      child: Text(
-                                        l10n.password_change__btn_settings_title,
-                                        style: appTheme.appTextStyles?.subtitle,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            SettingsItem(
-                              title: l10n.settings_page__export,
-                              informationMessage: l10n.settings_page__export_tooltip,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        context.read<SettingsBloc>().checkPermission(
-                                            ImportExportPageType.export);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            l10n.settings_page__export_btn,
-                                            style: appTheme.appTextStyles?.subtitle,
-                                          ),
-                                          SvgPicture.asset(
-                                            AppIcons.icExport,
-                                            color: appTheme.appColors?.textColor,
-                                          )
-                                        ],
-                                      ))
-                                ],
-                              ),
+                          ),
+                          SettingsItem(
+                            title: l10n.settings_page__import,
+                            informationMessage:
+                                l10n.settings_page__import_tooltip,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      context
+                                          .read<SettingsBloc>()
+                                          .checkPermission(
+                                              ImportExportPageType.import);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          l10n.settings_page__import_btn,
+                                          style:
+                                              appTheme.appTextStyles?.subtitle,
+                                        ),
+                                        SvgPicture.asset(
+                                          AppIcons.icImport,
+                                          color: appTheme.appColors?.textColor,
+                                        )
+                                      ],
+                                    ))
+                              ],
                             ),
-                            SettingsItem(
-                              title: l10n.settings_page__import,
-                              informationMessage: l10n.settings_page__import_tooltip,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        context.read<SettingsBloc>().checkPermission(
-                                            ImportExportPageType.import);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            l10n.settings_page__import_btn,
-                                            style: appTheme.appTextStyles?.subtitle,
-                                          ),
-                                          SvgPicture.asset(
-                                            AppIcons.icImport,
-                                            color: appTheme.appColors?.textColor,
-                                          )
-                                        ],
-                                      ))
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                },
-                listener: _settingsBlocListener,
-              ),
+                  ),
+                );
+              },
+              listener: _settingsBlocListener,
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 
