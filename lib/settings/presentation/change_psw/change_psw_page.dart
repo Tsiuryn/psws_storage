@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
@@ -60,7 +60,7 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
               Icons.arrow_back_rounded,
               color: appTheme.appColors?.textColor,
             ),
-            onPressed: context.popRoute,
+            onPressed: context.maybePop,
           ),
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(1),

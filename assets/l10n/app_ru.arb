@@ -1,4 +1,10 @@
 {
+  "home_page_tab__notes": "Заметки",
+  "home_page_tab__habits": "Цели",
+  "home_page_tab__settings": "Настройки",
+  "habit_tracker__habit_create": "Создай цель",
+  "habit_tracker__habit_edit": "Редактируй цель",
+  "habit_tracker__dialog_placeholder": "Название",
   "app_snack_exit": "Для выхода из приложения нажмите кнопку \"Назад\" еще раз",
   "main_appbar_dialog_folder": "Введите название папки",
   "main_appbar_dialog_note": "Введите название файла",

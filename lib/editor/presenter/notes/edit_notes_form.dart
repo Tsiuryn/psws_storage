@@ -4,8 +4,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:intl/intl.dart';
+import 'package:psws_storage/res/app_localizations.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:psws_storage/app/common/path_bottom_sheet.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
@@ -108,7 +109,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
       context,
       backPressed: () {
         if (readOnly) {
-          context.router.pop();
+          context.router.maybePop();
         } else {
           showDialog(context);
         }
@@ -146,7 +147,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                     leading: IconButton(
                         onPressed: () {
                           if (readOnly) {
-                            context.router.pop();
+                            context.router.maybePop();
                           } else {
                             showDialog(context);
                           }
@@ -177,132 +178,158 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                       Padding(
                         padding: const EdgeInsets.all(AppDim.eight),
                         child: QuillToolbar.simple(
-                            configurations: QuillSimpleToolbarConfigurations(
                           controller: _controller,
-                          toolbarSectionSpacing: 0.0,
-                          showClipboardCut: false,
-                          showClipboardCopy: false,
-                          showClipboardPaste: false,
-                          showLink: false,
-                          showSearchButton: false,
-                          showFontSize: true,
-                          fontSizesValues: fontSize,
-                          showHeaderStyle: false,
-                          showSubscript: false,
-                          showSuperscript: false,
-                          showBackgroundColorButton: true,
-                          showFontFamily: false,
-                          showAlignmentButtons: true,
-                          toolbarIconAlignment: WrapAlignment.start,
-                          showInlineCode: false,
-                          showDividers: false,
-                          buttonOptions: const QuillSimpleToolbarButtonOptions(
-                            base: QuillToolbarBaseButtonOptions(
-                              iconTheme: QuillIconTheme(
-                                iconButtonSelectedData: selectedButtonData,
-                                iconButtonUnselectedData: unSelectedButtonData,
-                                // iconButtonSelectedStyle: selectedButton,
-                                // iconButtonUnselectedStyle: selectedButton,
+                          configurations: QuillSimpleToolbarConfigurations(
+                            toolbarSectionSpacing: 0.0,
+                            showClipboardCut: false,
+                            showClipboardCopy: false,
+                            showClipboardPaste: false,
+                            showLink: true,
+                            showSearchButton: false,
+                            showFontSize: true,
+                            fontSizesValues: fontSize,
+                            showHeaderStyle: false,
+                            showSubscript: false,
+                            showSuperscript: false,
+                            showBackgroundColorButton: true,
+                            showFontFamily: false,
+                            showAlignmentButtons: true,
+                            toolbarIconAlignment: WrapAlignment.start,
+                            showInlineCode: false,
+                            showDividers: false,
+
+                            buttonOptions: QuillSimpleToolbarButtonOptions(
+                              fontSize: QuillToolbarFontSizeButtonOptions(
+                                style: theme.appTextStyles?.subtitle?.copyWith(
+                                  color: theme.appColors?.textColor,
+                                ),
+                                defaultItemColor: theme.appColors?.textColor,
+                              ),
+                              base: QuillToolbarBaseButtonOptions(
+                                iconTheme: QuillIconTheme(
+                                  iconButtonSelectedData: selectedButtonData,
+                                  iconButtonUnselectedData:
+                                      unSelectedButtonData,
+
+                                  // iconButtonSelectedStyle: selectedButton,
+                                  // iconButtonUnselectedStyle: selectedButton,
+                                ),
                               ),
                             ),
-                          ),
-                          embedButtons: [
-                            (controller, toolbarIconSize, iconTheme,
-                                dialogTheme) {
-                              return CustomIconButton(
-                                iconTheme: iconTheme,
+                            embedButtons: [
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
+                                return CustomIconButton(
+                                  iconTheme: iconTheme,
+                                  onPressed: () {
+                                    final index =
+                                        controller.selection.baseOffset;
+                                    final length =
+                                        controller.selection.extentOffset -
+                                            index;
+                                    context.router
+                                        .push(SearchDirectoryRoute(
+                                      directories:
+                                          widget.state.allNotesWithoutCurrent,
+                                      searchDestination:
+                                          SearchDestination.getPath,
+                                    ))
+                                        .then(
+                                      (value) {
+                                        if (value is DirectoryModel) {
+                                          final block = BlockEmbed.custom(
+                                            NotesBlockEmbed.fromDocument(
+                                                CustomDirectory(
+                                              name: value.name,
+                                              id: value.id,
+                                              hiveId: value.idHiveObject,
+                                            )),
+                                          );
+                                          controller.replaceText(
+                                              index, length, block, null);
+                                        }
+                                      },
+                                    );
+                                  },
+                                  icon: Icons.add_link_rounded,
+                                );
+                              },
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
+                                return CustomIconButton(
+                                  icon: Icons.access_time_rounded,
+                                  iconTheme: iconTheme,
+                                  onPressed: () {
+                                    _showBottomSheet(context);
+                                  },
+                                );
+                              },
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
+                                return CustomIconButton(
+                                  icon: Icons.calculate_outlined,
+                                  iconTheme: iconTheme,
+                                  onPressed: () async {
+                                    final result = await material.showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const CalculatorDialog();
+                                        });
+                                    if (result != null &&
+                                        result is CalculatorResult) {
+                                      _setTextToCurrentPosition(
+                                          '${result.userInput} = ${result.answer}');
+                                    }
+                                  },
+                                );
+                              },
+                              (controller, toolbarIconSize, iconTheme,
+                                  dialogTheme) {
+                                return CustomIconButton(
+                                  icon: Icons.info_outline_rounded,
+                                  iconTheme: iconTheme,
+                                  onPressed: () async {
+                                    showPathBottomSheet(context,
+                                        path: widget.path);
+                                  },
+                                );
+                              },
+                            ],
+                            customButtons: [
+                              QuillToolbarCustomButtonOptions(
+                                icon: Icon(Icons.calendar_month_rounded),
                                 onPressed: () {
-                                  final index = controller.selection.baseOffset;
-                                  final length =
-                                      controller.selection.extentOffset - index;
-                                  context.router
-                                      .push(SearchDirectoryRoute(
-                                    directories:
-                                        widget.state.allNotesWithoutCurrent,
-                                    searchDestination:
-                                        SearchDestination.getPath,
-                                  ))
-                                      .then(
-                                    (value) {
-                                      if (value is DirectoryModel) {
-                                        final block = BlockEmbed.custom(
-                                          NotesBlockEmbed.fromDocument(
-                                              CustomDirectory(
-                                            name: value.name,
-                                            id: value.id,
-                                            hiveId: value.idHiveObject,
-                                          )),
-                                        );
-                                        controller.replaceText(
-                                            index, length, block, null);
-                                      }
-                                    },
-                                  );
+                                  _setTextToCurrentPosition(DateFormat.yMd('ru')
+                                      .format(DateTime.now()));
                                 },
-                                icon: Icons.add_link_rounded,
-                              );
-                            },
-                            (controller, toolbarIconSize, iconTheme,
-                                dialogTheme) {
-                              return CustomIconButton(
-                                icon: Icons.access_time_rounded,
-                                iconTheme: iconTheme,
+                              ),
+                              QuillToolbarCustomButtonOptions(
+                                icon: Icon(Icons.access_time_filled_rounded),
                                 onPressed: () {
-                                  _showBottomSheet(context);
+                                  _setTextToCurrentPosition(DateFormat.Hms('ru')
+                                      .format(DateTime.now()));
                                 },
-                              );
-                            },
-                            (controller, toolbarIconSize, iconTheme,
-                                dialogTheme) {
-                              return CustomIconButton(
-                                icon: Icons.calculate_outlined,
-                                iconTheme: iconTheme,
-                                onPressed: () async {
-                                  final result = await material.showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const CalculatorDialog();
-                                      });
-                                  if (result != null &&
-                                      result is CalculatorResult) {
-                                    _setTextToCurrentPosition(
-                                        '${result.userInput} = ${result.answer}');
-                                  }
-                                },
-                              );
-                            },
-                            (controller, toolbarIconSize, iconTheme,
-                                dialogTheme) {
-                              return CustomIconButton(
-                                icon: Icons.info_outline_rounded,
-                                iconTheme: iconTheme,
-                                onPressed: () async {
-                                  showPathBottomSheet(context,
-                                      path: widget.path);
-                                },
-                              );
-                            },
-                          ],
-                          customButtons: [
-                            QuillToolbarCustomButtonOptions(
-                              icon: widget.state.readOnly
-                                  ? const Icon(Icons.edit)
-                                  : const Icon(Icons.save),
-                              onPressed: () {
-                                context
-                                    .read<EditNotesBloc>()
-                                    .updateEditMode(!readOnly);
-                                if (!readOnly) {
+                              ),
+                              QuillToolbarCustomButtonOptions(
+                                icon: widget.state.readOnly
+                                    ? const Icon(Icons.edit)
+                                    : const Icon(Icons.save),
+                                onPressed: () {
                                   context
                                       .read<EditNotesBloc>()
-                                      .saveNote(content);
-                                  _focusNode.unfocus();
-                                }
-                              },
-                            ),
-                          ],
-                          // fontSizeValues: fontSize,
-                        )),
+                                      .updateEditMode(!readOnly);
+                                  if (!readOnly) {
+                                    context
+                                        .read<EditNotesBloc>()
+                                        .saveNote(content);
+                                    _focusNode.unfocus();
+                                  }
+                                },
+                              ),
+                            ],
+                            // fontSizeValues: fontSize,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -324,8 +351,8 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                       child: QuillEditor(
                         scrollController: ScrollController(),
                         focusNode: _focusNode,
+                        controller: _controller,
                         configurations: QuillEditorConfigurations(
-                          controller: _controller,
                           scrollable: false,
                           autoFocus: !readOnly,
                           expands: false,
@@ -333,6 +360,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
                           customStyles: DefaultStyles(
                             lists: DefaultListBlockStyle(
                               AppTheme(context).appTextStyles!.titleMedium!,
+                              const HorizontalSpacing(0, 0),
                               const VerticalSpacing(0, 0),
                               const VerticalSpacing(0, 0),
                               const BoxDecoration(),
@@ -369,7 +397,7 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
         directories: widget.state.directories,
       ))
           .then((value) {
-        if (readOnly) {
+        if (readOnly && context.mounted) {
           _focusNode.unfocus();
           context.read<EditNotesBloc>().updateEditMode(true);
         }
@@ -410,10 +438,10 @@ class _EditNotesFormState extends State<EditNotesForm> with PswsDialogs {
         AppLocalizations.of(context).edit_notes_page__dialog_subTitle;
 
     createOkDialog(context, title: title, message: subTitle, tapNo: () {
-      context.router.pop();
+      context.router.maybePop();
     }, tapOk: () {
       context.read<EditNotesBloc>().saveNote(content);
-      context.router.pop();
+      context.router.maybePop();
     });
   }
 }
@@ -425,12 +453,13 @@ class _CheckBox implements QuillCheckboxBuilder {
       required bool isChecked,
       required ValueChanged<bool> onChanged}) {
     return GestureDetector(
-        onTap: () {
-          onChanged(!isChecked);
-        },
-        child: Icon(
-          isChecked ? Icons.check_box : Icons.check_box_outline_blank,
-          size: AppDim.twentyFour,
-        ));
+      onTap: () {
+        onChanged(!isChecked);
+      },
+      child: Icon(
+        isChecked ? Icons.check_box : Icons.check_box_outline_blank,
+        size: AppDim.twenty,
+      ),
+    );
   }
 }

@@ -105,7 +105,7 @@ ThemeData darkTheme(BuildContext context) {
         primary: const Color(0xFF3C71CD),
         onPrimary: const Color(0xFF8B8E94),
         onSecondary: const Color(0xFF101112),
-        onSurface: const Color(0xFF212325),
+        onSurface: const Color(0xFFFFFFFF),
         surface: Colors.red),
     scaffoldBackgroundColor: const Color(0xFF3C3B3B),
     primaryColor: const Color(0xFF212325),

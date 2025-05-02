@@ -35,8 +35,12 @@ import 'package:psws_storage/settings/presentation/import_export/bloc/import_exp
 
 GetIt getIt = GetIt.instance;
 const String databaseName = 'PSWS_Database';
+const String habitDatabaseName = 'PSWS_habitDatabaseName';
+const String statisticsDatabaseName = 'PSWS_statisticsDatabaseName';
 const _idSecureStorage = '_idSecureStorage';
 const String _idDatabase = 'PSWS_STORAGE_ID';
+const String _idHabitDatabase = 'PSWS_HABIT_ID';
+const String _idStatisticsDatabase = 'PSWS_STATISTICS_ID';
 const String _encryptionKey = 'encryptionKey';
 const aOptions = AndroidOptions(encryptedSharedPreferences: true);
 
@@ -54,6 +58,7 @@ Future<void> initDi() async {
 
   // Repository
   getIt.registerSingleton<DirectoriesRepo>(DirectoriesRepoImpl());
+
   getIt.registerSingleton<PinRepo>(PinRepoImpl(
     secureStorage:
         getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage),

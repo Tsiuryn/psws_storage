@@ -5,21 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "psws_storage",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "psws_storage (profile mode)",
+            "name": "psws_storage (dev)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "psws_storage (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "args": [
+                "--flavor",
+                "dev"
+            ]
         }
     ]
 }

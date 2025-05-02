@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 
 void showPathBottomSheet(BuildContext context, {required String path}) {
   final l10n = AppLocalizations.of(context);
@@ -17,29 +17,31 @@ void showPathBottomSheet(BuildContext context, {required String path}) {
       backgroundColor: AppTheme(context).appColors?.appBarColor,
       context: context,
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text: pathPrefix,
-                    style: AppTheme(context).appTextStyles?.titleMedium,
-                  ),
-                  TextSpan(
-                    text: ' $path',
-                    style: AppTheme(context).appTextStyles?.subtitle,
-                  )
-                ]),
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: pathPrefix,
+                      style: AppTheme(context).appTextStyles?.titleMedium,
+                    ),
+                    TextSpan(
+                      text: ' $path',
+                      style: AppTheme(context).appTextStyles?.subtitle,
+                    )
+                  ]),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: AppDim.eight,
-            ),
-          ],
+              const SizedBox(
+                height: AppDim.eight,
+              ),
+            ],
+          ),
         );
       });
 }

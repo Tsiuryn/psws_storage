@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
@@ -47,13 +47,13 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
       showRequestSnackBar(context, message: state.error ?? '');
     }
     if (state.type == ImportExportStateType.exportSuccess) {
-      context.popRoute();
+      context.maybePop();
     }
     if (state.type == ImportExportStateType.importSuccess) {
       getIt.get<MainBloc>().changeToDefaultState();
       showRequestSnackBar(context,
           message: l10n.import_form__import_success, isSuccess: true);
-      context.popRoute();
+      context.maybePop();
     }
   }
 
@@ -74,7 +74,7 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
             Icons.arrow_back_rounded,
             color: appTheme.appColors?.textColor,
           ),
-          onPressed: context.popRoute,
+          onPressed: context.maybePop,
         ),
         actions: [
           IconWithTooltip(

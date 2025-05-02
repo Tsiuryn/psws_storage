@@ -93,7 +93,7 @@ ThemeData lightTheme(BuildContext context) {
       primary: const Color(0xFF1D5CCA),
       onPrimary: const Color(0xFF6F7276),
       onSecondary: const Color(0xFFF5F6F7),
-      onSurface: const Color(0xFFDADADA),
+      onSurface: const Color(0xFF000000),
       surfaceContainerHighest: const Color(0xFFFFFFFF),
     ),
     scaffoldBackgroundColor: const Color(0xFFDADADA),

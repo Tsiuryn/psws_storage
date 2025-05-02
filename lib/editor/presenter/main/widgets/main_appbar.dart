@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/app_bloc/app_bloc.dart';
 import 'package:psws_storage/app/di/di.dart';
@@ -152,18 +152,6 @@ class MainAppBar extends StatelessWidget
             size: AppDim.thirtyTwo,
           ),
         ),
-        IconButton(
-          onPressed: () {
-            context.router.push(const SettingsRoute());
-          },
-          icon: SvgPicture.asset(
-            AppIcons.icSettings,
-            color: appColors?.textColor,
-          ),
-        ),
-        const SizedBox(
-          width: AppDim.eight,
-        )
       ]),
     );
   }

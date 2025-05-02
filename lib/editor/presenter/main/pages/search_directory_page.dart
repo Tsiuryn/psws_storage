@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/theme/app_colors_ext.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
@@ -103,7 +103,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                   controller: _controller,
                   prefixIcon: widget.searchDestination != SearchDestination.move
                       ? IconButton(
-                          onPressed: context.popRoute,
+                          onPressed: context.maybePop,
                           icon: Icon(
                             Icons.arrow_back_rounded,
                             color: appColors?.textColor,
@@ -134,7 +134,7 @@ class _SearchDirectoryPageState extends State<SearchDirectoryPage> {
                         style: textStyles?.titleMedium,
                       ),
                       onPressed: () {
-                        context.popRoute(DirectoryModel.buildRootDirectory());
+                        context.maybePop(DirectoryModel.buildRootDirectory());
                       })),
               Expanded(
                 child: ListView.separated(

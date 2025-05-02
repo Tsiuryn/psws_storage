@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:psws_storage/app/ui_kit/psws_input.dart';
 import 'package:psws_storage/editor/presenter/notes/widget/choose_date_widget.dart';
 
@@ -10,6 +10,7 @@ mixin PswsDialogs {
     BuildContext context, {
     required String title,
     bool isFolder = true,
+    String? placeholder,
     String? initialTextValue,
     required Function(String) value,
   }) {
@@ -41,9 +42,10 @@ mixin PswsDialogs {
                     }
                     return null;
                   },
-                  placeholder: isFolder
-                      ? l10n.common_dialog_placeholder_folder
-                      : l10n.common_dialog_placeholder_file,
+                  placeholder: placeholder ??
+                      (isFolder
+                          ? l10n.common_dialog_placeholder_folder
+                          : l10n.common_dialog_placeholder_file),
                 ),
                 IconButton(
                   visualDensity: const VisualDensity(
@@ -149,6 +151,53 @@ mixin PswsDialogs {
                 child: Text(
                   l10n.common_dialog_yes,
                   style: const TextStyle(color: Colors.blue),
+                ))
+          ],
+        );
+      },
+    );
+  }
+
+  void showInputDialog(
+    BuildContext context, {
+    String? title,
+    ValueChanged<String>? onChanged,
+  }) {
+    final l10n = AppLocalizations.of(context);
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        final controller = TextEditingController();
+
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(
+            top: AppDim.sixteen,
+            left: AppDim.sixteen,
+            right: AppDim.sixteen,
+          ),
+          title: title == null ? null : Text(title),
+          content: PswsInput(
+            controller: controller,
+            placeholder: '',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                l10n.common_dialog_cancel,
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              ),
+            ),
+            TextButton(
+                onPressed: () {
+                  onChanged?.call(controller.text);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  l10n.common_dialog_ok,
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
                 ))
           ],
         );

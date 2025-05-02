@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:psws_storage/app/home_page.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
 import 'package:psws_storage/editor/presenter/main/main_page.dart';
 import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
@@ -12,9 +13,16 @@ import 'package:psws_storage/settings/settings_page.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends _$AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => pages;
+
+  @override
+  RouteType get defaultRouteType => const RouteType.custom(
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        durationInMilliseconds: 150,
+        reverseDurationInMilliseconds: 150,
+      );
 }
 
 final pages = [
@@ -23,10 +31,17 @@ final pages = [
     page: PinRoute.page,
     initial: true,
   ),
-  AutoRoute(
-    path: '/home',
-    page: MainRoute.page,
-  ),
+  AutoRoute(path: '/home_page', page: HomeRoute.page, children: [
+    AutoRoute(
+      path: 'main',
+      page: MainRoute.page,
+    ),
+    CustomRoute(
+      path: 'settings',
+      page: SettingsRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+    ),
+  ]),
   CustomRoute(
     path: '/search',
     page: SearchDirectoryRoute.page,
@@ -36,11 +51,6 @@ final pages = [
     path: '/edit_note',
     page: EditNotesRoute.page,
     transitionsBuilder: TransitionsBuilders.slideRight,
-  ),
-  CustomRoute(
-    path: '/settings',
-    page: SettingsRoute.page,
-    transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
   CustomRoute(
     path: '/import_export',

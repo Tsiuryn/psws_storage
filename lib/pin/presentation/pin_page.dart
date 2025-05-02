@@ -4,7 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
@@ -101,7 +101,7 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
             )
           ]);
       return didAuthenticate;
-    } on PlatformException {
+    } on PlatformException catch (_) {
       return false;
     }
   }
@@ -201,6 +201,6 @@ class PinPage extends StatelessBasePage<PinBloc, PinState> with PswsSnackBar {
   }
 
   void _nextPage(BuildContext context) {
-    context.router.replace(const MainRoute());
+    context.router.replace(const HomeRoute());
   }
 }

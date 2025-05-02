@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:psws_storage/res/app_localizations.dart';
 import 'package:psws_storage/settings/presentation/import_export/bloc/import_export_bloc.dart';
 
 extension ImportTypeExt on ImportType {
