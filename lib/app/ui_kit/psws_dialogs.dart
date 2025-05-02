@@ -157,4 +157,51 @@ mixin PswsDialogs {
       },
     );
   }
+
+  void showInputDialog(
+    BuildContext context, {
+    String? title,
+    ValueChanged<String>? onChanged,
+  }) {
+    final l10n = AppLocalizations.of(context);
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        final controller = TextEditingController();
+
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(
+            top: AppDim.sixteen,
+            left: AppDim.sixteen,
+            right: AppDim.sixteen,
+          ),
+          title: title == null ? null : Text(title),
+          content: PswsInput(
+            controller: controller,
+            placeholder: '',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                l10n.common_dialog_cancel,
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              ),
+            ),
+            TextButton(
+                onPressed: () {
+                  onChanged?.call(controller.text);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  l10n.common_dialog_ok,
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                ))
+          ],
+        );
+      },
+    );
+  }
 }
