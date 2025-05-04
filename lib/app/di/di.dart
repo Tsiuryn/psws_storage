@@ -11,13 +11,19 @@ import 'package:psws_storage/app/domain/usecase/get_environment_usecase.dart';
 import 'package:psws_storage/app/domain/usecase/save_environment.dart';
 import 'package:psws_storage/editor/data/bean/directory_bean.dart';
 import 'package:psws_storage/editor/data/directories_repo_impl.dart';
+import 'package:psws_storage/editor/data/goal_repo_impl.dart';
+import 'package:psws_storage/editor/data/source/goals_data_source.dart';
+import 'package:psws_storage/editor/data/source/local/db/goals_database.dart';
+import 'package:psws_storage/editor/data/source/local/goals_local_data_source.dart';
 import 'package:psws_storage/editor/domain/repo/directories_repo.dart';
+import 'package:psws_storage/editor/domain/repo/goal_repo.dart';
 import 'package:psws_storage/editor/domain/usecase/add_file_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/delete_directory_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/delete_list_directories_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/get_directory_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/get_list_directories_usecase.dart';
 import 'package:psws_storage/editor/domain/usecase/update_directory_usecase.dart';
+import 'package:psws_storage/editor/presenter/goals/bloc/goals_bloc.dart';
 import 'package:psws_storage/editor/presenter/main/bloc/main_bloc.dart';
 import 'package:psws_storage/editor/presenter/notes/bloc/edit_notes_bloc.dart';
 import 'package:psws_storage/pin/data/pin_repo_impl.dart';
@@ -39,15 +45,15 @@ const String habitDatabaseName = 'PSWS_habitDatabaseName';
 const String statisticsDatabaseName = 'PSWS_statisticsDatabaseName';
 const _idSecureStorage = '_idSecureStorage';
 const String _idDatabase = 'PSWS_STORAGE_ID';
-const String _idHabitDatabase = 'PSWS_HABIT_ID';
-const String _idStatisticsDatabase = 'PSWS_STATISTICS_ID';
 const String _encryptionKey = 'encryptionKey';
 const aOptions = AndroidOptions(encryptedSharedPreferences: true);
 
-Future<void> initDi() async {
+Future<void> initDi(GoalsDatabase db) async {
   //SecureStorage
   getIt.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage(),
       instanceName: _idSecureStorage);
+
+  getIt.registerSingleton<GoalsDatabase>(db);
 
   // initialize DataBase
   await _initDB(
@@ -56,7 +62,13 @@ Future<void> initDi() async {
     ),
   );
 
+  //DataSource
+  getIt.registerSingleton<GoalsDataSource>(
+      GoalsLocalDataSource(getIt.get<GoalsDatabase>()));
+
   // Repository
+  getIt.registerSingleton<GoalRepo>(GoalRepoImpl(getIt.get<GoalsDataSource>()));
+
   getIt.registerSingleton<DirectoriesRepo>(DirectoriesRepoImpl());
 
   getIt.registerSingleton<PinRepo>(PinRepoImpl(
@@ -145,6 +157,12 @@ Future<void> initDi() async {
     () => ImportExportBloc(
       exportDatabaseUseCase: getIt.get<ExportDatabaseUseCase>(),
       importDatabaseUseCase: getIt.get<ImportDatabaseUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<GoalsBloc>(
+    () => GoalsBloc(
+      repo: getIt.get<GoalRepo>(),
     ),
   );
 }
