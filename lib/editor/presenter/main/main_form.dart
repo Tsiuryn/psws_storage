@@ -5,6 +5,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/common/base_page.dart';
@@ -20,7 +22,7 @@ import 'package:psws_storage/editor/presenter/main/bloc/main_model.dart';
 import 'package:psws_storage/editor/presenter/main/const/constants.dart';
 import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/main/widgets/item_widget.dart';
-import 'package:psws_storage/editor/presenter/main/widgets/main_appbar.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/expandable_fab_widget.dart';
 import 'package:psws_storage/res/resources.dart';
 
 class MainForm extends StatelessBasePage<MainBloc, MainModelState>
@@ -67,11 +69,16 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
     }
   }
 
+  // @override
+  // PreferredSizeWidget? buildAppBar(BuildContext context, MainModelState state) {
+  //   return MainAppBar(
+  //     state: state,
+  //   );
+  // }
+
   @override
-  PreferredSizeWidget? buildAppBar(BuildContext context, MainModelState state) {
-    return MainAppBar(
-      state: state,
-    );
+  Widget? buildFloatingAction(BuildContext context, MainModelState state) {
+    return ExpandableFABWidget(state: state);
   }
 
   @override
