@@ -1,5 +1,5 @@
-import 'package:psws_storage/editor/data/source/local/db/goals_database.dart';
-import 'package:psws_storage/editor/domain/model/goal.dart';
+import 'package:psws_storage/goals/data/source/local/db/goals_database.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
 
 extension GoalExtension on Goal {
   GoalBeanCompanion get toGoalCompanion => GoalBeanCompanion.insert(

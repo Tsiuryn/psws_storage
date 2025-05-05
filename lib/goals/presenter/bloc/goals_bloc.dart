@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:psws_storage/app/utils/uuid_generator.dart';
-import 'package:psws_storage/editor/domain/model/goal.dart';
-import 'package:psws_storage/editor/domain/repo/goal_repo.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
+import 'package:psws_storage/goals/domain/repo/goal_repo.dart';
 
 part 'goals_state.dart';
 part 'goals_bloc_model.dart';

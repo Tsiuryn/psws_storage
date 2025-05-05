@@ -1,6 +1,6 @@
-import 'package:psws_storage/editor/data/source/goals_data_source.dart';
-import 'package:psws_storage/editor/domain/model/goal.dart';
-import 'package:psws_storage/editor/domain/repo/goal_repo.dart';
+import 'package:psws_storage/goals/data/source/goals_data_source.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
+import 'package:psws_storage/goals/domain/repo/goal_repo.dart';
 
 class GoalRepoImpl implements GoalRepo {
   final GoalsDataSource source;

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
-import 'package:psws_storage/editor/domain/model/goal.dart';
-import 'package:psws_storage/editor/presenter/goals/widgets/add_button.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
+import 'package:psws_storage/goals/presenter/widgets/add_button.dart';
 import 'bloc/goals_bloc.dart';
 
 @RoutePage()

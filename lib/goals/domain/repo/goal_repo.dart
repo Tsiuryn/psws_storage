@@ -1,6 +1,6 @@
-import 'package:psws_storage/editor/domain/model/goal.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
 
-abstract interface class GoalsDataSource {
+abstract interface class GoalRepo {
   Future<void> addGoal(Goal goal);
 
   Future<void> addTask(Task task);

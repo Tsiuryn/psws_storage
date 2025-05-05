@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
-import 'package:psws_storage/editor/domain/model/goal.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
 
 @RoutePage()
 class EditGoalPage extends StatelessWidget {

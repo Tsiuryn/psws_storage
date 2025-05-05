@@ -1,8 +1,8 @@
-import 'package:psws_storage/editor/data/mapper/goal_mapper.dart';
-import 'package:psws_storage/editor/data/mapper/task_mapper.dart';
-import 'package:psws_storage/editor/data/source/goals_data_source.dart';
-import 'package:psws_storage/editor/data/source/local/db/goals_database.dart';
-import 'package:psws_storage/editor/domain/model/goal.dart';
+import 'package:psws_storage/goals/data/mapper/goal_mapper.dart';
+import 'package:psws_storage/goals/data/mapper/task_mapper.dart';
+import 'package:psws_storage/goals/data/source/goals_data_source.dart';
+import 'package:psws_storage/goals/data/source/local/db/goals_database.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
 
 class GoalsLocalDataSource implements GoalsDataSource {
   final GoalsDatabase database;
