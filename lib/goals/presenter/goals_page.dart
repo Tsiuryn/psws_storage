@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
+import 'package:psws_storage/app/utils/localization_extension.dart';
 import 'package:psws_storage/goals/domain/models/goal.dart';
 import 'package:psws_storage/goals/presenter/widgets/add_button.dart';
 import 'bloc/goals_bloc.dart';
@@ -27,7 +28,8 @@ class GoalsPage extends StatelessWidget with PswsDialogs {
   }
 
   void _addGoal(BuildContext context) {
-    showInputDialog(context, title: 'Добавь название цели', onChanged: (title) {
+    showInputDialog(context, title: context.l10n.goals_page__dialog_title,
+        onChanged: (title) {
       if (context.mounted) {
         context.read<GoalsBloc>().addGoal(title);
       }
@@ -79,10 +81,10 @@ class _GoalsPageViewWidgetState extends State<GoalsPageViewWidget>
                     tabController: _tabController,
                     tabs: [
                       Tab(
-                        text: 'Текущие',
+                        text: context.l10n.goals_page__tab_current,
                       ),
                       Tab(
-                        text: 'Выполненные',
+                        text: context.l10n.goals_page__tab_done,
                       ),
                     ],
                   ),
@@ -99,12 +101,12 @@ class _GoalsPageViewWidgetState extends State<GoalsPageViewWidget>
                 children: [
                   ListGoals(
                     goals: widget.state.model.currentGoals,
-                    emptyListText: 'Пока не добавлены цели!!!',
+                    emptyListText: context.l10n.goals_page__empty_current,
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: AddButton(
-                      title: 'Добавить цель',
+                      title: context.l10n.goals_page__add_button,
                       onTap: widget.onCreateGoal,
                     ),
                   ),
@@ -112,7 +114,7 @@ class _GoalsPageViewWidgetState extends State<GoalsPageViewWidget>
               ),
               ListGoals(
                 goals: widget.state.model.finishedGoals,
-                emptyListText: 'Пока нет выполненных целей!!!',
+                emptyListText: context.l10n.goals_page__empty_done,
               )
             ],
           ),
@@ -218,7 +220,7 @@ class _GoalItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            'Выполнено $finishedTask из ${goal.tasks.length}',
+                            '${context.l10n.goals_page__done} $finishedTask ${context.l10n.goals_page__from} ${goal.tasks.length}',
                             style: TextStyle(
                               fontSize: 10,
                               fontStyle: FontStyle.italic,

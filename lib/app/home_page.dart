@@ -19,7 +19,10 @@ class HomePage extends StatelessWidget {
         icon: Icons.format_list_bulleted_rounded,
         text: l10n.home_page_tab__notes,
       ),
-      GButton(icon: Icons.radar_outlined, text: 'Goals'),
+      GButton(
+        icon: Icons.radar_outlined,
+        text: l10n.home_page_tab__habits,
+      ),
       GButton(
         icon: Icons.settings_rounded,
         text: l10n.home_page_tab__settings,

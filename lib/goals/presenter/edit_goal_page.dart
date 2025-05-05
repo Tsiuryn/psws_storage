@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
+import 'package:psws_storage/app/utils/localization_extension.dart';
 import 'package:psws_storage/goals/domain/models/goal.dart';
 
 @RoutePage()
@@ -78,10 +79,13 @@ class _EditGoalFormState extends State<_EditGoalForm> {
                     children: [
                       Text(widget.goal.id),
                       _InputWidget(
-                          controller: _titleController, hint: 'Название цели'),
+                        controller: _titleController,
+                        hint: context.l10n.edit_goal_page__name_goal_input,
+                      ),
                       _InputWidget(
                         controller: _descriptionController,
-                        hint: 'Описание цели',
+                        hint:
+                            context.l10n.edit_goal_page__description_goal_input,
                         maxLines: 24,
                       ),
                     ],
@@ -102,7 +106,7 @@ class _EditGoalFormState extends State<_EditGoalForm> {
 
                       context.maybePop(updatedGoal);
                     },
-                    child: Text('Сохранить'),
+                    child: Text(context.l10n.edit_goal_page__save_button),
                   ),
                 )),
               ],
@@ -116,7 +120,6 @@ class _EditGoalFormState extends State<_EditGoalForm> {
 
 class _EditTaskForm extends StatefulWidget {
   const _EditTaskForm({
-    super.key,
     required this.task,
   });
 
@@ -163,11 +166,13 @@ class _EditTaskFormState extends State<_EditTaskForm> {
                     children: [
                       Text(widget.task.id),
                       _InputWidget(
-                          controller: _titleController,
-                          hint: 'Название задачи'),
+                        controller: _titleController,
+                        hint: context.l10n.edit_goal_page__name_task_input,
+                      ),
                       _InputWidget(
                         controller: _descriptionController,
-                        hint: 'Описание задачи',
+                        hint:
+                            context.l10n.edit_goal_page__description_task_input,
                         maxLines: 24,
                       ),
                     ],
@@ -188,7 +193,7 @@ class _EditTaskFormState extends State<_EditTaskForm> {
 
                       context.maybePop(updatedTask);
                     },
-                    child: Text('Сохранить'),
+                    child: Text(context.l10n.edit_goal_page__save_button),
                   ),
                 )),
               ],

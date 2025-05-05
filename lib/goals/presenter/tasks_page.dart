@@ -8,6 +8,7 @@ import 'package:psws_storage/app/dimens/app_dim.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
+import 'package:psws_storage/app/utils/localization_extension.dart';
 import 'package:psws_storage/app/utils/uuid_generator.dart';
 import 'package:psws_storage/goals/domain/models/goal.dart';
 import 'package:psws_storage/goals/presenter/bloc/goals_bloc.dart';
@@ -41,8 +42,8 @@ class _TasksPageState extends State<TasksPage> with PswsDialogs {
   void _showDeleteDialog(BuildContext context) {
     createOkDialog(
       context,
-      title: 'Удаление цели',
-      message: 'Вы действительно хотите удалить цель?',
+      title: context.l10n.tasks_page__delete_dialog_title,
+      message: context.l10n.tasks_page__delete_dialog_message,
       tapNo: () {},
       tapOk: () async {
         await context.read<GoalsBloc>().deleteGoal(widget.goal);
@@ -74,7 +75,7 @@ class _TasksPageState extends State<TasksPage> with PswsDialogs {
             children: [
               if (_tasks.isEmpty)
                 Center(
-                  child: Text('Пока не добавлены задачи!!!'),
+                  child: Text(context.l10n.tasks_page__empty_message),
                 ),
               Positioned.fill(
                 child: Padding(
@@ -144,7 +145,7 @@ class _TasksPageState extends State<TasksPage> with PswsDialogs {
                 alignment: Alignment.bottomCenter,
                 child: SafeArea(
                   child: AddButton(
-                    title: 'Добавить задачу',
+                    title: context.l10n.tasks_page__add_task,
                     onTap: () => _addTask(context),
                   ),
                 ),
@@ -196,7 +197,7 @@ class _TasksPageState extends State<TasksPage> with PswsDialogs {
   void _addTask(BuildContext context) {
     showInputDialog(
       context,
-      title: 'Добавь название задачи',
+      title: context.l10n.tasks_page__add_task_dialog_title,
       onChanged: (title) {
         if (context.mounted) {
           final task = Task(
@@ -265,16 +266,16 @@ class _GoalDescriptionWidget extends StatelessWidget {
               spacing: 4,
               children: [
                 _getItem(
-                  'Название: ',
+                  context.l10n.tasks_page__name_title,
                   goal.title,
                 ),
                 _getItem(
-                  'Описание: ',
+                  context.l10n.tasks_page__description_title,
                   goal.description.isEmpty ? '...' : goal.description,
                   maxLines: 8,
                 ),
                 _getItem(
-                  'Дата создания: ',
+                  context.l10n.tasks_page__created_date_title,
                   createdDate,
                 ),
               ],
@@ -312,7 +313,7 @@ class _TaskItem extends StatelessWidget {
         icon: _buildIcon(
           Icons.edit,
         ),
-        title: 'РЕДАКТИРОВАТЬ',
+        title: context.l10n.tasks_page__edit_title,
         style: const TextStyle(fontSize: AppDim.eight, color: Colors.white),
         onTap: (CompletionHandler handler) async {
           await handler(false);
@@ -408,7 +409,7 @@ class _TaskItem extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Описание: ${task.description}',
+                                '${context.l10n.tasks_page__description_title}${task.description}',
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTheme(context)
                                     .appTextStyles
