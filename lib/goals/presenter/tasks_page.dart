@@ -86,7 +86,7 @@ class _TasksPageState extends State<TasksPage> with PswsDialogs {
                         goal: _goal,
                         onTap: () {
                           context
-                              .pushRoute(EditGoalRoute(element: widget.goal))
+                              .pushRoute(EditGoalRoute(element: _goal))
                               .then((value) {
                             if (value is Goal && context.mounted) {
                               context.read<GoalsBloc>().updateGoal(value);

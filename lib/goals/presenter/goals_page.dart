@@ -72,25 +72,28 @@ class _GoalsPageViewWidgetState extends State<GoalsPageViewWidget>
     return Column(
       children: [
         SafeArea(
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TabsRow(
-                    tabController: _tabController,
-                    tabs: [
-                      Tab(
-                        text: context.l10n.goals_page__tab_current,
-                      ),
-                      Tab(
-                        text: context.l10n.goals_page__tab_done,
-                      ),
-                    ],
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TabsRow(
+                      tabController: _tabController,
+                      tabs: [
+                        Tab(
+                          text: context.l10n.goals_page__tab_current,
+                        ),
+                        Tab(
+                          text: context.l10n.goals_page__tab_done,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Expanded(
