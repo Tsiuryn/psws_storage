@@ -5,6 +5,7 @@ import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/utils/localization_extension.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 import 'package:psws_storage/goals/domain/models/goal.dart';
 import 'package:psws_storage/goals/presenter/widgets/add_button.dart';
 import 'bloc/goals_bloc.dart';
@@ -15,15 +16,18 @@ class GoalsPage extends StatelessWidget with PswsDialogs {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GoalsBloc, GoalsState>(
-      builder: (context, state) {
-        return Scaffold(
-          body: GoalsPageViewWidget(
-            state: state,
-            onCreateGoal: () => _addGoal(context),
-          ),
-        );
-      },
+    return LifeCycleWidget(
+      routeData: context.routeData,
+      child: BlocBuilder<GoalsBloc, GoalsState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: GoalsPageViewWidget(
+              state: state,
+              onCreateGoal: () => _addGoal(context),
+            ),
+          );
+        },
+      ),
     );
   }
 

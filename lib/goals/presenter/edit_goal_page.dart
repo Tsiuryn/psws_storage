@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/utils/localization_extension.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 import 'package:psws_storage/goals/domain/models/goal.dart';
 
 @RoutePage()
@@ -15,19 +16,26 @@ class EditGoalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (element is Goal) {
-      return _EditGoalForm(goal: element);
-    }
+    return LifeCycleWidget(
+      routeData: context.routeData,
+      child: Builder(
+        builder: (context) {
+          if (element is Goal) {
+            return _EditGoalForm(goal: element);
+          }
 
-    if (element is Task) {
-      return _EditTaskForm(
-        task: element,
-      );
-    }
+          if (element is Task) {
+            return _EditTaskForm(
+              task: element,
+            );
+          }
 
-    return Scaffold(
-      body: Center(
-        child: Text('${element.runtimeType} не поддерживается'),
+          return Scaffold(
+            body: Center(
+              child: Text('${element.runtimeType} не поддерживается'),
+            ),
+          );
+        },
       ),
     );
   }

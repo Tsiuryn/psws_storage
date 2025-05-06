@@ -10,6 +10,7 @@ import 'package:psws_storage/app/theme/app_theme.dart';
 import 'package:psws_storage/app/ui_kit/psws_dialogs.dart';
 import 'package:psws_storage/app/utils/localization_extension.dart';
 import 'package:psws_storage/app/utils/uuid_generator.dart';
+import 'package:psws_storage/editor/presenter/main/widgets/life_cycle_widget.dart';
 import 'package:psws_storage/goals/domain/models/goal.dart';
 import 'package:psws_storage/goals/presenter/bloc/goals_bloc.dart';
 import 'package:psws_storage/goals/presenter/widgets/add_button.dart';
@@ -57,103 +58,108 @@ class _TasksPageState extends State<TasksPage> with PswsDialogs {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GoalsBloc, GoalsState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(_goal.title),
-            actions: [
-              IconButton(
-                  onPressed: () => _showDeleteDialog(context),
-                  icon: Icon(
-                    Icons.delete,
-                    color: context.appColors.negativeActionColor,
-                  ))
-            ],
-          ),
-          body: Stack(
-            children: [
-              if (_tasks.isEmpty)
-                Center(
-                  child: Text(context.l10n.tasks_page__empty_message),
-                ),
-              Positioned.fill(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    children: [
-                      _GoalDescriptionWidget(
-                        goal: _goal,
-                        onTap: () {
-                          context
-                              .pushRoute(EditGoalRoute(element: _goal))
-                              .then((value) {
-                            if (value is Goal && context.mounted) {
-                              context.read<GoalsBloc>().updateGoal(value);
-                              setState(() {
-                                _goal = value;
-                              });
-                            }
-                          });
-                        },
-                      ),
-                      if (_tasks.isNotEmpty)
-                        Expanded(
-                          child: SafeArea(
-                            child: ListView.separated(
-                              itemCount: _tasks.length,
-                              padding: EdgeInsets.only(bottom: 40),
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 8,
-                                );
-                              },
-                              itemBuilder: (BuildContext context, int index) {
-                                final task = _tasks[index];
-                                return _TaskItem(
-                                  task: task,
-                                  onChanged: (_) => _updateTask(context, task),
-                                  onTapDelete: () => _deleteTask(context, task),
-                                  onTapRename: () {
-                                    context
-                                        .pushRoute(
-                                      EditGoalRoute(element: task),
-                                    )
-                                        .then((value) {
-                                      if (value is Task && context.mounted) {
-                                        setState(() async {
-                                          await _updateTask(
-                                            context,
-                                            value,
-                                            byCheckbox: false,
-                                          );
-                                        });
-                                      }
-                                    });
-                                  },
-                                );
-                              },
+    return LifeCycleWidget(
+      routeData: context.routeData,
+      child: BlocBuilder<GoalsBloc, GoalsState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(_goal.title),
+              actions: [
+                IconButton(
+                    onPressed: () => _showDeleteDialog(context),
+                    icon: Icon(
+                      Icons.delete,
+                      color: context.appColors.negativeActionColor,
+                    ))
+              ],
+            ),
+            body: Stack(
+              children: [
+                if (_tasks.isEmpty)
+                  Center(
+                    child: Text(context.l10n.tasks_page__empty_message),
+                  ),
+                Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      children: [
+                        _GoalDescriptionWidget(
+                          goal: _goal,
+                          onTap: () {
+                            context
+                                .pushRoute(EditGoalRoute(element: _goal))
+                                .then((value) {
+                              if (value is Goal && context.mounted) {
+                                context.read<GoalsBloc>().updateGoal(value);
+                                setState(() {
+                                  _goal = value;
+                                });
+                              }
+                            });
+                          },
+                        ),
+                        if (_tasks.isNotEmpty)
+                          Expanded(
+                            child: SafeArea(
+                              child: ListView.separated(
+                                itemCount: _tasks.length,
+                                padding: EdgeInsets.only(bottom: 40),
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return SizedBox(
+                                    height: 8,
+                                  );
+                                },
+                                itemBuilder: (BuildContext context, int index) {
+                                  final task = _tasks[index];
+                                  return _TaskItem(
+                                    task: task,
+                                    onChanged: (_) =>
+                                        _updateTask(context, task),
+                                    onTapDelete: () =>
+                                        _deleteTask(context, task),
+                                    onTapRename: () {
+                                      context
+                                          .pushRoute(
+                                        EditGoalRoute(element: task),
+                                      )
+                                          .then((value) {
+                                        if (value is Task && context.mounted) {
+                                          setState(() async {
+                                            await _updateTask(
+                                              context,
+                                              value,
+                                              byCheckbox: false,
+                                            );
+                                          });
+                                        }
+                                      });
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SafeArea(
-                  child: AddButton(
-                    title: context.l10n.tasks_page__add_task,
-                    onTap: () => _addTask(context),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SafeArea(
+                    child: AddButton(
+                      title: context.l10n.tasks_page__add_task,
+                      onTap: () => _addTask(context),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
