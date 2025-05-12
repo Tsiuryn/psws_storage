@@ -20,7 +20,7 @@ class TaskBean extends Table {
       dateTime().withDefault(currentDateAndTime)();
   TextColumn get title => text()();
   TextColumn get description => text()();
-  BoolColumn get isFinished => boolean().withDefault(const Constant(false))();
+  BoolColumn get isFinished => boolean()();
 }
 
 @DriftDatabase(tables: [GoalBean, TaskBean])

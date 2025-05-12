@@ -7,6 +7,7 @@ extension TaskExtension on Task {
         parentId: parentId,
         title: title,
         description: description,
+        isFinished: isFinished,
       );
 
   TaskBeanData get toTaskBeanData => TaskBeanData(

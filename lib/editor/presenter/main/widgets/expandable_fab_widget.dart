@@ -35,8 +35,9 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
     with PswsSnackBar, PswsDialogs {
   final _key = GlobalKey<ExpandableFabState>();
 
-  void _toggle() {
+  Future _toggle() async {
     _key.currentState?.toggle();
+    await await Future.delayed(Duration(milliseconds: 300));
   }
 
   @override
@@ -49,7 +50,7 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
 
     return ExpandableFab(
       key: _key,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 200),
       distance: 140.0,
       type: ExpandableFabType.fan,
       pos: ExpandableFabPos.right,
@@ -74,8 +75,8 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
         FloatingActionButton.small(
           heroTag: null,
           backgroundColor: appColors?.cardColor,
-          onPressed: () {
-            _toggle();
+          onPressed: () async {
+            await _toggle();
             createFileDialog(context, title: fileName, isFolder: false,
                 value: (fileName) {
               bloc.addFile(fileName).then((value) {
@@ -98,8 +99,8 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
         FloatingActionButton.small(
           heroTag: null,
           backgroundColor: appColors?.cardColor,
-          onPressed: () {
-            _toggle();
+          onPressed: () async {
+            await _toggle();
             createFileDialog(context, title: folderName, value: (folderName) {
               bloc.addFolder(folderName).then((value) {
                 bloc.openFolder(value.$2);
@@ -116,8 +117,8 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
         FloatingActionButton.small(
           heroTag: null,
           backgroundColor: appColors?.cardColor,
-          onPressed: () {
-            _toggle();
+          onPressed: () async {
+            await _toggle();
             context
                 .pushRoute(SearchDirectoryRoute(
                     directories: widget.state.directoriesWithoutLink))
@@ -137,8 +138,8 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
         FloatingActionButton.small(
           heroTag: null,
           backgroundColor: appColors?.cardColor,
-          onPressed: () {
-            _toggle();
+          onPressed: () async {
+            await _toggle();
             showSortDialog(context);
           },
           child: Icon(
@@ -150,8 +151,8 @@ class _ExpandableFABWidgetState extends State<ExpandableFABWidget>
         FloatingActionButton.small(
           heroTag: null,
           backgroundColor: appColors?.cardColor,
-          onPressed: () {
-            _toggle();
+          onPressed: () async {
+            await _toggle();
             context.router
                 .push(SearchDirectoryRoute(
                     directories: widget.state.directoriesWithoutLink))
