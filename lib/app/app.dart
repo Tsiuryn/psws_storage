@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:psws_storage/goals/presenter/bloc/goals_bloc.dart';
 import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -19,8 +20,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => getIt.get<AppBloc>(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => getIt.get<AppBloc>(),
+          ),
+          BlocProvider(
+            create: (_) => getIt.get<GoalsBloc>(),
+          ),
+        ],
         child: BlocBuilder<AppBloc, Environment>(
           builder: (context, settings) {
             final Locale locale = settings.appLocale == AppLocale.rus

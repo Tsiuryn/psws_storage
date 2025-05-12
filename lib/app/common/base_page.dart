@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:psws_storage/app/ui_kit/psws_back_button_listener.dart';
 
 abstract class StatelessBasePage<B extends BlocBase<S>, S>
@@ -24,6 +25,7 @@ abstract class StatelessBasePage<B extends BlocBase<S>, S>
               child: Scaffold(
                 appBar: buildAppBar(context, state),
                 body: buildBody(context, state),
+                floatingActionButtonLocation: ExpandableFab.location,
                 floatingActionButton: buildFloatingAction(context, state),
               ),
             ),

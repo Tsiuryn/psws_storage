@@ -47,6 +47,7 @@ class ImportExportBloc extends Cubit<ImportExportState> {
       debugPrint(e.toString());
       emit(state.copyWith(
           type: ImportExportStateType.error, error: e.toString()));
+      rethrow;
     }
   }
 
@@ -80,9 +81,13 @@ class ImportExportBloc extends Cubit<ImportExportState> {
       await importDatabaseUseCase(importConfig);
       emit(state.copyWith(type: ImportExportStateType.importSuccess));
     } catch (e) {
-      debugPrint(e.toString());
-      emit(state.copyWith(
-          type: ImportExportStateType.error, error: e.toString()));
+      emit(
+        state.copyWith(
+          type: ImportExportStateType.error,
+          error: e.toString(),
+        ),
+      );
+      rethrow;
     }
   }
 }

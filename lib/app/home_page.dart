@@ -20,6 +20,10 @@ class HomePage extends StatelessWidget {
         text: l10n.home_page_tab__notes,
       ),
       GButton(
+        icon: Icons.radar_outlined,
+        text: l10n.home_page_tab__habits,
+      ),
+      GButton(
         icon: Icons.settings_rounded,
         text: l10n.home_page_tab__settings,
       ),
@@ -30,6 +34,7 @@ class HomePage extends StatelessWidget {
       child: AutoTabsRouter(
           routes: const [
             MainRoute(),
+            GoalsRoute(),
             SettingsRoute(),
           ],
           builder: (context, child) {
@@ -38,18 +43,23 @@ class HomePage extends StatelessWidget {
             return Scaffold(
               backgroundColor: context.appColors.bodyColor,
               body: child,
-              bottomNavigationBar: GNav(
-                tabs: items,
-                padding: EdgeInsets.all(AppDim.fourteen),
-                backgroundColor: context.appColors.appBarColor!,
-                selectedIndex: tabsRouter.activeIndex,
-                onTabChange: tabsRouter.setActiveIndex,
-                duration: Duration(milliseconds: 500),
-                activeColor: context.appColors.negativeActionColor,
-                color: context.appColors.textColor,
-                gap: 8,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                curve: Curves.easeInCubic,
+              bottomNavigationBar: ColoredBox(
+                color: context.appColors.appBarColor!,
+                child: SafeArea(
+                  child: GNav(
+                    tabs: items,
+                    padding: EdgeInsets.all(AppDim.fourteen),
+                    backgroundColor: context.appColors.appBarColor!,
+                    selectedIndex: tabsRouter.activeIndex,
+                    onTabChange: tabsRouter.setActiveIndex,
+                    duration: Duration(milliseconds: 500),
+                    activeColor: context.appColors.negativeActionColor,
+                    color: context.appColors.textColor,
+                    gap: 8,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    curve: Curves.easeInCubic,
+                  ),
+                ),
               ),
             );
           }),

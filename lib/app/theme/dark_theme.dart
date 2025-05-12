@@ -13,7 +13,7 @@ ThemeData darkTheme(BuildContext context) {
         bodyColor: Color(0xFF3C3B3B),
         cardColor: Color(0xFF858585),
         negativeActionColor: Color(0xFF9D0000),
-        positiveActionColor: Color(0xFF002ABD),
+        positiveActionColor: Color(0xFF9074FF),
         dividerColor: Color(0xFFBBB6B6),
       ),
       const AppTextStyleExt(

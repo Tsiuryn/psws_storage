@@ -5,15 +5,20 @@ import 'package:psws_storage/app/app.dart';
 import 'package:psws_storage/app/di/di.dart';
 import 'package:psws_storage/app/router/app_router.dart';
 import 'package:psws_storage/editor/data/bean/directory_bean.dart';
+import 'package:psws_storage/goals/data/source/local/db/goals_database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  final db = GoalsDatabase();
+
   // init GetIt
   await _initHive();
-  await initDi();
+  await initDi(db);
   _initializedGetIt();
 }
 

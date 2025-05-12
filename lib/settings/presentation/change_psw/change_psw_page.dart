@@ -108,7 +108,6 @@ class _ChangePswPageState extends State<ChangePswPage> with PswsSnackBar {
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(8),
                           ],
                           hintText:
                               l10n.import_export_page__input_password_hint,

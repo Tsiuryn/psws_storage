@@ -2,9 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:psws_storage/app/home_page.dart';
 import 'package:psws_storage/editor/domain/model/directory_model.dart';
+import 'package:psws_storage/goals/presenter/edit_goal_page.dart';
 import 'package:psws_storage/editor/presenter/main/main_page.dart';
 import 'package:psws_storage/editor/presenter/main/pages/search_directory_page.dart';
 import 'package:psws_storage/editor/presenter/notes/edit_notes_page.dart';
+import 'package:psws_storage/goals/presenter/goals_page.dart';
+import 'package:psws_storage/goals/presenter/tasks_page.dart';
+import 'package:psws_storage/goals/domain/models/goal.dart';
 import 'package:psws_storage/pin/presentation/pin_page.dart';
 import 'package:psws_storage/settings/presentation/change_psw/change_psw_page.dart';
 import 'package:psws_storage/settings/presentation/import_export/import_export_page.dart';
@@ -37,6 +41,11 @@ final pages = [
       page: MainRoute.page,
     ),
     CustomRoute(
+      path: 'goals',
+      page: GoalsRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+    ),
+    CustomRoute(
       path: 'settings',
       page: SettingsRoute.page,
       transitionsBuilder: TransitionsBuilders.slideLeft,
@@ -45,6 +54,16 @@ final pages = [
   CustomRoute(
     path: '/search',
     page: SearchDirectoryRoute.page,
+    transitionsBuilder: TransitionsBuilders.slideLeft,
+  ),
+  CustomRoute(
+    path: '/tasks',
+    page: TasksRoute.page,
+    transitionsBuilder: TransitionsBuilders.slideLeft,
+  ),
+  CustomRoute(
+    path: '/edit_goals',
+    page: EditGoalRoute.page,
     transitionsBuilder: TransitionsBuilders.slideLeft,
   ),
   CustomRoute(
