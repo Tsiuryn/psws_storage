@@ -17,10 +17,10 @@ fvm flutter run --profile --cache-sksl --purge-persistent-cache
 
 ## Release apk with shaders
 ```bash
-fvm flutter build apk --flavor=prod --bundle-sksl-path flutter_01.sksl.json  --obfuscate --split-debug-info=build/debug-info
+fvm flutter build apk --flavor=prod  --obfuscate --split-debug-info=build/debug-info
 ```
 
 ## Release bundle with shaders
 ```bash
-fvm flutter build appbundle --release --flavor=prod --bundle-sksl-path flutter_01.sksl.json  --obfuscate --split-debug-info=build/debug-info
+fvm flutter build appbundle --release --flavor=prod --obfuscate --split-debug-info=build/debug-info
 ```
