@@ -90,4 +90,9 @@ class GoalsDatabase extends _$GoalsDatabase {
         await (delete(taskBean)..where((t) => t.id.equals(taskId))).go();
     return result;
   }
+
+  Future<void> clearAllData() async {
+    await taskBean.deleteAll();
+    await goalBean.deleteAll();
+  }
 }

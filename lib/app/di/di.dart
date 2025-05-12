@@ -32,6 +32,9 @@ import 'package:psws_storage/pin/domain/usecase/read_registration_pin_usecase.da
 import 'package:psws_storage/pin/domain/usecase/write_registration_pin_usecase.dart';
 import 'package:psws_storage/pin/presentation/bloc/pin_bloc.dart';
 import 'package:psws_storage/settings/data/import_export_gateway_impl.dart';
+import 'package:psws_storage/settings/data/source/archive_data_source.dart';
+import 'package:psws_storage/settings/data/source/data_agregator_data_source.dart';
+import 'package:psws_storage/settings/data/source/text_encrypter_data_source.dart';
 import 'package:psws_storage/settings/domain/gateway/import_export_gateway.dart';
 import 'package:psws_storage/settings/domain/usecase/export_database_usecase.dart';
 import 'package:psws_storage/settings/domain/usecase/import_database_usecase.dart';
@@ -81,7 +84,23 @@ Future<void> initDi(GoalsDatabase db) async {
         getIt.get<FlutterSecureStorage>(instanceName: _idSecureStorage),
     androidOptions: aOptions,
   ));
-  getIt.registerSingleton<ImportExportGateway>(ImportExportGatewayImpl());
+  getIt.registerFactory<DataAgregatorDataSource>(
+    () => DataAgregatorDataSource(
+      futureBox: () =>
+          getIt.get<Future<Box<DirectoryBean>>>(instanceName: databaseName),
+      goalsDataSource: getIt.get<GoalsDataSource>(),
+    ),
+  );
+  getIt.registerFactory<TextEncrypterDataSource>(
+      () => TextEncrypterDataSource());
+  getIt.registerFactory<ArchiveDataSource>(() => ArchiveDataSource());
+  getIt.registerSingleton<ImportExportGateway>(
+    ImportExportGatewayImpl(
+      dataAgregator: getIt.get<DataAgregatorDataSource>(),
+      textEncrypter: getIt.get<TextEncrypterDataSource>(),
+      archiveDataSource: getIt.get<ArchiveDataSource>(),
+    ),
+  );
 
   //UseCase
   getIt.registerFactory<GetEnvironmentUseCase>(
@@ -187,8 +206,10 @@ Future<void> _initDB(FlutterSecureStorage secureStorage) async {
     Uint8List encryptionKey = base64Url.decode(key);
 
     getIt.registerFactory<Future<Box<DirectoryBean>>>(
-      () async => await Hive.openBox(_idDatabase,
-          encryptionCipher: HiveAesCipher(encryptionKey)),
+      () async => await Hive.openBox(
+        _idDatabase,
+        encryptionCipher: HiveAesCipher(encryptionKey),
+      ),
       instanceName: databaseName,
     );
   }

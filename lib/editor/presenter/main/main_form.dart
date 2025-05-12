@@ -69,13 +69,6 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
     }
   }
 
-  // @override
-  // PreferredSizeWidget? buildAppBar(BuildContext context, MainModelState state) {
-  //   return MainAppBar(
-  //     state: state,
-  //   );
-  // }
-
   @override
   Widget? buildFloatingAction(BuildContext context, MainModelState state) {
     return ExpandableFABWidget(state: state);
@@ -91,6 +84,9 @@ class MainForm extends StatelessBasePage<MainBloc, MainModelState>
       canPop: false,
       child: ListView.separated(
         itemCount: listDirectories.length + 1,
+        padding: EdgeInsets.only(
+          bottom: 72,
+        ),
         separatorBuilder: (context, index) {
           if (state.parentId == rootDirectoryId && index == 0) {
             return const SizedBox();

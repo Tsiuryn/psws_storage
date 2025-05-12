@@ -78,6 +78,7 @@ dependencies:
   path: ^1.9.1
   drift_flutter: ^0.2.4
   flutter_expandable_fab: ^2.5.0
+  flutter_archive: ^6.0.3
 
 dev_dependencies:
   flutter_test:

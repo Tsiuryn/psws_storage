@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:psws_storage/goals/presenter/bloc/goals_bloc.dart';
 import 'package:psws_storage/res/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psws_storage/app/di/di.dart';
@@ -51,6 +52,7 @@ class _ImportExportPageState extends State<ImportExportPage> with PswsSnackBar {
     }
     if (state.type == ImportExportStateType.importSuccess) {
       getIt.get<MainBloc>().changeToDefaultState();
+      context.read<GoalsBloc>().fetchGoals();
       showRequestSnackBar(context,
           message: l10n.import_form__import_success, isSuccess: true);
       context.maybePop();

@@ -16,4 +16,6 @@ abstract interface class GoalsDataSource {
   Future<List<Goal>> getGoals();
 
   Future<Task> getTaskById(String id);
+
+  Future<void> clearAllData();
 }

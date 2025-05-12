@@ -11,10 +11,10 @@ class GoalsBloc extends Cubit<GoalsState> {
   GoalsBloc({
     required this.repo,
   }) : super(GoalsState.initial()) {
-    _fetchGoals();
+    fetchGoals();
   }
 
-  Future<void> _fetchGoals() async {
+  Future<void> fetchGoals() async {
     emit(
       GoalsState.updatePage(
         state.model.copyWith(
@@ -36,30 +36,30 @@ class GoalsBloc extends Cubit<GoalsState> {
 
     await repo.addGoal(goal);
 
-    _fetchGoals();
+    fetchGoals();
   }
 
   Future<void> addTask(Task task) async {
     await repo.addTask(task);
 
-    _fetchGoals();
+    fetchGoals();
   }
 
   Future<void> updateGoal(Goal goal) async {
     await repo.updateGoal(goal);
 
-    _fetchGoals();
+    fetchGoals();
   }
 
   Future<void> updateTask(Task task) async {
     await repo.updateTask(task);
 
-    _fetchGoals();
+    fetchGoals();
   }
 
   Future<void> deleteGoal(Goal goal) async {
     await repo.deleteGoal(goal);
-    _fetchGoals();
+    fetchGoals();
   }
 
   Future<Task> getTaskById(String id) async {
@@ -69,6 +69,6 @@ class GoalsBloc extends Cubit<GoalsState> {
   Future<void> deleteTask(Task task) async {
     await repo.deleteTask(task);
 
-    _fetchGoals();
+    fetchGoals();
   }
 }

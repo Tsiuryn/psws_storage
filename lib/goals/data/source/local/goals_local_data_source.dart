@@ -61,4 +61,9 @@ class GoalsLocalDataSource implements GoalsDataSource {
   Future<Task> getTaskById(String id) {
     return database.getTaskById(id).then((element) => element.toTask);
   }
+
+  @override
+  Future<void> clearAllData() {
+    return database.clearAllData();
+  }
 }
